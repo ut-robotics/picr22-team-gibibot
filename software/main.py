@@ -1,3 +1,4 @@
+from sqlite3 import connect
 import image_processor
 import camera
 import motion
@@ -5,13 +6,21 @@ import cv2
 import time
 from math import *
 import numpy as np
+import movement
+
+from software.software.movement import center_ball
+
 
 def main_loop():
     debug = True
     
     motion_sim = motion.TurtleRobot()
     motion_sim2 = motion.TurtleOmniRobot()
+    global robot
     robot = motion.OmniRobotMotion()
+
+    #Drive1m
+    Drive1m()
     
     #camera instance for normal web cameras
     #cam = camera.OpenCVCamera(id = 2)
@@ -59,27 +68,23 @@ def main_loop():
                 speedr=0.003*(xcord-424)
                 robotspeed=sqrt(speedx * speedx + speedy * speedy)
                 robotdirangle = atan2(speedy, speedx)
-                ratas1=robotspeed * cos(robotdirangle - 120) + 0.11 * speedr
-                ratas2=robotspeed * cos(robotdirangle - 0) + 0.11 * speedr
-                ratas3=robotspeed * cos(robotdirangle - 240) + 0.11 * speedr
+                wheel1=robotspeed * cos(robotdirangle - 120) + 0.11 * speedr
+                wheel2=robotspeed * cos(robotdirangle - 0) + 0.11 * speedr
+                wheel3=robotspeed * cos(robotdirangle - 240) + 0.11 * speedr
 
                 motion_sim.move(0, speedy, speedr)
+
+                robot.open()
+                if (movement.find_ball(speedr, len(processedData.balls))):
+                    robot.sendinfo(wheel1, wheel2, wheel3,0,0)
+                    robot.getinfo
+
                 
                 #speed1 - x, speed2 - y, speed3 - rotation
-                """
-                if xcord<930:
-                    robot.sendinfo(0, 0, 15, 0, 0)
-                    robot.getinfo()
-                elif ycord>990:
-                    robot.sendinfo(0, 0, -15, 0, 0)
-                    robot.getinfo()
-                else:
-                    print("Pall on keskel")
-                    robot.sendinfo(20,20,0,0,0)
-                    robot.getinfo()"""
                 
                 
-                    
+                
+            
                 
                 #if (frame_cnt > 1000):
                 #    break
@@ -99,5 +104,16 @@ def main_loop():
         processor.stop()
         motion_sim.close()
         motion_sim2.close()
+
+
+
+def Drive1m():
+    robot.open()
+    robot.sendinfo(20,0,20,0,0)
+    robot.getinfo()
+    time.sleep(3)
+    robot.sendinfo(0,0,0,0,0)
+    robot.getinfo()
+    robot.close()
 
 main_loop()
