@@ -1,17 +1,18 @@
 12.09.22
+[%hardbreaks]
 Starting the designe of the thrower. -Marc 10h
 [%hardbreaks]
 Configuration of the communication between the motherboard and the computer. -Argo -Robert 5h
 [%hardbreaks]
 VNC setup. -Argo -Robert 2h
 [%hardbreaks]
-Soldering wires and connectors. 3h
+Soldering wires and connectors. -Raimo 3h
 [%hardbreaks]
 
 15.09.22
 Image processing, basic movement. -Argo -Robert 3h
 [%hardbreaks]
-Soldering wires and connectors. 3h
+Soldering wires and connectors. -Raimo 3h
 [%hardbreaks]
 Thrower designe. -Marc 8h
 [%hardbreaks]
