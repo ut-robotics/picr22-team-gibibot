@@ -1,0 +1,13 @@
+12.09.22
+Starting the designe of the thrower. -Marc 10h
+Configuration of the communication between the motherboard and the computer. -Argo -Robert 5h
+VNC setup. -Argo -Robert 2h
+Soldering wires and connectors. 3h
+
+15.09.22
+Image processing, basic movement. -Argo -Robert 3h
+Soldering wires and connectors. 3h
+Thrower designe. -Marc 8h
+
+19.09.22
+Thrower designe. -Marc 5h
