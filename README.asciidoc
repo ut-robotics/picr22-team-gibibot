@@ -1,4 +1,4 @@
-12.09.22
+---12.09.22---
 [%hardbreaks]
 Starting the designe of the thrower. -Marc 10h
 [%hardbreaks]
@@ -9,7 +9,7 @@ VNC setup. -Argo -Robert 2h
 Soldering wires and connectors. -Raimo 3h
 [%hardbreaks]
 
-15.09.22
+---15.09.22---
 Image processing, basic movement. -Argo -Robert 3h
 [%hardbreaks]
 Soldering wires and connectors. -Raimo 3h
@@ -17,15 +17,23 @@ Soldering wires and connectors. -Raimo 3h
 Thrower designe. -Marc 8h
 [%hardbreaks]
 
-19.09.22
+---19.09.22---
 Thrower designe. -Marc 5h
 [%hardbreaks]
 
-21.09.22
+---21.09.22---
 Mainboard design started - Raimo 2h
 VNC setup vol2 - Argo & Robert 1h
 [%hardbreaks]
 
-22.09.22
+---22.09.22---
+Made code easier to understand, removed unnecessary parts of code - Robert 2h
 Battery and code test - Raimo & Robert 2h
 [%hardbreaks]
+
+
+---26.09.22---
+Robot finds and centers ball, got robot moving - Raimo, Robert, Argo, 2,5h
+Worked on thrower - 2,5h
+[%hardbreaks]
+
