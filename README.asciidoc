@@ -47,3 +47,7 @@ code structure corrections - Argo 0.5h
 ---02.10.22---
 Worked on thrower - Marc 2h
 [%hardbreaks]
+
+---03.10.22---
+Worked on thrower - Marc 2h
+[%hardbreaks]
