@@ -34,6 +34,10 @@ Battery and code test - Raimo & Robert 2h
 
 ---26.09.22---
 Robot finds and centers ball, got robot moving - Raimo, Robert, Argo, 2,5h
-Worked on thrower - 2,5h
+Worked on thrower - Marc 2,5h
+[%hardbreaks]
+
+---29.09.22---
+Mainboard schematic - Raimo 2,5h
 [%hardbreaks]
 
