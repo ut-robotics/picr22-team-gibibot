@@ -33,12 +33,15 @@ Battery and code test - Raimo & Robert 2h
 
 
 ---26.09.22---
-Robot finds and centers ball, got robot moving - Raimo, Robert, Argo, 2,5h
+Robot finds and centers ball, got robot moving - Raimo, Robert, Argo, 2.5h
 Worked on thrower - Marc 2,5h
 [%hardbreaks]
 
 ---29.09.22---
 Mainboard schematic - Raimo 2,5h
+secure_ball, omni funcktion implementation - Argo 3.5h
+code structure corrections - Argo 0.5h
+
 [%hardbreaks]
 
 ---02.10.22---
