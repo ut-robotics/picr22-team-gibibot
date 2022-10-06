@@ -3,7 +3,6 @@ import numpy as np
 import cv2
 
 
-#Basic camera interface that can be extended to use different API-s. Realsense example below
 class ICamera:
     def open(self):
         pass
@@ -15,8 +14,7 @@ class ICamera:
         pass
     def get_frames(self):
         pass
-
-
+    
 # Camera implementation using the pyrealsense2 provided API 
 class RealsenseCamera(ICamera):
     def __init__(self, 
