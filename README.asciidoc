@@ -51,3 +51,7 @@ Worked on thrower - Marc 2h
 ---03.10.22---
 Worked on thrower - Marc 2h
 [%hardbreaks]
+
+---06.10.22---
+Robot can find and follow the ball - Argo, Robert 2.5h
+[%hardbreaks]
