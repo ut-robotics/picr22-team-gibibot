@@ -50,8 +50,14 @@ Worked on thrower - Marc 2h
 
 ---03.10.22---
 Worked on thrower - Marc 2h
+Mainboard schematic - Raimo 2h
 [%hardbreaks]
 
 ---06.10.22---
 Robot can find and follow the ball - Argo, Robert 2.5h
+Mainboard PCB design - Raimo 2h
+[%hardbreaks]
+
+---10.10.22---
+Mainboard PCB design - Raimo 1,5h
 [%hardbreaks]
