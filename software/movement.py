@@ -57,17 +57,18 @@ class OmniRobot:
         self.send_inf(0,0,0,0,1)
 
     def try_motors(self):
-        self.send_inf(0,10,0,0,0)
+        self.send_inf(10,10,10,0,0)
     
-    def omni(self, speedY, xcord,wheel_nr, distance):
+    def omni(self, xcord,wheel_nr, distance):
         delta=((xcord-424)/424)
-        speedR = delta*(-1)
-        speedX = delta*0.5
+        speedR = delta*(-2.5)
+        speedX = delta*0.1
         
-        if distance <50:
+        if distance > 300:
             speedY=0.1
         else:
             speedY=0.5
+
         
         robot_speed=sqrt(speedX * speedX + speedY * speedY)
         robotDirectionAngle = atan2(speedY, speedX)
@@ -96,7 +97,7 @@ class OmniRobot:
         self.send_inf(rotate_speed,rotate_speed,rotate_speed,0,1)
             
 
-    def center_ball(self, rotate_dir, xcord):
+    def center_ball(self, xcord):
         if (xcord > 434):
             rotate_dir = -2
         elif (xcord < 414):
@@ -107,9 +108,8 @@ class OmniRobot:
         self.send_inf(rotate_dir,rotate_dir,rotate_dir,0,1)
 
     def secure_ball(self, distance):
-        if (distance < 20):
-            while (distance > 3):
-                self.send_inf(self.omni(0, 0.01, 1), self.omni(0, 0.01, 2), self.omni(0, 0.01, 3), 0, 1)
+        if (True):
+            self.send_inf(0, 0, 1, 0, 1)
 
     def timer(self, sec, start_time):
         run_time = time.time() - start_time

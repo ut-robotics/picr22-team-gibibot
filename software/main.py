@@ -11,7 +11,7 @@ import movement
 
 spin = 10
 
-speedY=0.5
+
 
 
 
@@ -55,16 +55,20 @@ def main_loop():
                     ycord=processedData.balls[-1].y
                     dist=processedData.balls[-1].distance
                     print("X: " , xcord , "Y: " , ycord)
+                    print("distance: ", dist)
                     #Framei laius 848
-                    
-                    #robot.center_ball(spin, xcord)
-                    wheel1=robot.omni(speedY,xcord,1,dist)
-                    wheel2=robot.omni(speedY,xcord,2,dist)
-                    wheel3=robot.omni(speedY,xcord,3,dist)
+
+                    if dist > 400:
+                        robot.center_ball(xcord)
+                    else:
+                        #robot.center_ball(spin, xcord)
+                        wheel1=robot.omni(xcord,1,dist)
+                        wheel2=robot.omni(xcord,2,dist)
+                        wheel3=robot.omni(xcord,3,dist)
 
                     #print("Wheel speeds-wheel1: ", wheel1, "wheel2:", wheel2, "wheel3:", wheel3)
                     
-                    robot.send_inf(wheel1,wheel2,wheel3, 0, 1)
+                        robot.send_inf(wheel1,wheel2,wheel3, 0, 1)
                         
                     
             if debug:
