@@ -24,12 +24,11 @@ def main_loop():
     robot=movement.OmniRobot()
     
     processor.start()
-    #robot.try_motors()
     start=time.time()
     fps=0
     frame=0
     frame_cnt=0
-    #Drive1m()
+    
     try:
         while True:
             processedData= processor.process_frame(aligned_depth=False)
@@ -46,21 +45,22 @@ def main_loop():
                 #print("ball_count: {}".format(len(processedData.balls)))
                 #[Object: x=7; y=212; size=15.0; distance=212; exists=True]
                 if (len(processedData.balls)==0):
-                    robot.find_ball(spin)
+                    robot.find_ball(spin, len(processedData.balls))
+                    
 
                 else:
                     processedData.balls.sort(key= lambda x: x.size)
                     print(processedData.balls[-1])
                     xcord=processedData.balls[-1].x
                     ycord=processedData.balls[-1].y
+                    dist=processedData.balls[-1].distance
                     print("X: " , xcord , "Y: " , ycord)
                     #Framei laius 848
                     
-
                     #robot.center_ball(spin, xcord)
-                    wheel1=robot.omni(speedY,xcord,1)
-                    wheel2=robot.omni(speedY,xcord,2)
-                    wheel3=robot.omni(speedY,xcord,3)
+                    wheel1=robot.omni(speedY,xcord,1,dist)
+                    wheel2=robot.omni(speedY,xcord,2,dist)
+                    wheel3=robot.omni(speedY,xcord,3,dist)
 
                     #print("Wheel speeds-wheel1: ", wheel1, "wheel2:", wheel2, "wheel3:", wheel3)
                     

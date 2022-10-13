@@ -1,4 +1,5 @@
 import math
+from turtle import distance
 import numpy as np
 import time
 import serial
@@ -37,6 +38,9 @@ class OmniRobot:
         ser.close()
         print("Serial closed")
     
+    
+        
+    
     def send_inf(self, speed1, speedr, speed3, thrower_speed, disable_failsafe):
         inf_out=struct.pack('<hhhHBH', speed1, speedr, speed3, thrower_speed, disable_failsafe, 0xAAAA)
         ser.write(inf_out)
@@ -45,19 +49,26 @@ class OmniRobot:
         actual_speed1, actual_speedr, actual_speed3, feedback_delimiter = struct.unpack('<hhhH', inf_in)
         print("Real Data: " , actual_speed1, actual_speedr, actual_speed3, feedback_delimiter)
 
+    def communication_test(self):
+        self.send_inf(0,0,0,0,0)
+        
+    
     def stop(self):
         self.send_inf(0,0,0,0,1)
 
     def try_motors(self):
         self.send_inf(0,10,0,0,0)
     
-    def omni(self, speedY, xcord,wheel_nr):
+    def omni(self, speedY, xcord,wheel_nr, distance):
         delta=((xcord-424)/424)
         speedR = delta*(-1)
         speedX = delta*0.5
         
-
-
+        if distance <50:
+            speedY=0.1
+        else:
+            speedY=0.5
+        
         robot_speed=sqrt(speedX * speedX + speedY * speedY)
         robotDirectionAngle = atan2(speedY, speedX)
 
@@ -80,9 +91,10 @@ class OmniRobot:
             self.send_inf(self.omni(0, 0.5, 1), self.omni(0, 0.5, 2), self.omni(0, 0.5, 3), 0, 1)
         self.stop()
     
-    def find_ball(self, rotate_speed):
+    def find_ball(self, rotate_speed, ball_count):
         print("rotate")
         self.send_inf(rotate_speed,rotate_speed,rotate_speed,0,1)
+            
 
     def center_ball(self, rotate_dir, xcord):
         if (xcord > 434):
