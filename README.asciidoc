@@ -60,4 +60,9 @@ Mainboard PCB design - Raimo 2h
 
 ---10.10.22---
 Mainboard PCB design - Raimo 1,5h
+Worked on robot's movement - Argo, Robert 2h
+[%hardbreaks]
+
+---13.10.22---
+Tested movement and fixed some bugs. Also implemented some functions related to speed- Argo, Robert 4h
 [%hardbreaks]
