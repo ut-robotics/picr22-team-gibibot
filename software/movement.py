@@ -61,8 +61,8 @@ class OmniRobot:
     
     def omni(self, xcord,wheel_nr, distance):
         delta=((xcord-424)/424)
-        speedR = delta*(-2.5)
-        speedX = delta*0.1
+        speedR = delta*(-1.75)
+        speedX = delta*0.25
         
         if distance > 300:
             speedY=0.1

@@ -1,5 +1,7 @@
 from ast import Break
 from asyncio import constants
+from concurrent.futures import process
+from pickle import TRUE
 import image_processor
 import camera
 #import motion
@@ -41,22 +43,14 @@ def main_loop():
                 end = time.time()
                 fps = 30/(end-start)
                 start = end
-                #print("FPS: {}, framecount: {}".format(fps, frame_cnt))
-                #print("ball_count: {}".format(len(processedData.balls)))
-                #[Object: x=7; y=212; size=15.0; distance=212; exists=True]
-                if (len(processedData.balls)==0):
-                    robot.find_ball(spin, len(processedData.balls))
-                    
-
-                else:
+                #[Object: x=7; y=212; size=15.0; distance=212; exists=True]  
+                print(processedData.balls)  
+        
+                if (len(processedData.balls)!=0):
                     processedData.balls.sort(key= lambda x: x.size)
-                    print(processedData.balls[-1])
                     xcord=processedData.balls[-1].x
                     ycord=processedData.balls[-1].y
                     dist=processedData.balls[-1].distance
-                    print("X: " , xcord , "Y: " , ycord)
-                    print("distance: ", dist)
-                    #Framei laius 848
 
                     if dist > 400:
                         robot.center_ball(xcord)
@@ -69,6 +63,10 @@ def main_loop():
                     #print("Wheel speeds-wheel1: ", wheel1, "wheel2:", wheel2, "wheel3:", wheel3)
                     
                         robot.send_inf(wheel1,wheel2,wheel3, 0, 1)
+
+                else:
+                    print("find ball")
+                    robot.find_ball(spin, len(processedData.balls))
                         
                     
             if debug:
