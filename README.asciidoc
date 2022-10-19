@@ -66,3 +66,7 @@ Worked on robot's movement - Argo, Robert 2h
 ---13.10.22---
 Tested movement and fixed some bugs. Also implemented some functions related to speed- Argo, Robert 4h
 [%hardbreaks]
+
+---19.10.22---
+Started to fix problems that instructors mentioned - Robert 1,5h
+[%hardbreaks]
