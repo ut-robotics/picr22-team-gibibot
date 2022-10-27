@@ -8,13 +8,29 @@ import movement
 import calculations
 import communication
 
+def Orbit(radius, xcord, reso_x_mid,dist):
+    speedY = 0
+    speedX = 0.5
+    speedR = 1000*speedX/(640-radius)
+
+    if radius > (dist-5):
+        speedY += (radius-dist)/100
+    elif radius > (dist+5):
+        speedY += (radius-dist)/100
+    
+    if xcord > (reso_x_mid + 1) or xcord < (reso_x_mid - 1):
+        speedR += (reso_x_mid- xcord) / 100
+
+    return [speedX, speedR, speedY]
+
 
 def main_loop():
-    state="tmotor"
+    state="find_ball"
     spin = 10
     debug=True
     basket_color="magenta"
-    cam=camera.RealsenseCamera(exposure=100)
+    basket_height = 0.5
+    cam=camera.RealsenseCamera(exposure=100) #defaulti peal on depth_enabled = True
     processor = image_processor.ImageProcessor(cam, debug=debug, color_config = "colors/colors.pkl")
     robot=movement.OmniRobot()
     reso_x_mid=424
@@ -27,22 +43,34 @@ def main_loop():
     frame_cnt=0
     radius=250
     ball_side=0
+    calibration_speed=0.15
     
     try:
         while True:
-            processedData= processor.process_frame(aligned_depth=False)
+            if state == "throw":
+                processedData = processor.process_frame(aligned_depth=True)
+            else:
+                processedData = processor.process_frame(aligned_depth=False)
+
             frame_cnt+=1
             frame+=1
-            if state=="try":
+            if state == "try":
                 robot.try_motors()
                 break
-            if state=="tmotor":
-                comms.send_inf(0,0,0,300,1)
-                time.sleep(1)
-                comms.send_inf(0,0,0,0,1)
+            if state == "tmotor":
+                robot.test_thrower(1400)
                 break
+            if state=="cameratest":
+                processedData = processor.process_frame(aligned_depth=True)
+                processedData.balls.sort(key= lambda x: x.size)
+                targeted_ball=processedData.balls[-1]
+                xcord=targeted_ball.x
+                ycord=targeted_ball.y
+                dist=targeted_ball.distance
+                print("DEPTH_FRAME: ", processedData.depth_frame)
+                continue
             
-            if frame%30==0:
+            if frame%30 == 0:
                 frame = 0
                 end = time.time()
                 fps = 30/(end-start)
@@ -50,7 +78,7 @@ def main_loop():
                 #[Object: x=7; y=212; size=15.0; distance=212; exists=True]  
                 print(fps)  
 
-            if state=="find_ball":
+            if state == "find_ball":
                 print("--------Searching ball--------")
                 if len(processedData.balls)!=0:
                     state="move"
@@ -60,7 +88,7 @@ def main_loop():
                     elif ball_side==0:
                         robot.find_ball((-1)*spin)
                         
-            elif state=="move":
+            elif state == "move":
                 print("--------Moving to ball--------")
                 if (len(processedData.balls)!=0):
                     
@@ -71,29 +99,26 @@ def main_loop():
                     dist=targeted_ball.distance
                     delta=((xcord-reso_x_mid)/reso_x_mid)
                     print(dist)
-                    #Follows where is ball so find_ball function is more efficient
+                        #Follows where is ball so find_ball function is more efficient
                     if delta<0:
-                        ball_side=0
+                        ball_side = 0
                     else:
-                        ball_side=1
+                        ball_side = 1
                     
-                    #SpeedY based on ball distance
+                        #SpeedY based on ball distance
                     if dist > 175:
                         speedY=0.1
                     else:
                         speedY=0.5
-                    #Controlls that balls location is ready for robot's orbit function
+                        #Controlls that balls location is ready for robot's orbit function
                     if xcord < (reso_x_mid + 15) and xcord >(reso_x_mid -15) and dist > 250:
                         #robot.center_ball(xcord)
                         state="orbit"
                     else:
-                    #Moves to ball
+                        #Moves to ball
                         speedR = delta*(-1.75)
                         speedX = delta*0.25
-                        wheel1=calculator.calc_speed(speedX, speedY, speedR, 1)
-                        wheelr=calculator.calc_speed(speedX, speedY, speedR, 2)
-                        wheel3=calculator.calc_speed(speedX, speedY, speedR, 3)
-                        comms.send_inf(wheel1,wheelr,wheel3, 0, 1)
+                        robot.move(speedX, speedR, speedY)
                 else:
                     #If there is no ball
                     state="find_ball"
@@ -110,25 +135,34 @@ def main_loop():
                     ycord=targeted_ball.y
                     dist=targeted_ball.distance
                     delta=((xcord-reso_x_mid)/reso_x_mid)
-                    robot.center_ball(xcord)
+
+                    if (xcord > 434):
+                        rotate_dir = -2
+                    elif (xcord < 414):
+                        rotate_dir = 2
+                    else:
+                        rotate_dir = 0
+
+                    robot.move(rotate_dir, rotate_dir, rotate_dir)
                     #controlls basket colour
 
                     if basket_color == "magenta":
                         basket = processedData.basket_m
                     elif basket_color == "blue":
                         basket = processedData.basket_b
+
                     #if that kind of basket is in our list
-                    
                     if basket.exists:
-                        deltabasket=((basket.x-reso_x_mid)/reso_x_mid)
-                        print(basket.x, basket.y, basket.distance)
-                        print("basketx-resomid: ", basket.x-reso_x_mid)
+                        #deltabasket=((basket.x-reso_x_mid)/reso_x_mid)
                         if(abs(basket.x-reso_x_mid)<10):
-                            robot.stop() 
-                            #input("Robot is ready to throw")
+                            robot.stop()
+                            state="throw"
+                            print("Robot is ready to throw")
                             #state="find_ball"
                             
                         elif abs(basket.x-reso_x_mid)>30:
+                            #orbit_speeds = Orbit(radius, reso_x_mid, xcord, dist)
+                             
                             speedY=0
                             speedX=0.5
                             speedR=1000*speedX/(640-radius)
@@ -140,38 +174,69 @@ def main_loop():
                             
                             
                             if xcord > (reso_x_mid + 1) or xcord < (reso_x_mid - 1):
-                                speedR += (reso_x_mid- xcord) / 100
-                            
-                            wheely=calculator.calc_speed(speedX, speedY, speedR, 1)
-                            wheelr=calculator.calc_speed(speedX, speedY, speedR, 2)
-                            wheelx=calculator.calc_speed(speedX, speedY, speedR, 3)
-                            
-                            robot.orbit(wheely,wheelr,wheelx)                        
+                                speedR += (reso_x_mid- xcord) / 100 
+                                                   
+                            #robot.move(orbit_speeds[0],orbit_speeds[1],orbit_speeds[2])
+                            robot.move(speedX, speedR, speedY)                        
                     else:
                         #Orbit
-                        print("ORBITING RIGHT NOW!!!!")
+                        #orbit_speeds = Orbit(radius, reso_x_mid, xcord, dist)
 
                         speedY=0
                         speedX=0.5
                         speedR=1000*speedX/(640-radius)
+
                         if radius > (dist-5):
                             speedY += (radius-dist)/100
                         elif radius > (dist+5):
                             speedY += (radius-dist)/100
+                        
+                        
                         if xcord > (reso_x_mid + 1) or xcord < (reso_x_mid - 1):
-                            speedR += (reso_x_mid - xcord) / 100
+                            speedR += (reso_x_mid- xcord) / 100 
+                                                
+                        #robot.move(orbit_speeds[0],orbit_speeds[1],orbit_speeds[2])
+                        robot.move(speedX, speedR, speedY)
                         
-                        print("SPEED R JA X: ", speedR, " ", speedX)
-                        wheely=calculator.calc_speed(speedX, speedY, speedR, 1)
-                        wheelr=calculator.calc_speed(speedX, speedY, speedR, 2)
-                        wheelx=calculator.calc_speed(speedX, speedY, speedR, 3)
-                        print("WHEELS: 1.", wheely, " 2.", wheelr, " 3.", wheelx)
-                        robot.orbit(wheely,wheelr,wheelx)
+                        #robot.move(orbit_speeds[0],orbit_speeds[1],orbit_speeds[2])
+            
+                            
+                    
+
+            elif state == "throw":
+                #calc speed in m/s
+
+                processedData.balls.sort(key= lambda x: x.size)
+                targeted_ball=processedData.balls[-1]
+                dist=targeted_ball.distance
+                delta=((xcord-reso_x_mid)/reso_x_mid)
+                
+
+                if dist > 300:
+                    basket_distance = 2
+                    launch_speed = 2*basket_distance / sqrt((2*basket_distance*sqrt(3) - 2*basket_height)/9.81)
+                    
+                    
+                    #convert to rpm
+                    ang_speed=(60/(2*pi*0.015))*launch_speed
+                    speedT = ang_speed
+                #Moves to ball
+                speedY = 0.3
+                if dist > 400:
+                    speedR = 0
+                    speedX = 0
+                    speedT=950
+                    robot.throw(speedX, speedR, speedY, speedT)
+                    time.sleep(3)
+                    state = "find_ball"
+                    
                 else:
-                    state="find_ball"
+                    speedR = delta*(-1.75)
+                    speedX = delta*0.25
+                    robot.move(speedX, speedR, speedY)
+
+                
                         
-                    
-                    
             if debug:
                     debug_frame = processedData.debug_frame
 

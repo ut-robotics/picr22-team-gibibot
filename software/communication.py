@@ -1,5 +1,4 @@
 import serial
-import serial.tools.list_ports
 import struct
 
 #ports=serial.tools.list_ports.comports()

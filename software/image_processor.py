@@ -74,6 +74,7 @@ class ImageProcessor():
         self.camera.close()
 
     def analyze_balls(self, t_balls, fragments) -> list:
+        #dilation here
         contours, hierarchy = cv2.findContours(t_balls, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
         balls = []
@@ -142,6 +143,8 @@ class ImageProcessor():
 
     def get_frame_data(self, aligned_depth = False):
         if self.camera.has_depth_capability():
+            #depth_capability on defaulti peal true
+            #tagastab color_farme ja depth_frame
             return self.camera.get_frames(aligned = aligned_depth)
         else:
             return self.camera.get_color_frame(), np.zeros((self.camera.rgb_height, self.camera.rgb_width), dtype=np.uint8)
