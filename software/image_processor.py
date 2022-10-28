@@ -94,6 +94,7 @@ class ImageProcessor():
             ys	= np.array(np.arange(y + h, self.camera.rgb_height), dtype=np.uint16)
             xs	= np.array(np.linspace(x + w/2, self.camera.rgb_width / 2, num=len(ys)), dtype=np.uint16)
 
+            #testobjdist, testobjx, testobjy = position(h,w,depth,x,y)
             obj_x = int(x + (w/2))
             obj_y = int(y + (h/2))
             obj_dst = obj_y
@@ -168,3 +169,12 @@ class ImageProcessor():
                                 depth_frame=depth_frame, 
                                 fragmented=self.fragmented, 
                                 debug_frame=self.debug_frame)
+
+def position(h, w, d, x, y):
+    x = int(x + 424/2)
+    y=int(y+220/2)
+    try:
+        dist=d[y,x]
+    except:
+        dist=y/4
+    return dist, x, y
