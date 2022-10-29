@@ -47,7 +47,7 @@ class OmniRobot:
 
     def test_thrower(self, speedT):
         self.comms.send_inf(0,0,0,speedT,1)
-        time.sleep(3)
+        time.sleep(5)
         self.comms.send_inf(0,0,0,0,1)
 
     def throw(self, speedX, speedR, speedY, speedT):
