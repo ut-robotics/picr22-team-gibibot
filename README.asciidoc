@@ -77,3 +77,23 @@ Tested movement and fixed some bugs. Also implemented some functions related to 
 ---19.10.22---
 Started to fix problems that instructors mentioned - Robert 1,5h
 [%hardbreaks]
+---20.10.22---
+Orbit and throw functions and made following better - Robert 9,5h
+[%hardbreaks]
+---24.10.22---
+Worked on thrower code - Robert 3h
+[%hardbreaks]
+
+---27.10.22---
+Linux setup vol2, nucleo replacement, new test to see that everything works again - Robert, Argo  7h
+[%hardbreaks]
+---28.10.22---
+Thrower measurements and calculations code - Robert 2,5h
+[%hardbreaks]
+---29.10.22---
+New thrower measurements, better aim, test runs on court - Robert 8h
+[%hardbreaks]
+---30.10.22---
+Different enums, made code cleaner, removed issues  - Robert 1,5h
+[%hardbreaks]
+
