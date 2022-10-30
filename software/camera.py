@@ -1,5 +1,6 @@
 import pyrealsense2 as rs
 import numpy as np
+import math
 import cv2
 
 
@@ -69,6 +70,11 @@ class RealsenseCamera(ICamera):
     
     def has_depth_capability(self) -> bool:
         return self.depth_enabled
+    def distance(self, x, y):
+        frames = self.pipeline.wait_for_frames()
+        distance = frames.get_depth_frame().get_distance(x,y)/ math.sin(1.16)
+        return distance
+
 
     def get_frames(self, aligned = False):
         frames = self.pipeline.wait_for_frames()
