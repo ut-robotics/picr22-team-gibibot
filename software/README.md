@@ -1,3 +1,5 @@
+### OLD INFO
+
 This is an example implementation of a LUT based segmentation module that can be used with Realsense cameras.
 
 Designed to use Python 3. Dependencies: numpy, openCV, pyrealsense2
