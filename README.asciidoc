@@ -87,18 +87,18 @@ Made the robot wiring a bit better, Mainboard PCB design - Raimo 2,5h
 [%hardbreaks]
 
 ---22.10.22---
-Looking through the review summary and fixing the problems in the PCB design - Raimo 4h
+Looked through the review summary and fixed some ofthe problems in the PCB design - Raimo 4h
 [%hardbreaks]
 
 ---24.10.22---
 Worked on thrower code - Robert 3h
-Looking through the review summary and fixing the problems in the PCB design - Raimo 2h
+Looked through the review summary and fixed some ofthe problems in the PCB design - Raimo 2h
 [%hardbreaks]
 
 ---27.10.22---
 Linux setup vol2, nucleo replacement, new test to see that everything works again - Robert, Argo  7h
 Modded the new nucleo - Raimo 0,5h
-Looking through the review summary and fixing the problems in the PCB design - Raimo 2h
+Looked through the review summary and fixed some ofthe problems in the PCB design - Raimo 2h
 [%hardbreaks]
 ---28.10.22---
 Thrower measurements and calculations code - Robert 2,5h
