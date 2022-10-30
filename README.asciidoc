@@ -91,7 +91,8 @@ Linux setup vol2, nucleo replacement, new test to see that everything works agai
 Thrower measurements and calculations code - Robert 2,5h
 [%hardbreaks]
 ---29.10.22---
-New thrower measurements, better aim, test runs on court - Robert 8h
+New thrower measurements, better aim, test runs on court - Robert 8h, Argo 4h
+Distance measuring function implementation - Robert, Argo 2h
 [%hardbreaks]
 ---30.10.22---
 Different enums, made code cleaner, removed issues  - Robert 1,5h
