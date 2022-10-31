@@ -21,7 +21,7 @@ class OmniRobot:
         self.comms.send_inf(0,0,0,0,1)
 
     def try_motors(self):
-        self.comms.send_inf(40,0,0,0,0)
+        self.comms.send_inf(10,10,10,0,0)
     
     def find_ball(self, rotate_speed):
         self.comms.send_inf(rotate_speed,rotate_speed,rotate_speed,0,1)

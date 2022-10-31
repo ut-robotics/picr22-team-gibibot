@@ -45,7 +45,7 @@ def main_loop():
     state=State.FIND_BALL
     spin = 12
     debug=True
-    basket_color="magenta"
+    basket_color=Color.MAGENTA
     cam=camera.RealsenseCamera(exposure=100) #defaulti peal on depth_enabled = True
     processor = image_processor.ImageProcessor(cam, debug=debug, color_config = "colors/colors.pkl")
     robot=movement.OmniRobot()
@@ -57,7 +57,7 @@ def main_loop():
     fps=0
     frame=0
     frame_cnt=0
-    radius=385
+    radius=300
     #Which side ball is on
     ball_side=0
     
@@ -74,7 +74,7 @@ def main_loop():
             if state == State.TRYMOTORS:
                 
                 robot.try_motors()
-                continue
+                break
             if state == State.TMOTOR:
                 try:
                     
@@ -139,7 +139,7 @@ def main_loop():
                     else:
                         speedY=1
                         #Controlls that balls location is ready for robot's orbit function
-                    if xcord < (reso_x_mid + 15) and xcord >(reso_x_mid -15) and dist > 250:
+                    if xcord < (reso_x_mid + 15) and xcord >(reso_x_mid -15) and dist > 340:
                         #robot.center_ball(xcord)
                         state=State.ORBIT
                     else:
@@ -172,18 +172,19 @@ def main_loop():
 
                     #if that kind of basket is in our list
                     if basket.exists:
-                        if(abs(basket.x-reso_x_mid)<1):
+                        if(basket.x>422 and basket.x<426) and (xcord>422 and xcord<426):
                             robot.stop()
                             state=State.THROW
                             print("Robot is centering")
                             continue
+                            #break
 
                         if basket.x<424:
                             basket_side=1
                         elif basket.x > 424:
                             basket_side=-1
                             
-                        speedX=0.15*basket_side
+                        speedX=0.13*basket_side
 
                         
                         speedY=0
@@ -192,13 +193,13 @@ def main_loop():
                             speedY += (radius-dist)/100
                                
                         if xcord > (reso_x_mid + 1) or xcord < (reso_x_mid - 1):
-                            speedR += (reso_x_mid- xcord) / 100 
+                            speedR += (reso_x_mid- xcord) / 100
                                                    
                         robot.move(speedX, speedR, speedY, speedT)    
                     else:
                         #Orbit
                         speedY=0
-                        speedX=0.6
+                        speedX=0.4
                         speedR=1000*speedX/(640-radius)
 
                         if radius > (dist-5) or radius > (dist+5):
@@ -206,6 +207,11 @@ def main_loop():
                         
                         if xcord > (reso_x_mid + 1) or xcord < (reso_x_mid - 1):
                             speedR += (reso_x_mid- xcord) / 100 
+
+                        if speedR > 2:
+                            speedR = 2
+                        if speedY > 0.2:
+                            speedY = 0.2
                                                 
                         robot.move(speedX, speedR, speedY, speedT)        
             
@@ -240,8 +246,8 @@ def main_loop():
                         print("Throwing with speed: ", speedT)
                         #Throws
                         robot.move(speedX, speedR, speedY, int(speedT))
-                        #Gonna change the time sleep so it can aim til the throw, but works for now
                         time.sleep(2)
+                        #Gonna change the time sleep so it can aim til the throw, but works for now  
                         state = State.FIND_BALL
                         continue
                     elif (xcord<422 or xcord>426) and dist <=440:
