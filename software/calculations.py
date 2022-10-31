@@ -25,3 +25,22 @@ class Calculations():
         ####print("MOVMENT CALC: ", wheel_lin_speed * self.wheelSpeedTo_mu)
     
         return  wheel_ang_speed_mu
+    
+    def calc_throwingSpeed(self, basketdist):
+        tdist=[60,68,85,100,125,150,175,200,225,250,275,300,325,350,375,400,425]
+        tspeeds=[472,472,500,520,550,620,670,730,780,810,865,900,930,985,1048,1115,1180]
+        for i in range(len(tdist)):
+            if basketdist<=tdist[i]:
+                speedT1=(basketdist*tspeeds[i]/tdist[i])
+                break
+            
+        for i in range(len(tdist)):
+            if basketdist<=tdist[i]:
+                if i!=0:
+                    speedT2=(basketdist*tspeeds[i-1]/tdist[i-1])
+                elif i==0:
+                    speedT2=(basketdist*tspeeds[i]/tdist[i])
+                break
+        speedT=(speedT1+speedT2)/2 
+        return speedT
+        
