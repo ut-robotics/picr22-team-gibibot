@@ -39,14 +39,6 @@ class OmniRobot:
         time.sleep(3)
         self.comms.send_inf(0,0,0,0,1)
 
-    def throw(self, speedX, speedR, speedY, speedT):
-
-        wheelx= self.calculator.calc_speed(speedX, speedY, speedR, 1)
-        wheelr= self.calculator.calc_speed(speedX, speedY, speedR, 2)
-        wheely= self.calculator.calc_speed(speedX, speedY, speedR, 3)
-
-        self.comms.send_inf(wheelx, wheelr, wheely, speedT, 1)
-
 
 
 

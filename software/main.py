@@ -221,6 +221,7 @@ def main_loop():
                     speedY = 0.3
                     speedR = 0
                     speedX=0
+                    speedT=0
                     if dist > 440:
                         basketdist=processedData.basket_m.distance*100
                         for i in range(len(tdist)):
@@ -246,6 +247,8 @@ def main_loop():
                     elif (xcord<422 or xcord>426) and dist <=440:
                         speedR+=delta/100
                         robot.move(speedX, speedR, speedY, speedT)
+                    elif (dist <=400):
+                        robot.move(speedX,speedR,speedY,speedT)
                 
                    
                 except:
