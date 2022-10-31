@@ -73,11 +73,21 @@ class ImageProcessor():
         self.camera.close()
 
     def analyze_balls(self, t_balls, fragments) -> list:
-        #dilation here
         contours, hierarchy = cv2.findContours(t_balls, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
+        #mask = t_balls
+        ##mask = cv2.drawContours(t_balls, contours, -1, (255,255,255), 24)
+        #orig_mask     = cv2.cvtColor(mask, cv2.COLOR_BGR2GRAY)
+        #kernel_size = 80
+        #kernel  = numpy.ones((kernel_size,kernel_size), numpy.uint8)
+        #dilated_mask  = cv2.dilate(orig_mask, kernel, iterations=1)
+        
+        #kernel   = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (11,11))
+        #morphed  = cv2.morphologyEx(dilated_mask, cv2.MORPH_CLOSE, kernel)
+        #dilated_contours = cv2.findContours(morphed, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        
         balls = []
-
+        
+        #for contour in dilated_contours:
         for contour in contours:
 
             # ball filtering logic goes here. Example includes filtering by size and an example how to get pixels from
