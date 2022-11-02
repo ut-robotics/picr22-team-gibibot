@@ -31,9 +31,7 @@ class ProcessedResults():
                 color_frame = [],
                 depth_frame = [],
                 fragmented = [],
-                debug_frame = [],
-                lines_w = Object(exists = False), 
-                lines_b = Object(exists = False)) -> None: #lisada jooned
+                debug_frame = []) -> None:
 
 
         self.balls = balls
@@ -42,8 +40,6 @@ class ProcessedResults():
         self.color_frame = color_frame
         self.depth_frame = depth_frame
         self.fragmented = fragmented
-        self.lines_w = lines_w
-        self.lines_b = lines_b
         # can be used to illustrate things in a separate frame buffer
         self.debug_frame = debug_frame
 
@@ -63,8 +59,6 @@ class ImageProcessor():
         self.t_balls = np.zeros((self.camera.rgb_height, self.camera.rgb_width), dtype=np.uint8)
         self.t_basket_b = np.zeros((self.camera.rgb_height, self.camera.rgb_width), dtype=np.uint8)
         self.t_basket_m = np.zeros((self.camera.rgb_height, self.camera.rgb_width), dtype=np.uint8)
-        self.t_lines_w = np.zeros((self.camera.rgb_height, self.camera.rgb_width), dtype=np.uint8)
-        self.t_lines_b = np.zeros((self.camera.rgb_height, self.camera.rgb_width), dtype=np.uint8)
 
         self.debug = debug
         self.debug_frame = np.zeros((self.camera.rgb_height, self.camera.rgb_width), dtype=np.uint8)
@@ -157,37 +151,6 @@ class ImageProcessor():
 
         return basket
 
-    def analyze_lines(self, t_lines, debug_color = (255, 255, 255)) -> list:
-        contours, hierarchy = cv2.findContours(t_lines, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
-        lines = []
-        for contour in contours:
-
-            # line filtering logic goes here. Example includes size filtering of the basket
-
-            size = cv2.contourArea(contour)
-
-            if size < 100:
-                continue
-
-            x, y, w, h = cv2.boundingRect(contour)
-
-            obj_x = int(x + (w/2))
-            obj_y = int(y + (h/2))
-            obj_dst = self.camera.distance(obj_x, obj_y)
-
-            lines.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
-
-        lines.sort(key= lambda x: x.size)
-
-        line = next(iter(lines), Object(exists = False))
-
-        if self.debug:
-            if line.exists:
-                cv2.circle(self.debug_frame,(line.x, line.y), 20, debug_color, -1)
-
-        return line
-
     def get_frame_data(self, aligned_depth = False):
         if self.camera.has_depth_capability():
             #depth_capability on defaulti peal true
@@ -199,7 +162,7 @@ class ImageProcessor():
     def process_frame(self, aligned_depth = False) -> ProcessedResults:
         color_frame, depth_frame = self.get_frame_data(aligned_depth = aligned_depth)
 
-        segment.segment(color_frame, self.fragmented, self.t_balls, self.t_basket_m, self.t_basket_b)#siialisada jooned
+        segment.segment(color_frame, self.fragmented, self.t_balls, self.t_basket_m, self.t_basket_b)
 
         if self.debug:
             self.debug_frame = np.copy(color_frame)
@@ -207,9 +170,6 @@ class ImageProcessor():
         balls = self.analyze_balls(self.t_balls, self.fragmented)
         basket_b = self.analyze_baskets(self.t_basket_b, debug_color=c.Color.BLUE.color.tolist())
         basket_m = self.analyze_baskets(self.t_basket_m, debug_color=c.Color.MAGENTA.color.tolist())
-        lines_w = self.analyze_baskets(self.t_lines_w, debug_color=c.Color.WHITE.color.tolist())
-        lines_b = self.analyze_baskets(self.t_lines_b, debug_color=c.Color.BLACK.color.tolist())
-        
 
         return ProcessedResults(balls = balls, 
                                 basket_b = basket_b, 
@@ -217,6 +177,4 @@ class ImageProcessor():
                                 color_frame=color_frame, 
                                 depth_frame=depth_frame, 
                                 fragmented=self.fragmented, 
-                                debug_frame=self.debug_frame,
-                                lines_w = lines_w, 
-                                lines_b = lines_b)#lines eemaldada kui katki
+                                debug_frame=self.debug_frame)

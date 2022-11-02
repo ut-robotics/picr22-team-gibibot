@@ -17,11 +17,11 @@ class State(Enum):
     TRYMOTORS=4
     TESTCAMERA=5
     TMOTOR=6
+    CALIBRATION=7
     
 class Color(Enum):
     MAGENTA=0
     BLUE=1
-
 
 
 
@@ -92,6 +92,7 @@ def main_loop():
                 print(fps)  
 
             if state == State.FIND_BALL:
+                
                 print("--------Searching ball--------")
                 if len(processedData.balls)!=0:
                     state=State.MOVE
@@ -100,10 +101,13 @@ def main_loop():
                         robot.find_ball(spin)
                     elif ball_side==0:
                         robot.find_ball((-1)*spin)
+                
+                
                         
             elif state == State.MOVE:
                 print("--------Moving to ball--------")
                 if (len(processedData.balls)!=0):
+                    # if pall seespool valget ja musta, siis edasi, kui on väljaspool, siis find_ball
                     
                     targeted_ball=processedData.balls[-1]
                     xcord=targeted_ball.x
@@ -155,7 +159,7 @@ def main_loop():
                     if basket.exists:
                         if(basket.x>reso_x_mid-2 and basket.x<(reso_x_mid+2)) and (xcord>(reso_x_mid-2) and xcord<(reso_x_mid+2)):
                             robot.stop()
-                            state=State.THROW
+                            state=State.CALIBRATION
                             print("Robot is centering")
                             continue
                             #break
@@ -196,9 +200,7 @@ def main_loop():
                                                 
                         robot.move(speedX, speedR, speedY, speedT)        
             
-                            
-
-            elif state == State.THROW:
+            elif state==State.CALIBRATION:
                 try:
                     targeted_ball=processedData.balls[-1]
                     dist=targeted_ball.distance
@@ -208,28 +210,33 @@ def main_loop():
                     speedY = 0.3
                     speedR = 0
                     speedX=0
-                    speedT=0
-                    if dist > 440:
-                        basketdist=processedData.basket_m.distance*100
-                        speedT=calculator.calc_throwingSpeed(basketdist)
-                        print("Throwing with speed: ", speedT)
-                        #Throws
-                        robot.move(speedX, speedR, speedY, int(speedT))
-                        time.sleep(2)
-                        #Gonna change the time sleep so it can aim til the throw, but works for now  
-                        state = State.FIND_BALL
+                    if dist >440:
+                        state=State.THROW
                         continue
+                    if (xcord<(reso_x_mid-1)) and xcord>(reso_x_mid+1):
+                        speedR+=delta/10
+                        if(abs(xcord-basket.x))>=1:
+                            speedX+=delta/10
+                        if speedX>0.5 or speedR>4:
+                            state=State.FIND_BALL
+                    else:
+                        speedX+delta/10
+                        if speedX>0.5:
+                            state=State.FIND_BALL
                     
-                    elif (xcord<(reso_x_mid-2) or xcord>(reso_x_mid+2)) and dist <=440:
-                        speedR+=delta/100
-                        robot.move(speedX, speedR, speedY, speedT)
-                    elif (dist <=400):
-                        robot.move(speedX,speedR,speedY,speedT)
-                
-                   
                 except:
-                    state=State.FIND_BALL
+                    state=State.FIND_BALL        
 
+            elif state == State.THROW:
+                basketdist=processedData.basket_m.distance*100
+                speedT=calculator.calc_throwingSpeed(basketdist)
+                print("Throwing with speed: ", speedT)
+                #Throws
+                robot.move(speedX, speedR, speedY, int(speedT))
+                time.sleep(2)
+                #Gonna change the time sleep so it can aim til the throw, but works for now  
+                state = State.FIND_BALL
+                continue
                 
                         
             if debug:
