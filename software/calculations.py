@@ -16,31 +16,33 @@ class Calculations():
         self.wheelSpeedTo_mu=self.gearbox_reduction_ratio*self.enc_edges_per_motor_rev/(2.0*pi*self.wheel_radius*self.pid_freq)
       
 
-    def calc_speed(self, speedX, speedY, speedR, wheel_nr):
-        robot_speed=sqrt(speedX * speedX + speedY * speedY)
-        robotDirectionAngle = atan2(speedY, speedX)
+    def calc_speed(self, speed_X, speed_Y, speed_R, wheel_nr):
+        robot_speed=sqrt(speed_X * speed_X + speed_Y * speed_Y)
+        robotDirectionAngle = atan2(speed_Y, speed_X)
         
-        wheel_lin_speed=robot_speed*cos(robotDirectionAngle - np.radians(self.wheel_angles[wheel_nr - 1])) + self.wheel_from_centr * speedR
+        wheel_lin_speed=robot_speed*cos(robotDirectionAngle - np.radians(self.wheel_angles[wheel_nr - 1])) + self.wheel_from_centr * speed_R
         wheel_ang_speed_mu=int(wheel_lin_speed * self.wheelSpeedTo_mu)
         ####print("MOVMENT CALC: ", wheel_lin_speed * self.wheelSpeedTo_mu)
     
         return  wheel_ang_speed_mu
     
-    def calc_throwingSpeed(self, basketdist):
-        tdist=[60,68,85,100,125,150,175,200,225,250,275,300,325,350,375,400,425]
-        tspeeds=[472,472,500,520,550,620,670,730,780,810,865,900,930,985,1048,1115,1180]
-        for i in range(len(tdist)):
-            if basketdist<=tdist[i]:
-                speedT1=(basketdist*tspeeds[i]/tdist[i])
-                break
-            
-        for i in range(len(tdist)):
-            if basketdist<=tdist[i]:
+    def calc_throwingSpeed(self, basket_dist):
+        t_dist=[60,68,85,100,125,150,175,200,225,250,275,300,325,350,375,400,425]
+        t_speeds=[472,472,500,520,550,620,670,730,780,810,865,900,930,985,1048,1115,1180]
+        for i in range(len(t_dist)):
+            if basket_dist<=t_dist[i]:
+                
+                #speed_T1=(basket_dist*t_speeds[i]/t_dist[i])
                 if i!=0:
-                    speedT2=(basketdist*tspeeds[i-1]/tdist[i-1])
+                    percentage=(basket_dist-t_dist[i-1])/(t_dist[i]-t_dist[i-1])
+                    #speed_T2=(basket_dist*t_speeds[i-1]/t_dist[i-1])
                 elif i==0:
-                    speedT2=(basketdist*tspeeds[i]/tdist[i])
+                    desired_speed=(basket_dist*t_speeds[i]/t_dist[i])
+                    break
+                
+                desired_speed=t_speeds[i-1]+(t_speeds[i]-t_speeds[i-1])*percentage
+                
                 break
-        speedT=(speedT1+speedT2)/2 
-        return speedT
+        #speed_T=(speed_T1+speed_T2)/2 
+        return desired_speed
         

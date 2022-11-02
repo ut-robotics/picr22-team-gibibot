@@ -14,7 +14,7 @@ class Communication:
                 self.testSerial.write(struct.pack('<hhhHBH', 0,0,0,0,0,0xAAAA))
                 self.testRecvData=self.testSerial.read(8)
                 self.testData=struct.unpack('<hhhH', self.testRecvData)
-                self.testSerial.close()
+                #self.testSerial.close()
                 self.port=self.testPort
             except:
                 continue

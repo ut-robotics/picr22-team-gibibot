@@ -26,16 +26,16 @@ class OmniRobot:
     def find_ball(self, rotate_speed):
         self.comms.send_inf(rotate_speed,rotate_speed,rotate_speed,0,1)
         
-    def move(self, speedX, speedR, speedY,speedT):
-        wheelx= self.calculator.calc_speed(speedX, speedY, speedR, 1)
-        wheelr= self.calculator.calc_speed(speedX, speedY, speedR, 2)
-        wheely= self.calculator.calc_speed(speedX, speedY, speedR, 3)
+    def move(self, speed_X, speed_R, speed_Y,speed_T):
+        wheelx= self.calculator.calc_speed(speed_X, speed_Y, speed_R, 1)
+        wheelr= self.calculator.calc_speed(speed_X, speed_Y, speed_R, 2)
+        wheely= self.calculator.calc_speed(speed_X, speed_Y, speed_R, 3)
         
 
-        self.comms.send_inf(wheelx, wheelr, wheely, speedT, 1)
+        self.comms.send_inf(wheelx, wheelr, wheely, speed_T, 1)
 
-    def test_thrower(self, speedT):
-        self.comms.send_inf(0,0,0,speedT,1)
+    def test_thrower(self, speed_T):
+        self.comms.send_inf(0,0,0,speed_T,1)
         time.sleep(3)
         self.comms.send_inf(0,0,0,0,1)
 

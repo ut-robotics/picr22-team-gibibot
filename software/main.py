@@ -8,6 +8,7 @@ import movement
 import calculations
 import communication
 from enum import Enum
+import Color
 
 class State(Enum):
     FIND_BALL=0
@@ -19,9 +20,6 @@ class State(Enum):
     TMOTOR=6
     CALIBRATION=7
     
-class Color(Enum):
-    MAGENTA=0
-    BLUE=1
 
 
 
@@ -29,7 +27,8 @@ def main_loop():
     state=State.FIND_BALL
     spin = 12
     debug=True
-    basket_color=Color.MAGENTA
+    color=Color.Color()
+    basket_color=color.MAGENTA
     cam=camera.RealsenseCamera(exposure=100) #defaulti peal on depth_enabled = True
     processor = image_processor.ImageProcessor(cam, debug=debug, color_config = "colors/colors.pkl")
     robot=movement.OmniRobot()
@@ -43,16 +42,16 @@ def main_loop():
     frame_cnt=0
     radius=400
     #Which side ball is on
-    ball_side=0
-    MaxOrbit_YSpeed=0.2
-    MaxOrbit_RSpeed=2
+    ball_right_side=0
+    max_orbit_Yspeed=0.2
+    max_orbit_Rspeed=2
     try:
         while True:
-            speedT=0
+            speed_T=0
             if state == State.THROW:
-                processedData = processor.process_frame(aligned_depth=True)
+                processed_Data = processor.process_frame(aligned_depth=True)
             else:
-                processedData = processor.process_frame(aligned_depth=False)
+                processed_Data = processor.process_frame(aligned_depth=False)
             
             frame_cnt+=1
             frame+=1
@@ -63,7 +62,7 @@ def main_loop():
                 break
             if state == State.TMOTOR:
                 try:
-                    processedData = processor.process_frame(aligned_depth=True)
+                    processed_Data = processor.process_frame(aligned_depth=True)
                     spt=int(input("ANNA TSPEED: "))
                     robot.test_thrower(spt)
                     
@@ -72,9 +71,9 @@ def main_loop():
                     print("KORVI POLE")
             if state==State.TESTCAMERA:
                 try:
-                    processedData = processor.process_frame(aligned_depth=True)
-                    print("MUST JOON DIST: ", processedData.lines_b)
-                    print("VALGE JOON DIST: ", processedData.lines_w)
+                    processed_Data = processor.process_frame(aligned_depth=True)
+                    print("MUST JOON DIST: ", processed_Data.lines_b)
+                    print("VALGE JOON DIST: ", processed_Data.lines_w)
                     #targeted_ball=processedData.balls[-1]
                     #print("Palli y kord   ", targeted_ball.y)
                     #print("DEPTH:",processedData.depth_frame)
@@ -95,7 +94,7 @@ def main_loop():
             if state == State.FIND_BALL:
                 
                 print("--------Searching ball--------")
-                if len(processedData.balls)!=0:
+                if len(processed_Data.balls)!=0:
                     state=State.MOVE
                 else:
                     if ball_side==1:
@@ -107,34 +106,34 @@ def main_loop():
                         
             elif state == State.MOVE:
                 print("--------Moving to ball--------")
-                if (len(processedData.balls)!=0):
+                if (len(processed_Data.balls)!=0):
                     # if pall seespool valget ja musta, siis edasi, kui on väljaspool, siis find_ball
                     
-                    targeted_ball=processedData.balls[-1]
-                    xcord=targeted_ball.x
-                    ycord=targeted_ball.y
+                    targeted_ball=processed_Data.balls[-1]
+                    x_cord=targeted_ball.x
+                    y_cord=targeted_ball.y
                     dist=targeted_ball.distance
-                    delta=((xcord-reso_x_mid)/reso_x_mid)
+                    delta=((x_cord-reso_x_mid)/reso_x_mid)
                         #Follows where is ball so find_ball function is more efficient
                     if delta<0:
-                        ball_side = 0
+                        ball_right_side = 0
                     else:
-                        ball_side = 1
+                        ball_right_side = 1
                     
                         #SpeedY based on ball distance
                     if dist > 175:
-                        speedY=0.4
+                        speed_Y=0.4
                     else:
-                        speedY=1
+                        speed_Y=1
                         #Controlls that balls location is ready for robot's orbit function
-                    if xcord < (reso_x_mid + 15) and xcord >(reso_x_mid -15) and dist > 275:
+                    if x_cord < (reso_x_mid + 15) and x_cord >(reso_x_mid -15) and dist > 275:
                         #robot.center_ball(xcord)
                         state=State.ORBIT
                     else:
                         #Moves to ball
-                        speedR = delta*(-3.5)
-                        speedX = delta*0.5
-                        robot.move(speedX, speedR, speedY, speedT)
+                        speed_R = delta*(-3.5)
+                        speed_X = delta*0.5
+                        robot.move(speed_X, speed_R, speed_Y, speed_T)
                 else:
                     #If there is no ball
                     state=State.FIND_BALL
@@ -142,21 +141,21 @@ def main_loop():
             elif state==State.ORBIT:
                 print("--------Centering ball and basket--------")
                 #If there is ball
-                if len(processedData.balls)>0:
-                    targeted_ball=processedData.balls[-1]
-                    xcord=targeted_ball.x
-                    ycord=targeted_ball.y
+                if len(processed_Data.balls)>0:
+                    targeted_ball=processed_Data.balls[-1]
+                    x_cord=targeted_ball.x
+                    y_cord=targeted_ball.y
                     dist=targeted_ball.distance
-                    delta=((xcord-reso_x_mid)/reso_x_mid)
+                    delta=((x_cord-reso_x_mid)/reso_x_mid)
 
                     #controlls basket colour
                     if dist<250:
                         State.FIND_BALL
                     
-                    if basket_color == Color.MAGENTA:
-                        basket = processedData.basket_m
-                    elif basket_color == Color.BLUE:
-                        basket = processedData.basket_b
+                    if basket_color == color.MAGENTA:
+                        basket = processed_Data.basket_m
+                    elif basket_color == color.BLUE:
+                        basket = processed_Data.basket_b
 
                     #if that kind of basket is in our list
                     if basket.exists:
@@ -167,42 +166,42 @@ def main_loop():
                             print("Robot is centering")
                             continue
 
-                        speedY=0
-                        basket_side = 1
-                        speedR=1000*speedX/(640-radius)
+                        speed_Y=0
+                        basket_right_side = 1
+                        speed_R=1000*speed_X/(640-radius)
                         if basket.x<reso_x_mid-2:
-                           basket_side=1
+                           basket_right_side=1
                         elif basket.x > reso_x_mid+2:
-                           basket_side=-1
+                           basket_right_side=-1
                          
-                        speedX=0.15*basket_side
+                        speedX=0.15*basket_right_side
                       
                         if radius > (dist-5) or radius > (dist+5):
-                            speedY += (radius-dist)/100
+                            speed_Y += (radius-dist)/100
         
-                        if  xcord > (reso_x_mid + 1) or xcord < (reso_x_mid - 1):
-                            speedR += (reso_x_mid- xcord) / 100
+                        if  x_cord > (reso_x_mid + 1) or x_cord < (reso_x_mid - 1):
+                            speed_R += (reso_x_mid- x_cord) / 100
                             
-                        print("SAADAME MOOTORILE SPEEDID XRYT: ", speedX, " ", speedR," " ,speedY, " " ,speedT)                        
-                        robot.move(speedX, speedR, speedY, speedT)    
+                        print("SAADAME MOOTORILE SPEEDID XRYT: ", speed_X, " ", speed_R," " ,speed_Y, " " ,speed_T)                        
+                        robot.move(speed_X, speed_R, speed_Y, speed_T)    
                     else:
                         #Orbit
-                        speedY=0
-                        speedX=0.4
-                        speedR=1000*speedX/(640-radius)
+                        speed_Y=0
+                        speed_X=0.4
+                        speed_R=1000*speed_X/(640-radius)
 
                         if radius > (dist-5) or radius > (dist+5):
-                            speedY += (radius-dist)/100
+                            speed_Y += (radius-dist)/100
                         
-                        if xcord > (reso_x_mid + 1) or xcord < (reso_x_mid - 1):
-                            speedR += (reso_x_mid- xcord) / 100 
+                        if x_cord > (reso_x_mid + 1) or x_cord < (reso_x_mid - 1):
+                            speedR += (reso_x_mid- x_cord) / 100 
 
-                        if speedR > MaxOrbit_RSpeed:
-                            speedR = MaxOrbit_RSpeed
-                        if speedY > MaxOrbit_YSpeed:
-                            speedY = MaxOrbit_YSpeed
+                        if speed_R > max_orbit_Rspeed:
+                            speed_R = max_orbit_Rspeed
+                        if speed_Y > max_orbit_Yspeed:
+                            speed_Y = max_orbit_Yspeed
                                                 
-                        robot.move(speedX, speedR, speedY, speedT)  
+                        robot.move(speed_X, speed_R, speed_Y, speed_T)  
                 else:
                     State.FIND_BALL      
             
@@ -210,19 +209,19 @@ def main_loop():
                 
                 try:
                     print("----CALIBRATION----")
-                    targeted_ball=processedData.balls[-1]
+                    targeted_ball=processed_Data.balls[-1]
                     dist=targeted_ball.distance
-                    delta=((xcord-reso_x_mid)/reso_x_mid)
+                    delta=((x_cord-reso_x_mid)/reso_x_mid)
 
                     #Moves to ball
-                    speedY = 0.3
-                    speedR = 0
-                    speedX=0
+                    speed_Y = 0.3
+                    speed_R = 0
+                    speed_X=0
                     if dist > 440:
                         state=State.THROW
                         continue
                     elif dist<=440 and dist >=radius-10:
-                        robot.move(speedX, speedR, speedY, speedT)
+                        robot.move(speed_X, speed_R, speed_Y, speed_T)
                     else:
                         State.FIND_BALL
                     
@@ -243,14 +242,14 @@ def main_loop():
                     state=State.FIND_BALL        
 
             elif state == State.THROW:
-                basketdist=processedData.basket_m.distance*100
-                speedT=calculator.calc_throwingSpeed(basketdist)
-                print("Throwing with speed: ", speedT)
+                basket_dist=processed_Data.basket_m.distance*100
+                speed_T=calculator.calc_throwingSpeed(basket_dist)
+                print("Throwing with speed: ", speed_T)
                 #Throws
-                speedX = 0
-                speedY = 0.3
-                speedR =0
-                robot.move(speedX, speedR, speedY, int(speedT))
+                speed_X = 0
+                speed_Y = 0.3
+                speed_R =0
+                robot.move(speed_X, speed_R, speed_Y, int(speed_T))
                 time.sleep(2)
                 #Gonna change the time sleep so it can aim til the throw, but works for now  
                 state = State.FIND_BALL
@@ -258,7 +257,7 @@ def main_loop():
                 
                         
             if debug:
-                    debug_frame = processedData.debug_frame
+                    debug_frame = processed_Data.debug_frame
 
                     cv2.imshow('debug', debug_frame)
 
