@@ -41,7 +41,7 @@ def main_loop():
     fps=0
     frame=0
     frame_cnt=0
-    radius=300
+    radius=275
     #Which side ball is on
     ball_side=0
     MaxOrbit_YSpeed=0.2
@@ -73,7 +73,8 @@ def main_loop():
             if state==State.TESTCAMERA:
                 try:
                     processedData = processor.process_frame(aligned_depth=True)
-                    print("LEGIT DISTANCE: ", processedData.basket_m.distance)
+                    print("MUST JOON DIST: ", processedData.lines_b)
+                    print("VALGE JOON DIST: ", processedData.lines_w)
                     #targeted_ball=processedData.balls[-1]
                     #print("Palli y kord   ", targeted_ball.y)
                     #print("DEPTH:",processedData.depth_frame)
@@ -126,7 +127,7 @@ def main_loop():
                     else:
                         speedY=1
                         #Controlls that balls location is ready for robot's orbit function
-                    if xcord < (reso_x_mid + 15) and xcord >(reso_x_mid -15) and dist > 340:
+                    if xcord < (reso_x_mid + 15) and xcord >(reso_x_mid -15) and dist > 275:
                         #robot.center_ball(xcord)
                         state=State.ORBIT
                     else:
@@ -157,29 +158,44 @@ def main_loop():
 
                     #if that kind of basket is in our list
                     if basket.exists:
-                        if(basket.x>reso_x_mid-2 and basket.x<(reso_x_mid+2)) and (xcord>(reso_x_mid-2) and xcord<(reso_x_mid+2)):
+                        print("BASKET ON OLEMAS")
+                        if(basket.x>reso_x_mid-3 and basket.x<(reso_x_mid+3)): #and (xcord>(reso_x_mid-5) and xcord<(reso_x_mid+5)):
                             robot.stop()
-                            state=State.CALIBRATION
-                            print("Robot is centering")
-                            continue
+                            if xcord>424:
+                                speedX=0.1
+                            else:
+                                speedX=-0.1
+                            robot.move(speedX, 0, 0, speedT)
+                            if xcord<reso_x_mid+2 or xcord>reso_x_mid-2:
+                                state=State.CALIBRATION
+                                print("Robot is centering")
+                                continue
                             #break
-
-                        if basket.x<reso_x_mid:
-                            basket_side=1
-                        elif basket.x > reso_x_mid:
-                            basket_side=-1
-                            
-                        speedX=0.13*basket_side
-
+                        
                         
                         speedY=0
+                        basket_side = 1
                         speedR=1000*speedX/(640-radius)
+                        if basket.x<reso_x_mid:
+                           basket_side=1
+                        elif basket.x > reso_x_mid:
+                           basket_side=-1
+            
+                            
+                        speedX=0.15*basket_side
+
+                        
+                        
                         if radius > (dist-5) or radius > (dist+5):
+                            
                             speedY += (radius-dist)/100
+                        
+                            
                                
-                        if xcord > (reso_x_mid + 1) or xcord < (reso_x_mid - 1):
+                        if  xcord > (reso_x_mid + 1) or xcord < (reso_x_mid - 1):
+                            
                             speedR += (reso_x_mid- xcord) / 100
-                                                   
+                        print("SAADAME MOOTORILE SPEEDID XRYT: ", speedX, " ", speedR," " ,speedY, " " ,speedT)                        
                         robot.move(speedX, speedR, speedY, speedT)    
                     else:
                         #Orbit
@@ -201,7 +217,9 @@ def main_loop():
                         robot.move(speedX, speedR, speedY, speedT)        
             
             elif state==State.CALIBRATION:
+                
                 try:
+                    print("----CALIBRATION----")
                     targeted_ball=processedData.balls[-1]
                     dist=targeted_ball.distance
                     delta=((xcord-reso_x_mid)/reso_x_mid)
@@ -210,19 +228,22 @@ def main_loop():
                     speedY = 0.3
                     speedR = 0
                     speedX=0
-                    if dist >440:
+                    if dist > 440:
                         state=State.THROW
                         continue
-                    if (xcord<(reso_x_mid-1)) and xcord>(reso_x_mid+1):
-                        speedR+=delta/10
-                        if(abs(xcord-basket.x))>=1:
-                            speedX+=delta/10
-                        if speedX>0.5 or speedR>4:
-                            state=State.FIND_BALL
-                    else:
-                        speedX+delta/10
-                        if speedX>0.5:
-                            state=State.FIND_BALL
+                    
+                    # if (xcord<(reso_x_mid)) or xcord>(reso_x_mid):
+                    #     print("KALIBREERIN")
+                    #     speedR+=delta*10
+                    #     if(abs(xcord-basket.x))>=1:
+                    #         speedX+=xcord-basket.x/1000
+                    #     if speedX>0.5 or speedR>4 or speedX<-0.5 or speedR<-4:
+                    #         state=State.FIND_BALL
+                    #     print("PEEDX; ", speedX, "speedy: ", speedY)
+                    #     robot.move(speedX, speedR, speedY, int(speedT))
+                    # else:
+                    #     print("SOIDAN EDASI ET VISATA")
+                    #     robot.move(speedX, speedR, speedY, int(speedT))
                     
                 except:
                     state=State.FIND_BALL        
@@ -232,8 +253,11 @@ def main_loop():
                 speedT=calculator.calc_throwingSpeed(basketdist)
                 print("Throwing with speed: ", speedT)
                 #Throws
+                speedX = 0
+                speedY = 0.3
+                speedR =0
                 robot.move(speedX, speedR, speedY, int(speedT))
-                time.sleep(2)
+                time.sleep(3)
                 #Gonna change the time sleep so it can aim til the throw, but works for now  
                 state = State.FIND_BALL
                 continue
