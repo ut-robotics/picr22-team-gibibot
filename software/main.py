@@ -28,7 +28,7 @@ def main_loop():
     spin = 12
     debug=True
 
-    basket_color=c.Color.MAGENTA
+    basket_color=c.Color.BLUE
     cam=camera.RealsenseCamera(exposure=100) #defaulti peal on depth_enabled = True
     processor = image_processor.ImageProcessor(cam, debug=debug, color_config = "colors/colors.pkl")
     robot=movement.OmniRobot()
@@ -40,7 +40,7 @@ def main_loop():
     fps=0
     frame=0
     frame_cnt=0
-    radius=400
+    radius=300
     #Which side ball is on
     ball_right_side=0
     max_orbit_Yspeed=0.2
@@ -93,7 +93,7 @@ def main_loop():
 
             if state == State.FIND_BALL:
                 
-                print("--------Searching ball--------")
+                #print("--------Searching ball--------")
                 if len(processed_Data.balls)!=0:
                     state=State.MOVE
                 else:
@@ -121,12 +121,12 @@ def main_loop():
                         ball_right_side = 1
                     
                         #SpeedY based on ball distance
-                    if dist > 175:
-                        speed_Y=0.4
+                    if dist > 250:
+                        speed_Y=0.3
                     else:
                         speed_Y=1
                         #Controlls that balls location is ready for robot's orbit function
-                    if x_cord < (reso_x_mid + 15) and x_cord >(reso_x_mid -15) and dist > 275:
+                    if x_cord < (reso_x_mid + 5) and x_cord >(reso_x_mid -5) and dist > 295:
                         #robot.center_ball(xcord)
                         state=State.ORBIT
                     else:
@@ -149,8 +149,10 @@ def main_loop():
                     delta=((x_cord-reso_x_mid)/reso_x_mid)
 
                     #controlls basket colour
-                    if dist<250:
-                        State.FIND_BALL
+                    if dist<200:
+                        print("PALL LIIGA KAUGEL LAHEME OTSIME PALLI")
+                        state=State.FIND_BALL
+                        continue
                     
                     if basket_color == c.Color.MAGENTA:
                         basket = processed_Data.basket_m
@@ -160,11 +162,7 @@ def main_loop():
                     #if that kind of basket is in our list
                     if basket.exists:
                         print("BASKET ON OLEMAS")
-                        if(basket.x>reso_x_mid-2 and basket.x<(reso_x_mid+2)): #and (xcord>(reso_x_mid-5) and xcord<(reso_x_mid+5)):
-                            robot.stop()
-                            state=State.CALIBRATION
-                            print("Robot is centering")
-                            continue
+                        
 
                         speed_Y=0
                         basket_right_side = 1
@@ -174,27 +172,39 @@ def main_loop():
                         elif basket.x > reso_x_mid+2:
                            basket_right_side=-1
                          
-                        speed_X=0.15*basket_right_side
+                        #if reso_x_mid-200 > basket.x and reso_x_mid + 200 < basket.x:
+                        #    speed_X=0.1*ball_right_side
+                        #else:
+                        speed_X=0.25*basket_right_side
+                        print("RAADIUS: ", radius)
+                        print("PALL Y: ", y_cord)
                       
-                        if radius > (dist-5) or radius > (dist+5):
+                        if radius > (dist-3) or radius > (dist+3):
                             speed_Y += (radius-dist)/100
         
-                        if  x_cord > (reso_x_mid + 1) or x_cord < (reso_x_mid - 1):
-                            speed_R += (reso_x_mid- x_cord) / 100
+                        if  (x_cord > (reso_x_mid + 1) or x_cord < (reso_x_mid - 1)): #and (x_cord > (reso_x_mid - 10) and x_cord < (reso_x_mid +10)):
+                            speed_R += (reso_x_mid- x_cord) / 100#reso_x_mid
+                        
+                        if(basket.x>reso_x_mid-5 and basket.x<(reso_x_mid+5)):# and (x_cord>(reso_x_mid-5) and x_cord<(reso_x_mid+5)):
+                            robot.stop()
+                            state=State.CALIBRATION
+                            print("Robot is centering")
+                            continue
                             
                         print("SAADAME MOOTORILE SPEEDID XRYT: ", speed_X, " ", speed_R," " ,speed_Y, " " ,speed_T)                        
+                        
                         robot.move(speed_X, speed_R, speed_Y, speed_T)    
                     else:
                         #Orbit
                         speed_Y=0
-                        speed_X=0.4
+                        speed_X=0.5
                         speed_R=1000*speed_X/(640-radius)
 
-                        if radius > (dist-5) or radius > (dist+5):
+                        if radius > (dist-3) or radius > (dist+3):
                             speed_Y += (radius-dist)/100
                         
                         if x_cord > (reso_x_mid + 1) or x_cord < (reso_x_mid - 1):
-                            speed_R += (reso_x_mid- x_cord) / 100 
+                            speed_R += (reso_x_mid- x_cord) / 100
 
                         if speed_R > max_orbit_Rspeed:
                             speed_R = max_orbit_Rspeed
@@ -203,7 +213,7 @@ def main_loop():
                                                 
                         robot.move(speed_X, speed_R, speed_Y, speed_T)  
                 else:
-                    State.FIND_BALL      
+                    state=State.FIND_BALL      
             
             elif state==State.CALIBRATION:
                 
@@ -217,13 +227,29 @@ def main_loop():
                     speed_Y = 0.3
                     speed_R = 0
                     speed_X=0
-                    if dist > 440:
+                    #if (basket.x>=reso_x_mid-2 and basket.x<=(reso_x_mid+2)) and (x_cord>=(reso_x_mid-2) and x_cord<=(reso_x_mid+2)):
+                    if dist > 452:
                         state=State.THROW
                         continue
-                    elif dist<=440 and dist >=radius-41:
+                    elif dist<=452 and dist >=radius-41:
+                        speed_Y = 0.3
                         robot.move(speed_X, speed_R, speed_Y, speed_T)
                     else:
-                        State.FIND_BALL
+                        state=State.FIND_BALL
+                    if (x_cord<(reso_x_mid-5) or x_cord>(reso_x_mid+5)) and x_cord>(reso_x_mid-50) and x_cord<(reso_x_mid+50):
+                        speed_X+=delta*2
+                    if (basket.x<(reso_x_mid-2) or basket.x>(reso_x_mid+2)):
+                        speed_R+=(x_cord-basket.x)/(reso_x_mid*5)
+                   
+                    else:
+                        state=State.FIND_BALL
+                    robot.move(speed_X, speed_R, speed_Y, speed_T)
+                        # speed_Y = 0
+                        # if basket.x<(reso_x_mid+5) or x_cord<(reso_x_mid+5):
+                        #     speed_X = -0.1
+                        # else:
+                        #     basket.x>reso_x_mid-5 or x_cord>(reso_x_mid-5)
+                        #     speed_X = -0.1
                     
                     # if (xcord<(reso_x_mid)) or xcord>(reso_x_mid):
                     #     print("KALIBREERIN")
@@ -242,7 +268,8 @@ def main_loop():
                     state=State.FIND_BALL        
 
             elif state == State.THROW:
-                basket_dist=processed_Data.basket_m.distance*100
+                basket_dist=basket.distance*100
+                print("BLUE BASKET DISTANCE: ", basket_dist)
                 speed_T=calculator.calc_throwingSpeed(basket_dist)
                 print("Throwing with speed: ", speed_T)
                 #Throws

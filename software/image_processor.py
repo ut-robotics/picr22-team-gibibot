@@ -145,6 +145,8 @@ class ImageProcessor():
             obj_x = int(x + (w/2))
             obj_y = int(y + (h/2))
             obj_dst = self.camera.distance(obj_x, obj_y)
+            #depth_frame on list kus esimene argument on Ycord ja teine on x cord ja selle pohjal saan kauguse
+            print("BASKET DISTANTS IMAGE PROCESSOR: ", obj_dst)
 
             baskets.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
 

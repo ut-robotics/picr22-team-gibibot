@@ -9,17 +9,17 @@ class Communication:
         self.ports=serial.tools.list_ports.comports()
         for port in self.ports:
             try:
-                self.testPort="/dev/"+port.name
-                self.testSerial=serial.Serial(self.testPort, baudrate=9600, timeout=2)
-                self.testSerial.write(struct.pack('<hhhHBH', 0,0,0,0,0,0xAAAA))
-                self.testRecvData=self.testSerial.read(8)
-                self.testData=struct.unpack('<hhhH', self.testRecvData)
+                self.port="/dev/"+port.name
+                self.Serial=serial.Serial(self.port, baudrate=9600, timeout=2)
+                self.Serial.write(struct.pack('<hhhHBH', 0,0,0,0,0,0xAAAA))
+                self.RecvData=self.Serial.read(8)
+                self.Data=struct.unpack('<hhhH', self.RecvData)
                 #self.testSerial.close()
-                self.port=self.testPort
+                #self.port=self.testPort
             except:
                 continue
-            finally:
-                self.Serial=serial.Serial(self.port, baudrate=9600, timeout=2)
+            #finally:
+                #self.Serial=serial.Serial(self.port, baudrate=9600, timeout=2)
             
         print("Serial opened on port: ", self.port)
 

@@ -29,6 +29,7 @@ class Calculations():
     def calc_throwingSpeed(self, basket_dist):
         t_dist=[60,68,85,100,125,150,175,200,225,250,275,300,325,350,375,400,425]
         t_speeds=[472,472,500,520,550,620,670,730,780,810,865,900,930,985,1048,1115,1180]
+        desired_speed=0
         for i in range(len(t_dist)):
             if basket_dist<=t_dist[i]:
                 
@@ -38,11 +39,11 @@ class Calculations():
                     #speed_T2=(basket_dist*t_speeds[i-1]/t_dist[i-1])
                 elif i==0:
                     desired_speed=(basket_dist*t_speeds[i]/t_dist[i])
-                    break
+                    return desired_speed
                 
                 desired_speed=t_speeds[i-1]+(t_speeds[i]-t_speeds[i-1])*percentage
                 
-                break
+                return desired_speed
         #speed_T=(speed_T1+speed_T2)/2 
         return desired_speed
         
