@@ -8,7 +8,7 @@ import movement
 import calculations
 import communication
 from enum import Enum
-import Color
+import Color as c
 
 class State(Enum):
     FIND_BALL=0
@@ -27,8 +27,8 @@ def main_loop():
     state=State.FIND_BALL
     spin = 12
     debug=True
-    color=Color.Color()
-    basket_color=color.MAGENTA
+
+    basket_color=c.Color.MAGENTA
     cam=camera.RealsenseCamera(exposure=100) #defaulti peal on depth_enabled = True
     processor = image_processor.ImageProcessor(cam, debug=debug, color_config = "colors/colors.pkl")
     robot=movement.OmniRobot()
@@ -97,9 +97,9 @@ def main_loop():
                 if len(processed_Data.balls)!=0:
                     state=State.MOVE
                 else:
-                    if ball_side==1:
+                    if ball_right_side==1:
                         robot.find_ball(spin)
-                    elif ball_side==0:
+                    elif ball_right_side==0:
                         robot.find_ball((-1)*spin)
                 
                 
@@ -152,9 +152,9 @@ def main_loop():
                     if dist<250:
                         State.FIND_BALL
                     
-                    if basket_color == color.MAGENTA:
+                    if basket_color == c.Color.MAGENTA:
                         basket = processed_Data.basket_m
-                    elif basket_color == color.BLUE:
+                    elif basket_color == c.Color.BLUE:
                         basket = processed_Data.basket_b
 
                     #if that kind of basket is in our list
@@ -162,7 +162,7 @@ def main_loop():
                         print("BASKET ON OLEMAS")
                         if(basket.x>reso_x_mid-2 and basket.x<(reso_x_mid+2)): #and (xcord>(reso_x_mid-5) and xcord<(reso_x_mid+5)):
                             robot.stop()
-                            state=State.THROW
+                            state=State.CALIBRATION
                             print("Robot is centering")
                             continue
 
@@ -174,7 +174,7 @@ def main_loop():
                         elif basket.x > reso_x_mid+2:
                            basket_right_side=-1
                          
-                        speedX=0.15*basket_right_side
+                        speed_X=0.15*basket_right_side
                       
                         if radius > (dist-5) or radius > (dist+5):
                             speed_Y += (radius-dist)/100
@@ -194,7 +194,7 @@ def main_loop():
                             speed_Y += (radius-dist)/100
                         
                         if x_cord > (reso_x_mid + 1) or x_cord < (reso_x_mid - 1):
-                            speedR += (reso_x_mid- x_cord) / 100 
+                            speed_R += (reso_x_mid- x_cord) / 100 
 
                         if speed_R > max_orbit_Rspeed:
                             speed_R = max_orbit_Rspeed
@@ -220,7 +220,7 @@ def main_loop():
                     if dist > 440:
                         state=State.THROW
                         continue
-                    elif dist<=440 and dist >=radius-10:
+                    elif dist<=440 and dist >=radius-41:
                         robot.move(speed_X, speed_R, speed_Y, speed_T)
                     else:
                         State.FIND_BALL
