@@ -120,6 +120,70 @@ DocumentUniqueId=WIBEMNST
 DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\Design Rule Check - picr22-team-GibiBot-mainboard.html
 DItemRevisionGUID=
 
+[GeneratedDocument2]
+DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard.EXTREP
+DItemRevisionGUID=
+
+[GeneratedDocument3]
+DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard.REP
+DItemRevisionGUID=
+
+[GeneratedDocument4]
+DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard.RUL
+DItemRevisionGUID=
+
+[GeneratedDocument5]
+DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard_Copper_Signal_1.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument6]
+DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard_Copper_Signal_2.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument7]
+DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard_Copper_Signal_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument8]
+DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard_Copper_Signal_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument9]
+DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard_Legend_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument10]
+DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard_Legend_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument11]
+DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard_NPTH_Drill.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument12]
+DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard_Paste_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument13]
+DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard_Paste_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument14]
+DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard_Profile.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument15]
+DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard_PTH_Drill.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument16]
+DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard_Soldermask_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument17]
+DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard_Soldermask_Top.gbr
+DItemRevisionGUID=
+
 [Configuration1]
 Name=Sources
 ParameterCount=0
@@ -397,7 +461,7 @@ OutputDefault5=0
 Configuration5_Name1=ForceUpdateSettings
 Configuration5_Item1=False
 Configuration5_Name2=OutputConfigurationParameter1
-Configuration5_Item2=FileComment= |FileSubject=Autodetect|GenerateDRCRulesFile=True|GenerateReports=True|GerberUnit=Metric|IncludeUnconnectedMidLayerPads=True|MergePadAndRegion=False|MinusApertureTolerance=39|NumberOfDecimals=5|OptimizeChangeLocationCommands=True|PlotBackDrillingPairs=False|PlotBlindViasPairs=False|PlotBoardProfile=True|PlotCounterHolesPairs=False|PlotDrillDrawingPair0_Backdrill=False|PlotDrillDrawingPair0_DrillType=Regular|PlotDrillDrawingPair0_HighLayer=Bottom Layer|PlotDrillDrawingPair0_LowLayer=Top Layer|PlotDrillDrawingPairs=False|PlotDrillGuidePair0_Backdrill=False|PlotDrillGuidePair0_DrillType=Regular|PlotDrillGuidePair0_HighLayer=Bottom Layer|PlotDrillGuidePair0_LowLayer=Top Layer|PlotDrillGuidePairs=False|PlotMicroViasPairs=False|PlotNPTHPair0_Backdrill=False|PlotNPTHPair0_DrillType=Regular|PlotNPTHPair0_HighLayer=Top Layer|PlotNPTHPair0_LowLayer=Bottom Layer|PlotNPTHPairs=False|PlotPTHPair0_Backdrill=False|PlotPTHPair0_DrillType=Regular|PlotPTHPair0_HighLayer=Top Layer|PlotPTHPair0_LowLayer=Bottom Layer|PlotPTHPairs=False|PlotViaTypeDrillDrawingPairs=False|PlotViaTypeDrillGuidePairs=False|PlotViaTypeDrillPairs=False|PlotX2.Set=SerializeLayerHash.Version~2,ClassName~TPlotLayerStateArray,16777217~1,16973848~1,16908301~1,16777219~1,16908312~1,16973831~1,16973849~1,16908309~1,16908308~1,16973835~1,16973833~1,16973830~1,16973832~1,16842751~1,16908293~1,16908304~1,16908289~1,16973834~1,16777218~1,16973837~1,16908311~1,16908303~1|PlusApertureTolerance=39|Record=GerberX2View|Sorted=False|DocumentPath=C:\Users\Public\Documents\Altium\Projects\picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard.PcbDoc
+Configuration5_Item2=FileComment= |FileSubject=Autodetect|GenerateDRCRulesFile=False|GenerateReports=True|GerberUnit=Metric|IncludeUnconnectedMidLayerPads=True|MergePadAndRegion=False|MinusApertureTolerance=39|NumberOfDecimals=5|OptimizeChangeLocationCommands=True|PlotBackDrillingPairs=False|PlotBlindViasPairs=False|PlotBoardProfile=True|PlotCounterHolesPairs=False|PlotDrillDrawingPairs=False|PlotDrillGuidePairs=False|PlotMicroViasPairs=False|PlotNPTHPair0_Backdrill=False|PlotNPTHPair0_DrillType=Regular|PlotNPTHPair0_HighLayer=Top Layer|PlotNPTHPair0_LowLayer=Bottom Layer|PlotNPTHPairs=False|PlotPTHPair0_Backdrill=False|PlotPTHPair0_DrillType=Regular|PlotPTHPair0_HighLayer=Top Layer|PlotPTHPair0_LowLayer=Bottom Layer|PlotPTHPairs=False|PlotViaTypeDrillDrawingPairs=False|PlotViaTypeDrillGuidePairs=False|PlotViaTypeDrillPairs=False|PlotX2.Set=SerializeLayerHash.Version~2,ClassName~TPlotLayerStateArray,16777217~1,16777219~1,16973831~1,16973835~1,16973833~1,16973830~1,16973832~1,16842751~1,16973834~1,16777218~1|PlusApertureTolerance=39|Record=GerberX2View|Sorted=False|DocumentPath=C:\Users\Public\Documents\Altium\Projects\picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard.PcbDoc
 OutputType6=ODB
 OutputName6=ODB++ Files
 OutputDocumentPath6=
