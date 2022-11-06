@@ -111,4 +111,8 @@ Distance measuring function implementation - Robert, Argo 2h
 Different enums, made code cleaner, removed issues  - Robert 1,5h
 Fixed some issues with the PCB design - Raimo 2h
 [%hardbreaks]
+---06.11.22---
+Line detection - Argo 2,5h
+Distance measuring from deapth frame with numpy - ARGO4hh
+[%hardbreaks]
 
