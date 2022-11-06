@@ -34,10 +34,18 @@ class OmniRobot:
 
         self.comms.send_inf(wheelx, wheelr, wheely, speed_T, 1)
 
-    def test_thrower(self, speed_T):
-        self.comms.send_inf(0,0,0,speed_T,1)
-        time.sleep(3)
+    def test_thrower(self, speed_T, speed_Y):
+        self.move(0,0,speed_Y,speed_T)
+        time.sleep(2)
         self.comms.send_inf(0,0,0,0,1)
+
+    def straight_movement(self, speed_Y):
+        self.move(0,0,speed_Y,0)
+    
+    def side_movement(self, speed_X):
+        self.move(speed_X,0,0,0)
+
+    
 
 
 

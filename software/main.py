@@ -24,11 +24,11 @@ class State(Enum):
 
 
 def main_loop():
-    state=State.FIND_BALL
+    state=State.TESTCAMERA
     spin = 12
     debug=True
 
-    basket_color=c.Color.BLUE
+    basket_color=c.Color.MAGENTA
     cam=camera.RealsenseCamera(exposure=100) #defaulti peal on depth_enabled = True
     processor = image_processor.ImageProcessor(cam, debug=debug, color_config = "colors/colors.pkl")
     robot=movement.OmniRobot()
@@ -40,7 +40,7 @@ def main_loop():
     fps=0
     frame=0
     frame_cnt=0
-    radius=300
+    radius=400
     #Which side ball is on
     ball_right_side=0
     max_orbit_Yspeed=0.2
@@ -57,14 +57,31 @@ def main_loop():
             frame+=1
             #Just Testing states for own comfort
             if state == State.TRYMOTORS:
-                
                 robot.try_motors()
+                robot.straight_movement(0.3)
+                time.sleep(2)
+                robot.straight_movement(-0.3)
+                time.sleep(2)
+                robot.side_movement(0.3)
+                time.sleep(2)
+                robot.side_movement(-0.3)
+                time.sleep(2)
+                robot.stop()
                 break
             if state == State.TMOTOR:
                 try:
                     processed_Data = processor.process_frame(aligned_depth=True)
-                    spt=int(input("ANNA TSPEED: "))
-                    robot.test_thrower(spt)
+                    if basket_color == c.Color.MAGENTA:
+                        basket = processed_Data.basket_m
+                    elif basket_color == c.Color.BLUE:
+                        basket = processed_Data.basket_b
+                    print("BASKET DIST: ", basket.distance)
+                    
+                    speed_T=int(input("ANNA TSPEED: "))
+                    if speed_T == "stop":
+                        break
+                    robot.test_thrower(speed_T, 0)
+
                     
                     continue
                 except:
@@ -72,8 +89,7 @@ def main_loop():
             if state==State.TESTCAMERA:
                 try:
                     processed_Data = processor.process_frame(aligned_depth=True)
-                    print("MUST JOON DIST: ", processed_Data.lines_b)
-                    print("VALGE JOON DIST: ", processed_Data.lines_w)
+                    print("JONEKAUGUS: ", processed_Data.lines_b)
                     #targeted_ball=processedData.balls[-1]
                     #print("Palli y kord   ", targeted_ball.y)
                     #print("DEPTH:",processedData.depth_frame)
@@ -122,11 +138,11 @@ def main_loop():
                     
                         #SpeedY based on ball distance
                     if dist > 250:
-                        speed_Y=0.3
+                        speed_Y=0.25
                     else:
                         speed_Y=1
                         #Controlls that balls location is ready for robot's orbit function
-                    if x_cord < (reso_x_mid + 5) and x_cord >(reso_x_mid -5) and dist > 295:
+                    if x_cord < (reso_x_mid + 5) and x_cord >(reso_x_mid -5) and dist > 385:
                         #robot.center_ball(xcord)
                         state=State.ORBIT
                     else:
@@ -228,17 +244,17 @@ def main_loop():
                     speed_R = 0
                     speed_X=0
                     #if (basket.x>=reso_x_mid-2 and basket.x<=(reso_x_mid+2)) and (x_cord>=(reso_x_mid-2) and x_cord<=(reso_x_mid+2)):
-                    if dist > 452:
+                    if dist > 440:
                         state=State.THROW
                         continue
-                    elif dist<=452 and dist >=radius-41:
+                    elif dist<=440 and dist >=radius-41:
                         speed_Y = 0.3
                         robot.move(speed_X, speed_R, speed_Y, speed_T)
                     else:
                         state=State.FIND_BALL
                     if (x_cord<(reso_x_mid-5) or x_cord>(reso_x_mid+5)) and x_cord>(reso_x_mid-50) and x_cord<(reso_x_mid+50):
-                        speed_X+=delta*2
-                    if (basket.x<(reso_x_mid-2) or basket.x>(reso_x_mid+2)):
+                        speed_X+=delta*0.5
+                    if (basket.x<(reso_x_mid-1) or basket.x>(reso_x_mid+1)):
                         speed_R+=(x_cord-basket.x)/(reso_x_mid*5)
                    
                     else:
@@ -269,7 +285,7 @@ def main_loop():
 
             elif state == State.THROW:
                 basket_dist=basket.distance*100
-                print("BLUE BASKET DISTANCE: ", basket_dist)
+                print("BASKET DISTANCE: ", basket_dist)
                 speed_T=calculator.calc_throwingSpeed(basket_dist)
                 print("Throwing with speed: ", speed_T)
                 #Throws
