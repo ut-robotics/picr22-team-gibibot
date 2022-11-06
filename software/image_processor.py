@@ -126,9 +126,13 @@ class ImageProcessor():
 
         return balls
 
-    def analyze_baskets(self, t_basket, debug_color = (0, 255, 255)) -> list:
+    def analyze_baskets(self, t_basket, depth_frame, debug_color = (0, 255, 255)) -> list:
         contours, hierarchy = cv2.findContours(t_basket, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         #print("BASKET CONTURES: ",contours)
+        blob_pixel_y = np.nonzero(t_basket)[0]
+        blob_pixel_x = np.nonzero(t_basket)[1]
+        distance_arr = depth_frame[blob_pixel_y[0]:blob_pixel_y[-1], np.amin(blob_pixel_x):np.amax(blob_pixel_y)]
+        average_dist = np.average(distance_arr)
 
         baskets = []
         for contour in contours:
@@ -145,8 +149,7 @@ class ImageProcessor():
             obj_x = int(x + (w/2))
             obj_y = int(y + (h/2))
             obj_dst = self.camera.distance(obj_x, obj_y)
-            #depth_frame on list kus esimene argument on Ycord ja teine on x cord ja selle pohjal saan kauguse
-            print("BASKET DISTANTS IMAGE PROCESSOR: ", obj_dst)
+            obj_dist_f = depth_frame(obj_y, obj_x)
 
             baskets.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
 
@@ -160,9 +163,18 @@ class ImageProcessor():
 
         return basket
 
-    def analyze_lines(self, t_lines, debug_color = (255, 255, 255)) -> list:
+    def analyze_lines(self, t_lines, fragmented, depth_frame, debug_color = (255, 255, 255)) -> list:
+        #tekkitdada t_lines listi numpy array kus on koik peale uhe varvi muduetud 0deks vastavalt fragmented arrayle
+        t_lines = fragmented
+        colour_nr = debug_color[0]
+        t_lines[t_lines != colour_nr] = 0
+
+        blob_pixel_y = np.nonzero(t_lines)[0]
+        blob_pixel_x = np.nonzero(t_lines)[1]
+        distance_arr = depth_frame[blob_pixel_y[0]:blob_pixel_y[-1], np.amin(blob_pixel_x):np.amax(blob_pixel_y)]
+        average_dist = np.average(distance_arr)
+
         contours, hierarchy = cv2.findContours(t_lines, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        #print("contours:", contours)
         lines = []
         for contour in contours:
 
@@ -204,16 +216,15 @@ class ImageProcessor():
         color_frame, depth_frame = self.get_frame_data(aligned_depth = aligned_depth)
 
         segment.segment(color_frame, self.fragmented, self.t_balls, self.t_basket_m, self.t_basket_b)
-        #segment.segment(self.t_lines_w, self.t_lines_b)
 
         if self.debug:
             self.debug_frame = np.copy(color_frame)
 
         balls = self.analyze_balls(self.t_balls, self.fragmented)
-        basket_b = self.analyze_baskets(self.t_basket_b, debug_color=c.Color.BLUE.color.tolist())
-        basket_m = self.analyze_baskets(self.t_basket_m, debug_color=c.Color.MAGENTA.color.tolist())
-        lines_w = self.analyze_lines(self.t_lines_w, debug_color=c.Color.WHITE.color.tolist())
-        lines_b = self.analyze_lines(self.t_lines_b, debug_color=c.Color.BLACK.color.tolist())
+        basket_b = self.analyze_baskets(self.t_basket_b, depth_frame, debug_color=c.Color.BLUE.color.tolist())
+        basket_m = self.analyze_baskets(self.t_basket_m, depth_frame, debug_color=c.Color.MAGENTA.color.tolist())
+        lines_w = self.analyze_lines(self.t_lines_w, self.fragmented, depth_frame, debug_color=c.Color.WHITE.color.tolist())
+        lines_b = self.analyze_lines(self.t_lines_b, self.fragmented, depth_frame, debug_color=c.Color.BLACK.color.tolist())
         
 
         return ProcessedResults(balls = balls, 
