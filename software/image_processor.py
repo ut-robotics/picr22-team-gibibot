@@ -201,19 +201,24 @@ class ImageProcessor():
             obj_x = int(x + (w/2))
             obj_y = int(y + (h/2))
             obj_dst = depth_frame[obj_y, obj_x]
-            print("XJAYCORDINAADID", obj_x ,obj_y)
+            #print("XJAYCORDINAADID", obj_x ,obj_y)
 
-            lines.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
+            if (obj_x > 394 and obj_x < 454) and obj_y < 440:
+
+                lines.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
+
+                if self.debug:
+                    line = lines[-1]
+                    if line.exists:
+                        cv2.circle(self.debug_frame,(line.x, line.y), 15, debug_color, -1)
 
         lines.sort(key= lambda x: x.distance)
 
-        line = next(iter(lines), Object(exists = False))
+        #line = next(iter(lines), Object(exists = False))
 
-        if self.debug:
-            if line.exists:
-                cv2.circle(self.debug_frame,(line.x, line.y), 5, debug_color, -1)
+        
 
-        return line
+        return lines
 
     def get_frame_data(self, aligned_depth = False):
         if self.camera.has_depth_capability():
@@ -239,9 +244,9 @@ class ImageProcessor():
         balls = self.analyze_balls(self.t_balls, self.fragmented)
         basket_b = self.analyze_baskets(self.t_basket_b, depth_frame, debug_color=c.Color.BLUE.color.tolist())
         basket_m = self.analyze_baskets(self.t_basket_m, depth_frame, debug_color=c.Color.MAGENTA.color.tolist())
-        lines_w = self.analyze_lines(self.t_lines_w, self.fragmented, depth_frame, c.Color.WHITE._value_, debug_color=c.Color.WHITE.color.tolist())
         lines_b = self.analyze_lines(self.t_lines_b, self.fragmented, depth_frame, c.Color.BLACK._value_, debug_color=c.Color.BLACK.color.tolist())
-        
+        lines_w = self.analyze_lines(self.t_lines_w, self.fragmented, depth_frame, c.Color.WHITE._value_, debug_color=c.Color.WHITE.color.tolist())
+
 
         return ProcessedResults(balls = balls, 
                                 basket_b = basket_b, 
