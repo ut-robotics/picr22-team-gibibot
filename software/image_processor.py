@@ -65,6 +65,7 @@ class ImageProcessor():
         self.t_basket_m = np.zeros((self.camera.rgb_height, self.camera.rgb_width), dtype=np.uint8)
         self.t_lines_w = np.zeros((self.camera.rgb_height, self.camera.rgb_width), dtype=np.uint8)
         self.t_lines_b = np.zeros((self.camera.rgb_height, self.camera.rgb_width), dtype=np.uint8)
+        self.closest_line = Object(x = 10, y = 10, size = 10, distance = 10, exists = True)
 
         self.debug = debug
         self.debug_frame = np.zeros((self.camera.rgb_height, self.camera.rgb_width), dtype=np.uint8)
@@ -78,7 +79,7 @@ class ImageProcessor():
     def stop(self):
         self.camera.close()
 
-    def analyze_balls(self, t_balls, fragments) -> list:
+    def analyze_balls(self, t_balls, fragments, lines_b, lines_w) -> list:
         contours, hierarchy = cv2.findContours(t_balls, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         #mask = t_balls
         #mask = cv2.drawContours(mask, contours, -1, (255,255,255), 24)
@@ -114,12 +115,20 @@ class ImageProcessor():
             obj_x = int(x + (w/2))
             obj_y = int(y + (h/2))
             obj_dst = obj_y
+            print("PALLY: ", obj_y)
+            print("JOONY: ", lines_b.y)
 
             if self.debug:
                 self.debug_frame[ys, xs] = [0, 0, 0]
                 cv2.circle(self.debug_frame,(obj_x, obj_y), 10, (0,255,0), 2)
 
-            balls.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
+            
+            if lines_b == []:
+
+                balls.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
+            else:
+                if obj_y > lines_b.y or lines_b.y > lines_w.y:
+                    balls.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
         #[Object: x=7; y=212; size=15.0; distance=212; exists=True]
         
         balls.sort(key= lambda x: x.size)
@@ -156,9 +165,9 @@ class ImageProcessor():
                 #obj_dst = np.bincount(distance_arr).argmax() / 10
                 #print(distance_arr)
                 obj_dst = np.average(distance_arr) / 10
-                print("TRYLAUSE")
+                #print("TRYLAUSE")
             except:
-                print("EXCEPT LAUSE:")
+                #print("EXCEPT LAUSE:")
                 obj_dst = depth_frame[obj_y, obj_x] / 10
 
             baskets.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
@@ -175,15 +184,9 @@ class ImageProcessor():
 
     def analyze_lines(self, t_lines, fragmented, depth_frame, color_nr, debug_color = (255, 255, 255)) -> list:
         #tekkitdada t_lines listi numpy array kus on koik peale uhe varvi muduetud 0deks vastavalt fragmented arrayle
-        #t_lines = fragmented
         t_lines[fragmented != color_nr] = 0
         t_lines[fragmented == color_nr] = 1
-        #print("asdasdasd: ", np.average(t_lines))
 
-        #blob_pixel_y = np.nonzero(t_lines)[0]
-        #blob_pixel_x = np.nonzero(t_lines)[1]
-        #distance_arr = depth_frame[blob_pixel_y[0]:blob_pixel_y[-1], np.amin(blob_pixel_x):np.amax(blob_pixel_y)]
-        #average_dist = np.average(distance_arr)
 
         contours, hierarchy = cv2.findContours(t_lines, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         lines = []
@@ -212,13 +215,17 @@ class ImageProcessor():
                     if line.exists:
                         cv2.circle(self.debug_frame,(line.x, line.y), 15, debug_color, -1)
 
-        lines.sort(key= lambda x: x.distance)
+        lines.sort(key= lambda x: x.y)
 
-        #line = next(iter(lines), Object(exists = False))
+        if len(lines) != 0:
+            self.closest_line = lines[-1]
 
-        
 
-        return lines
+        #print("RETURN VALUE LINES: ",self.closest_line)
+        #print("LISTI VIIMANE ELEMENT: ", lines[-1])
+
+        return self.closest_line
+
 
     def get_frame_data(self, aligned_depth = False):
         if self.camera.has_depth_capability():
@@ -240,12 +247,12 @@ class ImageProcessor():
         if self.debug:
             self.debug_frame = np.copy(color_frame)
         
-
-        balls = self.analyze_balls(self.t_balls, self.fragmented)
-        basket_b = self.analyze_baskets(self.t_basket_b, depth_frame, debug_color=c.Color.BLUE.color.tolist())
-        basket_m = self.analyze_baskets(self.t_basket_m, depth_frame, debug_color=c.Color.MAGENTA.color.tolist())
         lines_b = self.analyze_lines(self.t_lines_b, self.fragmented, depth_frame, c.Color.BLACK._value_, debug_color=c.Color.BLACK.color.tolist())
         lines_w = self.analyze_lines(self.t_lines_w, self.fragmented, depth_frame, c.Color.WHITE._value_, debug_color=c.Color.WHITE.color.tolist())
+        balls = self.analyze_balls(self.t_balls, self.fragmented, lines_b, lines_w)
+        basket_b = self.analyze_baskets(self.t_basket_b, depth_frame, debug_color=c.Color.BLUE.color.tolist())
+        basket_m = self.analyze_baskets(self.t_basket_m, depth_frame, debug_color=c.Color.MAGENTA.color.tolist())
+        
 
 
         return ProcessedResults(balls = balls, 
