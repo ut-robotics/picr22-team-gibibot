@@ -94,6 +94,10 @@ Worked on thrower code - Robert 3h
 Looked through the review summary and fixed some ofthe problems in the PCB design - Raimo 2h
 [%hardbreaks]
 
+[%hardbreaks]
+---26.11.22---
+Mechanics - Marc, 1h
+
 ---27.10.22---
 Linux setup vol2, nucleo replacement, new test to see that everything works again - Robert, Argo  7h
 Modded the new nucleo - Raimo 0,5h
@@ -120,6 +124,10 @@ Previous changes tested - Robert, Argo 5h
 Calibration state - Robert 5h
 
 [%hardbreaks]
+---04.11.22---
+Mechanics problems - Marc, 2h
+
+[%hardbreaks]
 ---06.11.22---
 Line detection - Argo 2,5h
 Distance measuring from deapth frame with numpy - Argo, Robert 4h
@@ -137,6 +145,9 @@ Fixed thrower's mechanical issue and worked on main file- Robert, Argo 1h
 ---10.11.22---
 Test competition and new measurements - Argo, Robert 7h
 
+[%hardbreaks]
+---12.11.22---
+Base plate design - Marc, 3h
 
 
 
