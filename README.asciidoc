@@ -116,8 +116,17 @@ Fixed some issues with the PCB design - Raimo 2h
 
 
 [%hardbreaks]
----31.11.22---
+---31.10.22---
 Previous changes tested - Robert, Argo 5h
+Fixed some issues with the PCB design - Raimo 6h
+
+[%hardbreaks]
+---01.11.22---
+Fixed some issues with the PCB design and made some changes - Raimo 5h
+
+[%hardbreaks]
+---02.11.22---
+Fixed some issues with the PCB design and made some changes - Raimo 1,5h
 
 [%hardbreaks]
 ---03.11.22---
@@ -131,6 +140,7 @@ Mechanics problems - Marc, 2h
 ---06.11.22---
 Line detection - Argo 2,5h
 Distance measuring from deapth frame with numpy - Argo, Robert 4h
+Fixed the final issues with the design and added gerber files - Raimo 2h
 [%hardbreaks]
 
 ---07.11.22---
