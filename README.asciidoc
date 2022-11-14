@@ -162,5 +162,9 @@ Test competition and new measurements - Argo, Robert 7h
 ---12.11.22---
 Base plate design - Marc, 3h
 
+[%hardbreaks]
+---14.11.22---
+Bottom and top plate design - Marc, 3h
+
 
 
