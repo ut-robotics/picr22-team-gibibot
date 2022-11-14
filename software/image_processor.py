@@ -115,8 +115,6 @@ class ImageProcessor():
             obj_x = int(x + (w/2))
             obj_y = int(y + (h/2))
             obj_dst = obj_y
-            print("PALLY: ", obj_y)
-            print("JOONY: ", lines_b.y)
 
             if self.debug:
                 self.debug_frame[ys, xs] = [0, 0, 0]
@@ -137,11 +135,6 @@ class ImageProcessor():
 
     def analyze_baskets(self, t_basket, depth_frame, debug_color = (0, 255, 255)) -> list:
         contours, hierarchy = cv2.findContours(t_basket, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        #print("BASKET CONTURES: ",contours)
-        #blob_pixel_y = np.nonzero(t_basket)[0]
-        #blob_pixel_x = np.nonzero(t_basket)[1]
-        #print("YLIST: ",blob_pixel_y, "PRINT XLIST: ", blob_pixel_x)
-        #print("XCORDS IGA PIXLI KOHTA MIS EI OLE 0: ",blob_pixel_x,"\nYCORDS IGA PIXLI KOHTA MIS EI OLE 0: ",blob_pixel_y)
         
         
 
@@ -226,6 +219,26 @@ class ImageProcessor():
 
         return self.closest_line
 
+    def line_detection(self, colour_frame):
+        cv2.namedWindow("jooned")
+        low_threshold = 0
+        ratio = 5
+        kernel_size = 5
+
+        gray_sacle = cv2.cvtColor(colour_frame, cv2.COLOR_BGR2GRAY)
+
+        blurred_image = cv2.blur(gray_sacle, (3,3))
+        detected_edges = cv2.Canny(blurred_image, low_threshold, low_threshold*ratio, kernel_size)
+       
+        lines = cv2.HoughLines(detected_edges, 1, np.pi/180, 240)
+
+        mask = lines != 0 #enne oli dedect_edges
+        #dst = colour_frame * (mask[:,:,None].astype(colour_frame.dtype))
+
+        
+
+        #cv2.imshow("jooned", dst)
+
 
     def get_frame_data(self, aligned_depth = False):
         if self.camera.has_depth_capability():
@@ -246,6 +259,8 @@ class ImageProcessor():
 
         if self.debug:
             self.debug_frame = np.copy(color_frame)
+
+        line = self.line_detection(color_frame)
         
         lines_b = self.analyze_lines(self.t_lines_b, self.fragmented, depth_frame, c.Color.BLACK._value_, debug_color=c.Color.BLACK.color.tolist())
         lines_w = self.analyze_lines(self.t_lines_w, self.fragmented, depth_frame, c.Color.WHITE._value_, debug_color=c.Color.WHITE.color.tolist())

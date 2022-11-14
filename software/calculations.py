@@ -46,4 +46,9 @@ class Calculations():
                 return desired_speed
         #speed_T=(speed_T1+speed_T2)/2 
         return desired_speed
+    
+    def speed_controller(current, wanted, x=1,y=1):
+        return (2 / (1 + np.exp(3*(wanted-current)/x)) - 1) * y
+        
+        
         
