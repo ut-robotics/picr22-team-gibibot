@@ -9,6 +9,7 @@ import calculations
 import communication
 from enum import Enum
 import Color as c
+from Client import get_current_referee_command
 
 class State(Enum):
     FIND_BALL=0
@@ -19,15 +20,19 @@ class State(Enum):
     TESTCAMERA=5
     TMOTOR=6
     CALIBRATION=7
+    WAITING=8
     
 
-
+class BasketColor(Enum):
+    BLUE=0
+    MAGENTA=1
 
 def main_loop():
     state=State.TMOTOR
     debug=True
-
-    basket_color=c.Color.MAGENTA
+    ref_cmds=False
+    
+    ref=Client.get_current_referee_command()
     cam=camera.RealsenseCamera(exposure=100) #defaulti peal on depth_enabled = True
     processor = image_processor.ImageProcessor(cam, debug=debug, color_config = "colors/colors.pkl")
     robot=movement.OmniRobot()
@@ -114,6 +119,27 @@ def main_loop():
                 #[Object: x=7; y=212; size=15.0; distance=212; exists=True]  
                 print(fps)  
 
+
+            if ref_cmds==True:
+                run, blue=ref.get_current_referee_command()
+                if run ==True:
+                    state=State.FIND_BALL
+                else:
+                    state=State.WAITING
+                if blue==True:
+                    basket_color=BasketColor.BLUE
+                else:
+                    basket_color=BasketColor.MAGENTA
+            else:
+                basket_color=BasketColor.MAGENTA
+            
+
+            if state==State.WAITING:
+                robot.stop()
+                continue
+
+
+
             if state == State.FIND_BALL:
                 
                 print("--------Searching ball--------")
@@ -183,9 +209,9 @@ def main_loop():
                         state=State.FIND_BALL
                         continue
                     
-                    if basket_color == c.Color.MAGENTA:
+                    if basket_color == BasketColor.MAGENTA:
                         basket = processed_Data.basket_m
-                    elif basket_color == c.Color.BLUE:
+                    elif basket_color == BasketColor.BLUE:
                         basket = processed_Data.basket_b
 
                     #if that kind of basket is in our list
