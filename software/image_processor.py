@@ -229,9 +229,15 @@ class ImageProcessor():
 
     def inside(self, fragmented):
 
+
         vertical_mid = fragmented[0:,int(self.camera.rgb_height/2)] 
 
+        np.trim_zeros(vertical_mid)
+        
         colours = color_sequence(vertical_mid)
+
+        print(is_inside(colours))
+
         print(colours)
         return 0
 

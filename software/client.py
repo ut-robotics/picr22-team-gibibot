@@ -1,6 +1,5 @@
 import asyncio
 import threading
-from ast import literal_eval
 import websockets
 import json
 
@@ -9,9 +8,9 @@ class Client:
     def __init__(self):
         self.run = False
         self.blue = True
-        self.robot = literal_eval('GibiBot')
-        self.host = literal_eval('')
-        self.port = literal_eval('')
+        self.robot = ('GibiBot')
+        self.host = ('localhost')
+        self.port = ('8888')
 
     async def listen(self):
         print("Connecting to " + str(self.host) + " on port " + str(self.port))

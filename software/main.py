@@ -9,7 +9,7 @@ import calculations
 import communication
 from enum import Enum
 import Color as c
-from Client import get_current_referee_command
+import client
 
 class State(Enum):
     FIND_BALL=0
@@ -27,12 +27,19 @@ class BasketColor(Enum):
     BLUE=0
     MAGENTA=1
 
+
+
+
+
 def main_loop():
-    state=State.TMOTOR
+    state=State.WAITING
     debug=True
     ref_cmds=False
-    
-    ref=Client.get_current_referee_command()
+
+    First_Ref=1
+    ref=client.Client()
+    if ref_cmds==True:
+        ref.start()
     cam=camera.RealsenseCamera(exposure=100) #defaulti peal on depth_enabled = True
     processor = image_processor.ImageProcessor(cam, debug=debug, color_config = "colors/colors.pkl")
     robot=movement.OmniRobot()
@@ -120,18 +127,25 @@ def main_loop():
                 print(fps)  
 
 
-            if ref_cmds==True:
-                run, blue=ref.get_current_referee_command()
-                if run ==True:
-                    state=State.FIND_BALL
-                else:
-                    state=State.WAITING
-                if blue==True:
-                    basket_color=BasketColor.BLUE
-                else:
+            try:
+               
+                if ref_cmds==True:
+                    run, blue=ref.get_current_referee_command()
+                    if run ==True and First_Ref==1:
+                        state=State.FIND_BALL
+                        First_Ref=0
+                    elif run==False:
+                        state=State.WAITING
+                    if blue==True:
+                        basket_color=BasketColor.BLUE
+                    else:
+                        basket_color=BasketColor.MAGENTA
+                elif ref_cmds==False:
                     basket_color=BasketColor.MAGENTA
-            else:
-                basket_color=BasketColor.MAGENTA
+                    state=State.FIND_BALL
+                    
+            except:
+                print("Server client communication failed.")
             
 
             if state==State.WAITING:
