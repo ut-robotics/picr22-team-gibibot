@@ -4,6 +4,7 @@ import _pickle as pickle
 import numpy as np
 import cv2
 import Color as c
+from jit import *
 
 
 class Object():
@@ -155,12 +156,8 @@ class ImageProcessor():
             try:
                 
                 distance_arr = depth_frame[obj_y-10:obj_y+10, obj_x-10:obj_x+10]
-                #obj_dst = np.bincount(distance_arr).argmax() / 10
-                #print(distance_arr)
                 obj_dst = np.average(distance_arr) / 10
-                #print("TRYLAUSE")
             except:
-                #print("EXCEPT LAUSE:")
                 obj_dst = depth_frame[obj_y, obj_x] / 10
 
             baskets.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
@@ -188,7 +185,6 @@ class ImageProcessor():
             # line filtering logic goes here. Example includes size filtering of the basket
 
             size = cv2.contourArea(contour)
-            #print("SUURUS: ", size)
             if size < 20:
                 continue
 
@@ -197,7 +193,6 @@ class ImageProcessor():
             obj_x = int(x + (w/2))
             obj_y = int(y + (h/2))
             obj_dst = depth_frame[obj_y, obj_x]
-            #print("XJAYCORDINAADID", obj_x ,obj_y)
 
             if (obj_x > 394 and obj_x < 454) and obj_y < 440:
 
@@ -212,10 +207,6 @@ class ImageProcessor():
 
         if len(lines) != 0:
             self.closest_line = lines[-1]
-
-
-        #print("RETURN VALUE LINES: ",self.closest_line)
-        #print("LISTI VIIMANE ELEMENT: ", lines[-1])
 
         return self.closest_line
 
@@ -234,10 +225,15 @@ class ImageProcessor():
 
         mask = lines != 0 #enne oli dedect_edges
         #dst = colour_frame * (mask[:,:,None].astype(colour_frame.dtype))
-
-        
-
         #cv2.imshow("jooned", dst)
+
+    def inside(self, fragmented):
+
+        vertical_mid = fragmented[0:,int(self.camera.rgb_height/2)] 
+
+        colours = color_sequence(vertical_mid)
+        print(colours)
+        return 0
 
 
     def get_frame_data(self, aligned_depth = False):
@@ -260,7 +256,9 @@ class ImageProcessor():
         if self.debug:
             self.debug_frame = np.copy(color_frame)
 
-        line = self.line_detection(color_frame)
+        #line = self.line_detection(color_frame)
+
+        self.inside(self.fragmented)
         
         lines_b = self.analyze_lines(self.t_lines_b, self.fragmented, depth_frame, c.Color.BLACK._value_, debug_color=c.Color.BLACK.color.tolist())
         lines_w = self.analyze_lines(self.t_lines_w, self.fragmented, depth_frame, c.Color.WHITE._value_, debug_color=c.Color.WHITE.color.tolist())
