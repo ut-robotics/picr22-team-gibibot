@@ -35,7 +35,6 @@ def main_loop():
     state=State.FIND_BALL
     debug=True
     ref_cmds=False
-    first_loop = True
 
     First_Ref=1
     ref=client.Client()
@@ -121,29 +120,28 @@ def main_loop():
                 start = end 
                 print(fps)  
 
-            if first_loop:
-                try:
-                
-                    if ref_cmds==True:
-                        run, blue=ref.get_current_referee_command()
-                        if run ==True and First_Ref==1:
-                            state=State.FIND_BALL
-                            First_Ref=0
-                        elif run==False:
-                            state=State.WAITING
-                        if blue==True:
-                            basket_color=BasketColor.BLUE
-                        else:
-                            basket_color=BasketColor.MAGENTA
-                    elif ref_cmds==False:
-                        basket_color=BasketColor.MAGENTA
+            
+            try:
+            
+                if ref_cmds==True:
+                    run, blue=ref.get_current_referee_command()
+                    if run ==True and First_Ref==1:
                         state=State.FIND_BALL
-
-                    first_loop = False
-                        
-                except:
-                    first_loop = False
-                    print("Server client communication failed.")
+                        First_Ref=0
+                    elif run==False:
+                        state=State.WAITING
+                        First_Ref==1
+                    if blue==True:
+                        basket_color=BasketColor.BLUE
+                    else:
+                        basket_color=BasketColor.MAGENTA
+                elif ref_cmds==False and First_Ref==1:
+                    basket_color=BasketColor.MAGENTA
+                    state=State.FIND_BALL
+                    First_Ref=0
+        
+            except:
+                print("Server client communication failed.")
             
 
             if state==State.WAITING:
