@@ -32,9 +32,10 @@ class BasketColor(Enum):
 
 
 def main_loop():
-    state=State.WAITING
+    state=State.FIND_BALL
     debug=True
     ref_cmds=False
+    first_loop = True
 
     First_Ref=1
     ref=client.Client()
@@ -71,7 +72,8 @@ def main_loop():
             
             frame_cnt+=1
             frame+=1
-            #Just Testing states for own comfort
+
+            #State for testing the wheel motors
             if state == State.TRYMOTORS:
                 robot.try_motors()
                 robot.straight_movement(0.3)
@@ -85,7 +87,7 @@ def main_loop():
                 robot.stop()
                 break
             
-            
+            #State for calibrating the thrower motor speed with distance
             if state == State.TMOTOR:
                 try:
                     processed_Data = processor.process_frame(aligned_depth=True)
@@ -93,26 +95,20 @@ def main_loop():
                         basket = processed_Data.basket_m
                     elif basket_color == c.Color.BLUE:
                         basket = processed_Data.basket_b
-                    print("BASKET DIST: ", basket.distance)
+                    print("Measured basket distance: ", basket.distance)
                     
-                    speed_T=int(input("ANNA TSPEED: "))
+                    speed_T=int(input("Give motor speed: "))
                     if speed_T == "stop":
                         break
                     robot.test_thrower(speed_T, 0)
-
-                    
                     continue
                 except:
                     print("KORVI POLE")
+
+            #State for camera testing
             if state==State.TESTCAMERA:
                 try:
                     processed_Data = processor.process_frame(aligned_depth=True)
-                    # print("VALGE JOON: ", processed_Data.lines_w)
-                    # print("MUST JOON: ", processed_Data.lines_b)
-                    #targeted_ball=processedData.balls[-1]
-                    #print("Palli y kord   ", targeted_ball.y)
-                    #print("DEPTH:",processedData.depth_frame)
-                    #print(processedData.basket_m)
                 except:
                     continue
                     
@@ -122,30 +118,32 @@ def main_loop():
                 frame = 0
                 end = time.time()
                 fps = 30/(end-start)
-                start = end
-                #[Object: x=7; y=212; size=15.0; distance=212; exists=True]  
+                start = end 
                 print(fps)  
 
-
-            try:
-               
-                if ref_cmds==True:
-                    run, blue=ref.get_current_referee_command()
-                    if run ==True and First_Ref==1:
-                        state=State.FIND_BALL
-                        First_Ref=0
-                    elif run==False:
-                        state=State.WAITING
-                    if blue==True:
-                        basket_color=BasketColor.BLUE
-                    else:
+            if first_loop:
+                try:
+                
+                    if ref_cmds==True:
+                        run, blue=ref.get_current_referee_command()
+                        if run ==True and First_Ref==1:
+                            state=State.FIND_BALL
+                            First_Ref=0
+                        elif run==False:
+                            state=State.WAITING
+                        if blue==True:
+                            basket_color=BasketColor.BLUE
+                        else:
+                            basket_color=BasketColor.MAGENTA
+                    elif ref_cmds==False:
                         basket_color=BasketColor.MAGENTA
-                elif ref_cmds==False:
-                    basket_color=BasketColor.MAGENTA
-                    state=State.FIND_BALL
-                    
-            except:
-                print("Server client communication failed.")
+                        state=State.FIND_BALL
+
+                    first_loop = False
+                        
+                except:
+                    first_loop = False
+                    print("Server client communication failed.")
             
 
             if state==State.WAITING:
@@ -157,6 +155,7 @@ def main_loop():
             if state == State.FIND_BALL:
                 
                 print("--------Searching ball--------")
+                print(processed_Data.balls)
                 if len(processed_Data.balls)!=0:
                     state=State.MOVE
                 else:
@@ -169,6 +168,7 @@ def main_loop():
                         
             elif state == State.MOVE:
                 print("--------Moving to ball--------")
+                
                 if (len(processed_Data.balls)!=0):
                     # if pall seespool valget ja musta, siis edasi, kui on väljaspool, siis find_ball
                     
@@ -205,6 +205,7 @@ def main_loop():
                         robot.move(speed_X, speed_R, speed_Y, speed_T)
                 else:
                     #If there is no ball
+                    print("PALLILIST SAI TUHJAKS OTSIN UUT PALLI")
                     state=State.FIND_BALL
                         
             elif state==State.ORBIT:

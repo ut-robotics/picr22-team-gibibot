@@ -34,7 +34,7 @@ class ProcessedResults():
                 fragmented = [],
                 debug_frame = [],
                 lines_w = Object(exists = False), 
-                lines_b = Object(exists = False)) -> None: #lisada jooned
+                lines_b = Object(exists = False)) -> None:
 
 
         self.balls = balls
@@ -110,8 +110,14 @@ class ImageProcessor():
 
             x, y, w, h = cv2.boundingRect(contour)
 
-            ys	= np.array(np.arange(y + h, self.camera.rgb_height), dtype=np.uint16)
+            ys	= np.array(np.arange(y + h, self.camera.rgb_height-30), dtype=np.uint16)
             xs	= np.array(np.linspace(x + w/2, self.camera.rgb_width / 2, num=len(ys)), dtype=np.uint16)
+
+            line_to_ball = fragments[ys, xs]
+
+            inside = self.analyze_line(line_to_ball)
+
+            print(inside)
 
             obj_x = int(x + (w/2))
             obj_y = int(y + (h/2))
@@ -121,14 +127,8 @@ class ImageProcessor():
                 self.debug_frame[ys, xs] = [0, 0, 0]
                 cv2.circle(self.debug_frame,(obj_x, obj_y), 10, (0,255,0), 2)
 
-            
-            if lines_b == []:
-
+            if inside or obj_y > 350:
                 balls.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
-            else:
-                if obj_y > lines_b.y or lines_b.y > lines_w.y:
-                    balls.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
-        #[Object: x=7; y=212; size=15.0; distance=212; exists=True]
         
         balls.sort(key= lambda x: x.size)
 
@@ -173,7 +173,7 @@ class ImageProcessor():
         return basket
 
     def analyze_lines(self, t_lines, fragmented, depth_frame, color_nr, debug_color = (255, 255, 255)) -> list:
-        #tekkitdada t_lines listi numpy array kus on koik peale uhe varvi muduetud 0deks vastavalt fragmented arrayle
+        
         t_lines[fragmented != color_nr] = 0
         t_lines[fragmented == color_nr] = 1
 
@@ -210,35 +210,39 @@ class ImageProcessor():
 
         return self.closest_line
 
-    def line_detection(self, colour_frame):
-        cv2.namedWindow("jooned")
-        low_threshold = 0
-        ratio = 5
-        kernel_size = 5
+    # def line_detection(self, colour_frame):
+    #     cv2.namedWindow("jooned")
+    #     low_threshold = 0
+    #     ratio = 5
+    #     kernel_size = 5
 
-        gray_sacle = cv2.cvtColor(colour_frame, cv2.COLOR_BGR2GRAY)
+    #     gray_sacle = cv2.cvtColor(colour_frame, cv2.COLOR_BGR2GRAY)
 
-        blurred_image = cv2.blur(gray_sacle, (3,3))
-        detected_edges = cv2.Canny(blurred_image, low_threshold, low_threshold*ratio, kernel_size)
+    #     blurred_image = cv2.blur(gray_sacle, (3,3))
+    #     detected_edges = cv2.Canny(blurred_image, low_threshold, low_threshold*ratio, kernel_size)
        
-        lines = cv2.HoughLines(detected_edges, 1, np.pi/180, 240)
+    #     lines = cv2.HoughLines(detected_edges, 1, np.pi/180, 240)
 
-        mask = lines != 0 #enne oli dedect_edges
-        #dst = colour_frame * (mask[:,:,None].astype(colour_frame.dtype))
-        #cv2.imshow("jooned", dst)
+    #     mask = lines != 0 #enne oli dedect_edges
+    #     dst = colour_frame * (mask[:,:,None].astype(colour_frame.dtype))
+    #     cv2.imshow("jooned", dst)
 
-    def inside(self, fragmented):
-
-        vertical_mid = fragmented[0:,int(self.camera.rgb_height/2)]
+    def analyze_line(self, line):
         
-        np.trim_zeros(vertical_mid)
+        value = True
 
-        colours = color_sequence(vertical_mid)
+        np.trim_zeros(line)
 
-        print(is_inside(colours))
+        colours = color_sequence(line)
 
-        print(colours)
-        return 0
+        print("FILTERED LINE: ", colours)
+
+        if len(colours) == 0:
+            value = False
+        else:
+            value = is_inside(colours)
+
+        return value
 
 
     def get_frame_data(self, aligned_depth = False):
@@ -256,10 +260,6 @@ class ImageProcessor():
 
         if self.debug:
             self.debug_frame = np.copy(color_frame)
-
-        #line = self.line_detection(color_frame)
-
-        self.inside(self.fragmented)
         
         lines_b = self.analyze_lines(self.t_lines_b, self.fragmented, depth_frame, c.Color.BLACK._value_, debug_color=c.Color.BLACK.color.tolist())
         lines_w = self.analyze_lines(self.t_lines_w, self.fragmented, depth_frame, c.Color.WHITE._value_, debug_color=c.Color.WHITE.color.tolist())
@@ -277,4 +277,4 @@ class ImageProcessor():
                                 fragmented=self.fragmented, 
                                 debug_frame=self.debug_frame,
                                 lines_w = lines_w, 
-                                lines_b = lines_b)#lines eemaldada kui katki
+                                lines_b = lines_b)
