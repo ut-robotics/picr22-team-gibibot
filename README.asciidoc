@@ -166,5 +166,9 @@ Base plate design - Marc, 3h
 ---14.11.22---
 Bottom and top plate design - Marc, 3h
 
+[%hardbreaks]
+---21.11.22---
+Ref commands and other stuff - Robert 4h
+
 
 
