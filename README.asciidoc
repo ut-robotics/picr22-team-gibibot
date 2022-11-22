@@ -177,7 +177,12 @@ Chassis design - Marc, 3h
 [%hardbreaks]
 ---21.11.22---
 Ref commands and other stuff - Robert 4h
+setting up line dedection with @jit - Argo 3h
 Thrower and chassis design - Marc 8h
+
+[%hardbreaks]
+---22.11.22---
+line dedection using @jit - Argo 3h
 
 
 
