@@ -229,11 +229,10 @@ class ImageProcessor():
 
     def inside(self, fragmented):
 
-
-        vertical_mid = fragmented[0:,int(self.camera.rgb_height/2)] 
-
-        np.trim_zeros(vertical_mid)
+        vertical_mid = fragmented[0:,int(self.camera.rgb_height/2)]
         
+        np.trim_zeros(vertical_mid)
+
         colours = color_sequence(vertical_mid)
 
         print(is_inside(colours))
@@ -252,10 +251,6 @@ class ImageProcessor():
 
     def process_frame(self, aligned_depth = False) -> ProcessedResults:
         color_frame, depth_frame = self.get_frame_data(aligned_depth = aligned_depth)
-        
-
-        #color_frame = color_frame[0:461]
-        #depth_frame = depth_frame[0:461]
 
         segment.segment(color_frame, self.fragmented, self.t_balls, self.t_basket_m, self.t_basket_b)
 

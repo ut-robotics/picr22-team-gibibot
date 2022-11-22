@@ -30,6 +30,7 @@ def is_inside(sequence):
                 value = False
             elif last_colour == 4:
                 value = True
-    return value
+        last_colour = i
+    return value    
 
 
