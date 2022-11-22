@@ -167,8 +167,17 @@ Base plate design - Marc, 3h
 Bottom and top plate design - Marc, 3h
 
 [%hardbreaks]
+---19.11.22---
+Chassis and wheels design - Marc, 2h
+
+[%hardbreaks]
+---20.11.22---
+Chassis design - Marc, 3h
+
+[%hardbreaks]
 ---21.11.22---
 Ref commands and other stuff - Robert 4h
+Thrower and chassis design - Marc 8h
 
 
 
