@@ -9,8 +9,8 @@ class Client:
         self.run = False
         self.blue = True
         self.robot = ('GibiBot')
-        self.host = ('localhost')
-        self.port = ('8888')
+        self.host = ('192.168.3.40')
+        self.port = ('8222')
 
     async def listen(self):
         print("Connecting to " + str(self.host) + " on port " + str(self.port))

@@ -32,9 +32,10 @@ class BasketColor(Enum):
 
 
 def main_loop():
-    state=State.FIND_BALL
+    state=State.TMOTOR
     debug=True
     ref_cmds=False
+    basket_color = BasketColor.BLUE
 
     First_Ref=1
     ref=client.Client()
@@ -54,13 +55,13 @@ def main_loop():
     frame_cnt=0
     
     spin = 13
-    radius=400
+    radius=375
     ball_right_side=0
     basket_right_side = 1
     max_orbit_Yspeed=0.2
     max_orbit_Rspeed=3
     max_move_Yspeed=1.2
-    orbit_to_cali_buffer=5
+    orbit_to_cali_buffer=17
     try:
         while True:
             speed_T=0
@@ -103,6 +104,7 @@ def main_loop():
                     continue
                 except:
                     print("KORVI POLE")
+                    continue
 
             #State for camera testing
             if state==State.TESTCAMERA:
@@ -125,18 +127,19 @@ def main_loop():
             
                 if ref_cmds==True:
                     run, blue=ref.get_current_referee_command()
+                    print(run, blue )
                     if run ==True and First_Ref==1:
                         state=State.FIND_BALL
+                        if blue==True:
+                            basket_color=BasketColor.BLUE
+                        else:
+                            basket_color=BasketColor.MAGENTA
                         First_Ref=0
-                    elif run==False:
+                        continue
+                    elif run==False and First_Ref==0:
                         state=State.WAITING
-                        First_Ref==1
-                    if blue==True:
-                        basket_color=BasketColor.BLUE
-                    else:
-                        basket_color=BasketColor.MAGENTA
+                        First_Ref=1
                 elif ref_cmds==False and First_Ref==1:
-                    basket_color=BasketColor.MAGENTA
                     state=State.FIND_BALL
                     First_Ref=0
         
@@ -146,7 +149,8 @@ def main_loop():
 
             if state==State.WAITING:
                 robot.stop()
-                continue
+                print("WAITIN")
+                
 
 
 
@@ -187,12 +191,14 @@ def main_loop():
                         speed_Y=0.25
                     elif dist > 325:
                         speed_Y=0.15
+                    elif dist > 385:
+                        speed_Y=-0.15
                         
                     else:
                         speed_Y=max_move_Yspeed
                         
                     #Controlls that balls location is ready for robot's orbit function
-                    if x_cord < (reso_x_mid + 3) and x_cord >(reso_x_mid -3) and dist > 385:
+                    if x_cord < (reso_x_mid + 5) and x_cord >(reso_x_mid -5) and dist > 368:
                         state=State.ORBIT
                           
                     else:
@@ -203,7 +209,6 @@ def main_loop():
                         robot.move(speed_X, speed_R, speed_Y, speed_T)
                 else:
                     #If there is no ball
-                    print("PALLILIST SAI TUHJAKS OTSIN UUT PALLI")
                     state=State.FIND_BALL
                         
             elif state==State.ORBIT:
@@ -320,7 +325,7 @@ def main_loop():
                     robot.move(speed_X, speed_R, speed_Y, speed_T)
                     
                 except:
-                    state=State.FIND_BALL        
+                    state=State.FIND_BALL         
 
             elif state == State.THROW:
                 basket_dist=basket.distance

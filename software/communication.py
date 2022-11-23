@@ -29,7 +29,7 @@ class Communication:
         #print("Data sent")
         inf_in=self.Serial.read(8)
         actual_speed1, actual_speedr, actual_speed3, feedback_delimiter = struct.unpack('<hhhH', inf_in)
-        print("Real Data: " , actual_speed1, actual_speedr, actual_speed3, feedback_delimiter)
+        #print("Real Data: " , actual_speed1, actual_speedr, actual_speed3, feedback_delimiter)
         
     def close(self):
         self.Serial.close()

@@ -32,9 +32,7 @@ class ProcessedResults():
                 color_frame = [],
                 depth_frame = [],
                 fragmented = [],
-                debug_frame = [],
-                lines_w = Object(exists = False), 
-                lines_b = Object(exists = False)) -> None:
+                debug_frame = []) -> None:
 
 
         self.balls = balls
@@ -43,8 +41,6 @@ class ProcessedResults():
         self.color_frame = color_frame
         self.depth_frame = depth_frame
         self.fragmented = fragmented
-        self.lines_w = lines_w
-        self.lines_b = lines_b
         # can be used to illustrate things in a separate frame buffer
         self.debug_frame = debug_frame
 
@@ -64,8 +60,6 @@ class ImageProcessor():
         self.t_balls = np.zeros((self.camera.rgb_height, self.camera.rgb_width), dtype=np.uint8)
         self.t_basket_b = np.zeros((self.camera.rgb_height, self.camera.rgb_width), dtype=np.uint8)
         self.t_basket_m = np.zeros((self.camera.rgb_height, self.camera.rgb_width), dtype=np.uint8)
-        self.t_lines_w = np.zeros((self.camera.rgb_height, self.camera.rgb_width), dtype=np.uint8)
-        self.t_lines_b = np.zeros((self.camera.rgb_height, self.camera.rgb_width), dtype=np.uint8)
         self.closest_line = Object(x = 10, y = 10, size = 10, distance = 10, exists = True)
 
         self.debug = debug
@@ -80,7 +74,7 @@ class ImageProcessor():
     def stop(self):
         self.camera.close()
 
-    def analyze_balls(self, t_balls, fragments, lines_b, lines_w) -> list:
+    def analyze_balls(self, t_balls, fragments, distance_b, distance_m) -> list:
         contours, hierarchy = cv2.findContours(t_balls, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         #mask = t_balls
         #mask = cv2.drawContours(mask, contours, -1, (255,255,255), 24)
@@ -93,8 +87,16 @@ class ImageProcessor():
         morphed  = cv2.morphologyEx(dilated_mask, cv2.MORPH_CLOSE, kernel)
         dilated_contours, hierarchy = cv2.findContours(morphed, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-        
-        
+        basket_distance = 999
+
+        if distance_b != -1:
+            basket_distance = distance_b
+        elif distance_m != -1:
+            basket_distance = distance_m
+        elif distance_b == -1 or distance_m == -1:
+            basket_distance = 60
+        #print("BASKET DISTANCE IMAGES: ", basket_distance)
+
         balls = []
         
         for contour in dilated_contours:
@@ -105,7 +107,7 @@ class ImageProcessor():
 
             size = cv2.contourArea(contour)
 
-            if size < 15:
+            if size < 40:
                 continue
 
             x, y, w, h = cv2.boundingRect(contour)
@@ -117,7 +119,7 @@ class ImageProcessor():
 
             inside = self.analyze_line(line_to_ball)
 
-            print(inside)
+            #print(inside)
 
             obj_x = int(x + (w/2))
             obj_y = int(y + (h/2))
@@ -127,7 +129,7 @@ class ImageProcessor():
                 self.debug_frame[ys, xs] = [0, 0, 0]
                 cv2.circle(self.debug_frame,(obj_x, obj_y), 10, (0,255,0), 2)
 
-            if inside or obj_y > 350:
+            if (inside or obj_y > 350) and 50 < basket_distance :
                 balls.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
         
         balls.sort(key= lambda x: x.size)
@@ -172,43 +174,43 @@ class ImageProcessor():
 
         return basket
 
-    def analyze_lines(self, t_lines, fragmented, depth_frame, color_nr, debug_color = (255, 255, 255)) -> list:
+    # def analyze_lines(self, t_lines, fragmented, depth_frame, color_nr, debug_color = (255, 255, 255)) -> list:
         
-        t_lines[fragmented != color_nr] = 0
-        t_lines[fragmented == color_nr] = 1
+    #     t_lines[fragmented != color_nr] = 0
+    #     t_lines[fragmented == color_nr] = 1
 
 
-        contours, hierarchy = cv2.findContours(t_lines, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        lines = []
-        for contour in contours:
+    #     contours, hierarchy = cv2.findContours(t_lines, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    #     lines = []
+    #     for contour in contours:
 
-            # line filtering logic goes here. Example includes size filtering of the basket
+    #         # line filtering logic goes here. Example includes size filtering of the basket
 
-            size = cv2.contourArea(contour)
-            if size < 20:
-                continue
+    #         size = cv2.contourArea(contour)
+    #         if size < 20:
+    #             continue
 
-            x, y, w, h = cv2.boundingRect(contour)
+    #         x, y, w, h = cv2.boundingRect(contour)
 
-            obj_x = int(x + (w/2))
-            obj_y = int(y + (h/2))
-            obj_dst = depth_frame[obj_y, obj_x]
+    #         obj_x = int(x + (w/2))
+    #         obj_y = int(y + (h/2))
+    #         obj_dst = depth_frame[obj_y, obj_x]
 
-            if (obj_x > 394 and obj_x < 454) and obj_y < 440:
+    #         if (obj_x > 394 and obj_x < 454) and obj_y < 440:
 
-                lines.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
+    #             lines.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
 
-                if self.debug:
-                    line = lines[-1]
-                    if line.exists:
-                        cv2.circle(self.debug_frame,(line.x, line.y), 15, debug_color, -1)
+    #             if self.debug:
+    #                 line = lines[-1]
+    #                 if line.exists:
+    #                     cv2.circle(self.debug_frame,(line.x, line.y), 15, debug_color, -1)
 
-        lines.sort(key= lambda x: x.y)
+    #     lines.sort(key= lambda x: x.y)
 
-        if len(lines) != 0:
-            self.closest_line = lines[-1]
+    #     if len(lines) != 0:
+    #         self.closest_line = lines[-1]
 
-        return self.closest_line
+    #     return self.closest_line
 
     # def line_detection(self, colour_frame):
     #     cv2.namedWindow("jooned")
@@ -235,7 +237,7 @@ class ImageProcessor():
 
         colours = color_sequence(line)
 
-        print("FILTERED LINE: ", colours)
+        #print("FILTERED LINE: ", colours)
 
         if len(colours) == 0:
             value = False
@@ -261,11 +263,10 @@ class ImageProcessor():
         if self.debug:
             self.debug_frame = np.copy(color_frame)
         
-        lines_b = self.analyze_lines(self.t_lines_b, self.fragmented, depth_frame, c.Color.BLACK._value_, debug_color=c.Color.BLACK.color.tolist())
-        lines_w = self.analyze_lines(self.t_lines_w, self.fragmented, depth_frame, c.Color.WHITE._value_, debug_color=c.Color.WHITE.color.tolist())
-        balls = self.analyze_balls(self.t_balls, self.fragmented, lines_b, lines_w)
+        
         basket_b = self.analyze_baskets(self.t_basket_b, depth_frame, debug_color=c.Color.BLUE.color.tolist())
         basket_m = self.analyze_baskets(self.t_basket_m, depth_frame, debug_color=c.Color.MAGENTA.color.tolist())
+        balls = self.analyze_balls(self.t_balls, self.fragmented, basket_b.distance, basket_m.distance)
         
 
 
@@ -275,6 +276,4 @@ class ImageProcessor():
                                 color_frame=color_frame, 
                                 depth_frame=depth_frame, 
                                 fragmented=self.fragmented, 
-                                debug_frame=self.debug_frame,
-                                lines_w = lines_w, 
-                                lines_b = lines_b)
+                                debug_frame=self.debug_frame)
