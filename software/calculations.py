@@ -27,8 +27,8 @@ class Calculations():
         return  wheel_ang_speed_mu
     
     def calc_throwingSpeed(self, basket_dist):
-        t_dist=[60,75,91,115,133,154,178,203,225,248,268,287,310]
-        t_speeds=[473,495,540,580,640,680,750,780,860,915,958,1030,1065]
+        t_dist=[53,72,94,118,143,165,190,222,248,290,310,350,390,430]
+        t_speeds=[475,500,565,600,670,720,785,830,860,930,990,1050,1200,1300]
         desired_speed=0
         for i in range(len(t_dist)):
             if basket_dist<=t_dist[i]:
@@ -41,7 +41,7 @@ class Calculations():
                     desired_speed=(basket_dist*t_speeds[i]/t_dist[i])
                     return desired_speed
                 
-                desired_speed=t_speeds[i-1]+(t_speeds[i]-t_speeds[i-1])*percentage
+                desired_speed=t_speeds[i-1]+(t_speeds[i]-t_speeds[i-1])*percentage-18
                 
                 return desired_speed
         #speed_T=(speed_T1+speed_T2)/2 

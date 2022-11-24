@@ -32,10 +32,10 @@ class BasketColor(Enum):
 
 
 def main_loop():
-    state=State.TMOTOR
+    state=State.WAITING
     debug=True
-    ref_cmds=False
-    basket_color = BasketColor.BLUE
+    ref_cmds=True
+    basket_color = BasketColor.MAGENTA
 
     First_Ref=1
     ref=client.Client()
@@ -44,7 +44,7 @@ def main_loop():
     cam=camera.RealsenseCamera(exposure=100) #defaulti peal on depth_enabled = True
     processor = image_processor.ImageProcessor(cam, debug=debug, color_config = "colors/colors.pkl")
     robot=movement.OmniRobot()
-    reso_x_mid=424
+    reso_x_mid=437
     calculator = calculations.Calculations()
     comms=communication.Communication()
     processor.start()
@@ -58,7 +58,7 @@ def main_loop():
     radius=375
     ball_right_side=0
     basket_right_side = 1
-    max_orbit_Yspeed=0.2
+    max_orbit_Yspeed=0.05
     max_orbit_Rspeed=3
     max_move_Yspeed=1.2
     orbit_to_cali_buffer=17
@@ -91,9 +91,9 @@ def main_loop():
             if state == State.TMOTOR:
                 try:
                     processed_Data = processor.process_frame(aligned_depth=True)
-                    if basket_color == c.Color.MAGENTA:
+                    if basket_color == BasketColor.MAGENTA:
                         basket = processed_Data.basket_m
-                    elif basket_color == c.Color.BLUE:
+                    elif basket_color == BasketColor.BLUE:
                         basket = processed_Data.basket_b
                     print("Measured basket distance: ", basket.distance)
                     
@@ -191,7 +191,7 @@ def main_loop():
                         speed_Y=0.25
                     elif dist > 325:
                         speed_Y=0.15
-                    elif dist > 385:
+                    elif dist > 378:
                         speed_Y=-0.15
                         
                     else:
@@ -241,15 +241,21 @@ def main_loop():
                         elif basket.x > reso_x_mid+2:
                            basket_right_side=-1
                         speed_Y=0
-                        speed_X=0.25*basket_right_side
+                        speed_X=0.37*basket_right_side
                         speed_R=1000*(speed_X)/(640-radius)
-
+                        
+                        
+                        if basket.distance<reso_x_mid-290 or basket.distance>reso_x_mid+290:
+                            speed_X=0.2*basket_right_side
+                        if basket.distance<reso_x_mid-350 or basket.distance>reso_x_mid+350:
+                            speed_X=0.25*basket_right_side
+                        
                       
-                        if radius > (dist-1) or radius > (dist+1):
-                            speed_Y += (radius-dist)/ 25 
-        
-                        if  (x_cord > (reso_x_mid + 1) or x_cord < (reso_x_mid - 1)): #and (x_cord > (reso_x_mid - 10) and x_cord < (reso_x_mid +10)):
-                            speed_R += (reso_x_mid- x_cord) / 200
+                        if radius > (dist) or radius < (dist):
+                            speed_Y += (radius-dist)/ 100
+
+                        if  (x_cord > (reso_x_mid ) or x_cord < (reso_x_mid )): #and (x_cord > (reso_x_mid - 10) and x_cord < (reso_x_mid +10)):
+                            speed_R += (reso_x_mid- x_cord) / 40
                         
                         if(basket.x>reso_x_mid-orbit_to_cali_buffer and basket.x<(reso_x_mid+orbit_to_cali_buffer)):# and (x_cord>(reso_x_mid-5) and x_cord<(reso_x_mid+5)):
                             robot.stop()
@@ -272,14 +278,14 @@ def main_loop():
                     else:
                         #Orbit
                         speed_Y=0
-                        speed_X=0.5
+                        speed_X=0.4
                         speed_R=1000*speed_X/(640-radius)
 
-                        if radius > (dist-3) or radius > (dist+3):
-                            speed_Y += (radius-dist)/25
+                        if radius > (dist) or radius < (dist):
+                            speed_Y += (radius-dist)/100
                         
-                        if x_cord > (reso_x_mid + 1) or x_cord < (reso_x_mid - 1):
-                            speed_R += (reso_x_mid- x_cord) / 200
+                        if x_cord > (reso_x_mid ) or x_cord < (reso_x_mid ):
+                            speed_R += (reso_x_mid- x_cord) / 40
 
                         if speed_R > max_orbit_Rspeed:
                             speed_R = max_orbit_Rspeed
@@ -287,6 +293,7 @@ def main_loop():
                             speed_R = -1*max_orbit_Rspeed
                         if speed_Y > max_orbit_Yspeed:
                             speed_Y = max_orbit_Yspeed
+                        print(speed_R) 
                                                 
                         robot.move(speed_X, speed_R, speed_Y, speed_T)  
                 else:
@@ -308,13 +315,13 @@ def main_loop():
                         state=State.THROW
                         continue
                     
-                    if (x_cord<(reso_x_mid-1) or x_cord>(reso_x_mid+1)) and x_cord>(reso_x_mid-24) and x_cord<(reso_x_mid+24):
-                        speed_X+=delta*2
+                    if (x_cord<(reso_x_mid) or x_cord>(reso_x_mid)) and x_cord>(reso_x_mid-24) and x_cord<(reso_x_mid+24):
+                        speed_X+=delta
                     else:
                         state=State.FIND_BALL
                         
-                    if (basket.x<(reso_x_mid-1) or basket.x>(reso_x_mid+1)):
-                        speed_R+=(x_cord-basket.x)/(reso_x_mid)
+                    if (basket.x<(reso_x_mid) or basket.x>(reso_x_mid)):
+                        speed_R+=(x_cord-basket.x)/(reso_x_mid*5)
                         
                     elif dist<=420 and dist >=radius-41:
                         speed_Y = 0.2
