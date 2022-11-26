@@ -184,5 +184,14 @@ Thrower and chassis design - Marc 8h
 ---22.11.22---
 line dedection using @jit - Argo 3h
 
+[%hardbreaks]
+---24.11.22---
+New thrower measurments, throwing calibration corrections, second test competition - Argo, Robert 6h
+
+
+[%hardbreaks]
+---25.11.22---
+first sigmoid controller implementation - Argo 2h
+
 
 
