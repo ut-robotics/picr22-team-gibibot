@@ -119,8 +119,6 @@ class ImageProcessor():
 
             inside = self.analyze_line(line_to_ball)
 
-            #print(inside)
-
             obj_x = int(x + (w/2))
             obj_y = int(y + (h/2))
             obj_dst = obj_y
@@ -174,43 +172,6 @@ class ImageProcessor():
 
         return basket
 
-    # def analyze_lines(self, t_lines, fragmented, depth_frame, color_nr, debug_color = (255, 255, 255)) -> list:
-        
-    #     t_lines[fragmented != color_nr] = 0
-    #     t_lines[fragmented == color_nr] = 1
-
-
-    #     contours, hierarchy = cv2.findContours(t_lines, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    #     lines = []
-    #     for contour in contours:
-
-    #         # line filtering logic goes here. Example includes size filtering of the basket
-
-    #         size = cv2.contourArea(contour)
-    #         if size < 20:
-    #             continue
-
-    #         x, y, w, h = cv2.boundingRect(contour)
-
-    #         obj_x = int(x + (w/2))
-    #         obj_y = int(y + (h/2))
-    #         obj_dst = depth_frame[obj_y, obj_x]
-
-    #         if (obj_x > 394 and obj_x < 454) and obj_y < 440:
-
-    #             lines.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
-
-    #             if self.debug:
-    #                 line = lines[-1]
-    #                 if line.exists:
-    #                     cv2.circle(self.debug_frame,(line.x, line.y), 15, debug_color, -1)
-
-    #     lines.sort(key= lambda x: x.y)
-
-    #     if len(lines) != 0:
-    #         self.closest_line = lines[-1]
-
-    #     return self.closest_line
 
     # def line_detection(self, colour_frame):
     #     cv2.namedWindow("jooned")
@@ -237,8 +198,6 @@ class ImageProcessor():
 
         colours = color_sequence(line)
 
-        #print("FILTERED LINE: ", colours)
-
         if len(colours) == 0:
             value = False
         else:
@@ -249,8 +208,6 @@ class ImageProcessor():
 
     def get_frame_data(self, aligned_depth = False):
         if self.camera.has_depth_capability():
-            #depth_capability on defaulti peal true
-            #tagastab color_farme ja depth_frame
             return self.camera.get_frames(aligned = aligned_depth)
         else:
             return self.camera.get_color_frame(), np.zeros((self.camera.rgb_height, self.camera.rgb_width), dtype=np.uint8)
