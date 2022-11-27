@@ -41,14 +41,57 @@ class Calculations():
                     desired_speed=(basket_dist*t_speeds[i]/t_dist[i])
                     return desired_speed
                 
-                desired_speed=t_speeds[i-1]+(t_speeds[i]-t_speeds[i-1])*percentage-18
+                desired_speed=t_speeds[i-1]+(t_speeds[i]-t_speeds[i-1])*percentage
                 
                 return desired_speed
         #speed_T=(speed_T1+speed_T2)/2 
         return desired_speed
+
+    def sig_correction_move(self, xcord, max_speed, a=1):
+
+        base = np.linspace(-424, 424, 849)
+
+        element = xcord - 19
+
+        if element < 0:
+            element = 0
+
+        sigmoid = max_speed*2/(1 + np.exp(a*(-base)))
+
+        speed = round((sigmoid[element] - max_speed), 2)
+
+        print("keskpunkt kiirus - ", round((sigmoid[443] - max_speed), 2))
+
+        return speed
     
-    def speed_controller(current, wanted, x=1,y=1):
-        return (2 / (1 + np.exp(3*(wanted-current)/x)) - 1) * y
+    def sig_approach(self, ycord, max_speed, a=1):
+
+        base = np.linspace(0, 480, 481)
+
+        sigmoid = (max_speed*2)/(1 + np.exp(a*(-base)))
+
+        sigmoid = np.flip(sigmoid)
+
+        speed = abs(round((sigmoid[ycord]- max_speed), 2))
+
+        return speed
+
+    def sig_correction_orbit(self, ycord, max_speed, a=1):
+
+        base = np.linspace(-52, 52, 105)
+
+        element = ycord - 342
+
+        if element < 0:
+            element = 0
+        elif element > 104:
+            element = 104
+
+        sigmoid = max_speed*2/(1 + np.exp(a*(-base)))
+
+        speed = -(round((sigmoid[element] - max_speed), 2))
+
+        return speed
         
         
         
