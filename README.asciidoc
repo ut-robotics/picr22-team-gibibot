@@ -165,6 +165,7 @@ Base plate design - Marc, 3h
 [%hardbreaks]
 ---14.11.22---
 Bottom and top plate design - Marc, 3h
+Firmware - Raimo 4h
 
 [%hardbreaks]
 ---19.11.22---
@@ -179,10 +180,16 @@ Chassis design - Marc, 3h
 Ref commands and other stuff - Robert 4h
 setting up line dedection with @jit - Argo 3h
 Thrower and chassis design - Marc 8h
+Soldering mainboard - Raimo 4,5h
 
 [%hardbreaks]
 ---22.11.22---
 line dedection using @jit - Argo 3h
+Soldering mainboard - Raimo 3h
+
+[%hardbreaks]
+---23.11.22---
+Soldering mainboard - Raimo 3h
 
 [%hardbreaks]
 ---24.11.22---
