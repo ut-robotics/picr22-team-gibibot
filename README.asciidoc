@@ -168,6 +168,10 @@ Bottom and top plate design - Marc, 3h
 Firmware - Raimo 4h
 
 [%hardbreaks]
+---17.11.22---
+Firmware - Raimo 2h
+
+[%hardbreaks]
 ---19.11.22---
 Chassis and wheels design - Marc, 2h
 
