@@ -191,7 +191,13 @@ New thrower measurments, throwing calibration corrections, second test competiti
 
 [%hardbreaks]
 ---25.11.22---
-first sigmoid controller implementation - Argo 2h
+first sigmoid controller implementation - Argo 2h, Robert 1h
+
+[%hardbreaks]
+---25.11.22---
+Sigmoid fully implemented and tested - Robert 3h, Argo 4.5h
+
+
 
 
 
