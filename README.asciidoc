@@ -165,7 +165,7 @@ Base plate design - Marc, 3h
 [%hardbreaks]
 ---14.11.22---
 Bottom and top plate design - Marc, 3h
-Firmware - Raimo 4h
+Firmware - Raimo 2h
 
 [%hardbreaks]
 ---17.11.22---
