@@ -1,0 +1,24 @@
+Output: Gerber X2 Files
+Type  : GerberX2
+From  : Variant [[No Variations]] of Project [picr22-team-GibiBot-mainboard.PrjPcb]
+   Generated File[picr22-team-GibiBot-mainboard_Copper_Signal_Top.gbr]
+   Generated File[picr22-team-GibiBot-mainboard_Copper_Signal_1.gbr]
+   Generated File[picr22-team-GibiBot-mainboard_Copper_Signal_2.gbr]
+   Generated File[picr22-team-GibiBot-mainboard_Copper_Signal_Bot.gbr]
+   Generated File[picr22-team-GibiBot-mainboard_Legend_Bot.gbr]
+   Generated File[picr22-team-GibiBot-mainboard_Soldermask_Bot.gbr]
+   Generated File[picr22-team-GibiBot-mainboard_Paste_Bot.gbr]
+   Generated File[picr22-team-GibiBot-mainboard_Legend_Top.gbr]
+   Generated File[picr22-team-GibiBot-mainboard_Paste_Top.gbr]
+   Generated File[picr22-team-GibiBot-mainboard_Soldermask_Top.gbr]
+   Generated File[picr22-team-GibiBot-mainboard_Profile.gbr]
+   Generated File[picr22-team-GibiBot-mainboard_NPTH_Drill.gbr]
+   Generated File[picr22-team-GibiBot-mainboard_PTH_Drill.gbr]
+   Generated File[picr22-team-GibiBot-mainboard.EXTREP]
+   Generated File[picr22-team-GibiBot-mainboard.REP]
+
+
+Files Generated   : 15
+Documents Printed : 0
+
+Finished Output Generation At 15:48:36 On 06.11.2022
