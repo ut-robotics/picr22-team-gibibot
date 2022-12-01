@@ -21,6 +21,7 @@ class State(Enum):
     TMOTOR=6
     CALIBRATION=7
     WAITING=8
+    NO_BALLS = 9
     
 
 class BasketColor(Enum):
@@ -62,17 +63,22 @@ def main_loop():
     #orbit state constants
     max_orbit_Yspeed = 0.15
     max_orbit_Rspeed = 3
-    orbit_to_cali_buffer = 9
+    orbit_to_cali_buffer = 15
     change_orbit_Y = 0.1
 
     #move state constants
     max_move_Xspeed = 1.0
-    max_move_Yspeed = 1.5
+    max_move_Yspeed = 1.3
     max_move_Rspeed = 4
     change_move_X = 0.01
     change_move_Y = 0.01
     change_move_R = 0.01
-    
+
+    #Timer
+    timer = False
+    elapsed_time = 0
+    start_time = 0
+
     try:
         while True:
             print("------------------------- Current state: ", state, "-------------------------")
@@ -136,7 +142,7 @@ def main_loop():
             
             try:
             
-                if ref_cmds = =True:
+                if ref_cmds == True:
                     run, blue = ref.get_current_referee_command()
                     print(run, blue )
                     if run == True and First_Ref==1:
@@ -169,6 +175,15 @@ def main_loop():
                 
                 print("--------Searching ball--------")
                 print(processed_Data.balls)
+                if timer:
+                    elapsed_time = time.time() - start_time
+                else:
+                    start_time = time.time()
+                    timer = True
+
+                if elapsed_time > 5 and (processed_Data.basket_m.exists or processed_Data.basket_b.exists):
+                    state = State.NO_BALLS
+
                 if len(processed_Data.balls) != 0:
                     state = State.MOVE
                 else:
@@ -176,10 +191,27 @@ def main_loop():
                         robot.find_ball(-spin)
                     elif ball_right_side == 0:
                         robot.find_ball(spin)
-                
+
+            elif state == State.NO_BALLS:
+                if (processed_Data.basket_b.exists or processed_Data.basket_m.exists):
+                    if processed_Data.basket_m.exists:
+                        target = processed_Data.basket_m
+                    else:
+                        target = processed_Data.basket_b
+                    
+                    if target.distance > 100:
+                        speed_Y = calculator.sig_approach(target.y,max_move_Yspeed, change_move_Y)
+                        speed_R = -(calculator.sig_correction_move(target.x,max_move_Rspeed, change_move_R))
+                        speed_X = calculator.sig_correction_move(target.x,max_move_Xspeed, change_move_X)
+                        robot.move(speed_X, speed_R, speed_Y, speed_T)
+
+                    else:
+                        state = State.FIND_BALL
                 
                         
             elif state == State.MOVE:
+                timer = False
+                elapsed_time = 0
                 print("--------Moving to ball--------")
                 
                 if (len(processed_Data.balls) != 0):
@@ -228,7 +260,6 @@ def main_loop():
                     x_cord=targeted_ball.x
                     y_cord=targeted_ball.y
                     dist=targeted_ball.distance
-                    delta=((x_cord-reso_x_mid)/reso_x_mid)
 
                     #controlls basket colour
                     if dist < 340:
@@ -254,7 +285,7 @@ def main_loop():
                         speed_R = -(calculator.sig_correction_move(basket.x, max_orbit_Rspeed, 0.008))
                         
                         
-                        if(basket.x > reso_x_mid-orbit_to_cali_buffer and basket.x < (reso_x_mid + orbit_to_cali_buffer)) and (x_cord > (reso_x_mid-9) and x_cord < (reso_x_mid+9)):
+                        if(basket.x > reso_x_mid-orbit_to_cali_buffer and basket.x < (reso_x_mid + orbit_to_cali_buffer)) and (x_cord > (reso_x_mid-15) and x_cord < (reso_x_mid+15)):
                             robot.stop()
                             state = State.CALIBRATION
                             print("Robot is centering")
@@ -295,38 +326,42 @@ def main_loop():
                 
                 try:
                     print("----CALIBRATION----")
-                    targeted_ball = processed_Data.balls[-1]
-                    dist = targeted_ball.distance
-                    delta = ((x_cord-reso_x_mid)/reso_x_mid)
-
-                    #Moves to ball
+                    speed_T = int(calculator.calc_throwingSpeed(basket.distance))
+                    speed_R = -(calculator.sig_correction_move(basket.x, 0.5, 0.008))
                     speed_Y = 0.2
-                    speed_R = 0
-                    speed_X = 0
+                    if len(processed_Data.balls) > 0:
+                        targeted_ball = processed_Data.balls[-1]
+                        dist = targeted_ball.distance
+                    #Moves to ball
+                        speed_X = calculator.sig_correction_move(x_cord, 0.5, 0.01)
+                    else:
+                        speed_X = 0
                     
-                    if dist > 420:
-                        state = State.THROW
+                    
+                    if len(processed_Data.balls) > 0 and dist > radius:
+                        speed_X = 0
+                    
+                     
+                        
+                     
+                    if timer:
+                        elapsed_time = time.time() - start_time
+                    else:
+                        start_time = time.time()
+                        timer = True
+                    print('Elapsed time: ', elapsed_time)
+                    if elapsed_time > 2:
+                        state = State.FIND_BALL
+                        elapsed_time = 0
+                        timer = False
                         continue
                     robot.move(speed_X, speed_R, speed_Y, speed_T)
                     
                 except Exception as e:
                     print(e)
-                    state = State.FIND_BALL         
-
-            elif state == State.THROW:
-                basket_dist = basket.distance
-                print("BASKET DISTANCE: ", basket_dist)
-                speed_T = calculator.calc_throwingSpeed(basket_dist)
-                print("Throwing with speed: ", speed_T)
-                #Throws
-                speed_X = 0
-                speed_Y = 0.2
-                speed_R = 0
-                robot.move(speed_X, speed_R, speed_Y, int(speed_T))
-                time.sleep(2)
-                #Gonna change the time sleep so it can aim til the throw, but works for now  
-                state = State.FIND_BALL
-                continue
+                    state = State.FIND_BALL
+                    elapsed_time = 0
+                    timer = False
                 
                         
             if debug:
