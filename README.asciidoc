@@ -206,7 +206,22 @@ first sigmoid controller implementation - Argo 2h, Robert 1h
 
 [%hardbreaks]
 ---27.11.22---
-Sigmoid fully implemented and tested - Robert 3h, Argo 4.5h
+Sigmoid fully implemented and tested - Robert 3h, Argo 4.5h  
+Github Issues - Marc 5h  
+
+[%hardbreaks]
+---01.12.22---
+Thrower and Electronics in Fusion - Marc 7h  
+
+[%hardbreaks]
+---02.12.22---
+Front guards and github issues - Marc 4h  
+
+[%hardbreaks]
+---01.12.22---
+Front guards - Marc 3h  
+
+
 
 
 
