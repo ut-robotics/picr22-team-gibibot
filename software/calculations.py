@@ -52,9 +52,8 @@ class Calculations():
         base = np.linspace(-424, 424, 849)
 
         element = xcord - 19
-
-        if element < 0:
-            element = 0
+        
+        element = max(element, 0)
 
         sigmoid = max_speed*2/(1 + np.exp(a*(-base)))
 
@@ -81,11 +80,9 @@ class Calculations():
         base = np.linspace(-52, 52, 105)
 
         element = ycord - 342
-
-        if element < 0:
-            element = 0
-        elif element > 104:
-            element = 104
+        
+        element = max(element 0)
+        element = min(element, 104)
 
         sigmoid = max_speed*2/(1 + np.exp(a*(-base)))
 
