@@ -59,6 +59,8 @@ def main_loop():
     radius = 365
     ball_right_side = 0
     basket_right_side = 1
+    basket_exists=False
+    basket=""
 
     #orbit state constants
     max_orbit_Yspeed = 0.15
@@ -88,6 +90,18 @@ def main_loop():
             else:
                 processed_Data = processor.process_frame(aligned_depth=False)
             
+            if(processed_Data.basket_b.exists or processed_Data.basket_m.exists):
+                basket_exists=True
+                try:
+                    if basket_color == BasketColor.MAGENTA:
+                        basket = processed_Data.basket_m
+                    elif basket_color == BasketColor.BLUE:
+                        basket = processed_Data.basket_b
+                except:
+                    basket=""
+            else:
+                basket_exists=False
+            
             frame_cnt += 1
             frame += 1
 
@@ -108,10 +122,7 @@ def main_loop():
             #State for calibrating the thrower motor speed with distance
             if state == State.TMOTOR:
                 try:
-                    if basket_color == BasketColor.MAGENTA:
-                        basket = processed_Data.basket_m
-                    elif basket_color == BasketColor.BLUE:
-                        basket = processed_Data.basket_b
+                    
                     print("Measured basket distance: ", basket.distance)
                     
                     speed_T=int(input("Give motor speed: "))
@@ -162,13 +173,15 @@ def main_loop():
         
             except:
                 print("Server client communication failed.")
+                continue
             
 
             if state == State.WAITING:
                 robot.stop()
                 print("WAITIN")
                 
-
+            
+            
 
 
             if state == State.FIND_BALL:
@@ -181,7 +194,7 @@ def main_loop():
                     start_time = time.time()
                     timer = True
 
-                if elapsed_time > 5 and (processed_Data.basket_m.exists or processed_Data.basket_b.exists):
+                if elapsed_time > 5 basket_exists:
                     state = State.NO_BALLS
 
                 if len(processed_Data.balls) != 0:
@@ -193,13 +206,9 @@ def main_loop():
                         robot.find_ball(spin)
 
             elif state == State.NO_BALLS:
-                if (processed_Data.basket_b.exists or processed_Data.basket_m.exists):
-                    if processed_Data.basket_m.exists:
-                        target = processed_Data.basket_m
-                    else:
-                        target = processed_Data.basket_b
+                if (basket_exists):
                     
-                    if target.distance > 100:
+                    if basket.distance > 100:
                         speed_Y = calculator.sig_approach(target.y,max_move_Yspeed, change_move_Y)
                         speed_R = -(calculator.sig_correction_move(target.x,max_move_Rspeed, change_move_R))
                         speed_X = calculator.sig_correction_move(target.x,max_move_Xspeed, change_move_X)
@@ -267,10 +276,6 @@ def main_loop():
                         state = State.FIND_BALL
                         continue
                     
-                    if basket_color == BasketColor.MAGENTA:
-                        basket = processed_Data.basket_m
-                    elif basket_color == BasketColor.BLUE:
-                        basket = processed_Data.basket_b
 
                     #if that kind of basket is in our list
                     if basket.exists and (basket.x>75 and basket.x<773):

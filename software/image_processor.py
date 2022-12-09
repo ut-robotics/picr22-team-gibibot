@@ -4,7 +4,7 @@ import _pickle as pickle
 import numpy as np
 import cv2
 import Color as c
-from jit import *
+from jit_functions import *
 
 
 class Object():

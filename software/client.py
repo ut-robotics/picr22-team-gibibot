@@ -8,7 +8,7 @@ class Client:
     def __init__(self):
         self.run = False
         self.blue = True
-        self.robot = ('gibibot')
+        self.robot = 'gibibot'
         self.host = ('192.168.3.220')
         self.port = ('8111')
 
@@ -27,13 +27,7 @@ class Client:
 
     def process_command(self, cmd):
         if self.robot in cmd["targets"]:
-            if cmd["signal"] == "changeID" and self.robot != cmd["new_robot_id"]:
-                new_robot_id = cmd["new_robot_id"]
-                try:
-                    self.robot = new_robot_id
-                except ValueError:
-                    print("Invalid robot id")
-            elif cmd["signal"] == "stop":
+            if cmd["signal"] == "stop":
                 self.run = False
             elif cmd["signal"] == "start":
                 color = cmd["baskets"][cmd["targets"].index(self.robot)]

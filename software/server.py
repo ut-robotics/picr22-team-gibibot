@@ -5,9 +5,9 @@ import websockets
 async def main(websocket, path):
     print("Connection.")
     while True:
-        start_blue = '{"signal": "start","targets":  ["GibiBot"],"baskets": ["blue"]}'
-        start_magenta = '{"signal": "start","targets":  ["GibiBot"],"baskets": ["magneta"]}'
-        stop = '{"signal": "stop", "targets":  ["GibiBot"]}'
+        start_blue = '{"signal": "start","targets":  ["gibibot"],"baskets": ["blue"]}'
+        start_magenta = '{"signal": "start","targets":  ["gibibot"],"baskets": ["magneta"]}'
+        stop = '{"signal": "stop", "targets":  ["gibibot"]}'
         fake = '{"signal": "start","targets":  ["any_id_whatever"],"baskets": ["magneta"]}'
 
         input_data = str(await asyncio.get_event_loop().run_in_executor(None, input, "input:"))
