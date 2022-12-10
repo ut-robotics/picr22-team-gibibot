@@ -10,7 +10,7 @@ class Calculations():
         self.pid_freq=60
         self.gearbox_reduction_ratio=18.75
         self.enc_edges_per_motor_rev=64
-        self.wheel_angles=[240,0,120]
+        self.wheel_angles=[240,120,0]
         self.wheel_radius=0.07
         self.disable_failsafe=1
         self.wheelSpeedTo_mu=self.gearbox_reduction_ratio*self.enc_edges_per_motor_rev/(2.0*pi*self.wheel_radius*self.pid_freq)
@@ -27,8 +27,8 @@ class Calculations():
         return  wheel_ang_speed_mu
     
     def calc_throwingSpeed(self, basket_dist):
-        t_dist=[53,72,94,118,143,165,190,222,248,290,310,350,390,430]
-        t_speeds=[475,500,565,600,670,720,785,830,860,930,990,1050,1200,1300]
+        t_dist=[62, 160, 256, 412, 470]
+        t_speeds=[950, 1150, 1400, 1925, 1990]
         desired_speed=0
         for i in range(len(t_dist)):
             if basket_dist<=t_dist[i]:
@@ -81,7 +81,7 @@ class Calculations():
 
         element = ycord - 342
         
-        element = max(element 0)
+        element = max(element, 0)
         element = min(element, 104)
 
         sigmoid = max_speed*2/(1 + np.exp(a*(-base)))
