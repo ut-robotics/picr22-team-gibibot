@@ -198,7 +198,7 @@ def main_loop():
                     start_time = time.time()
                     timer = True
 
-                if elapsed_time > 5 basket_exists:
+                if elapsed_time > 5 and basket_exists:
                     state = State.NO_BALLS
 
                 if len(processed_Data.balls) != 0:
