@@ -63,7 +63,7 @@ def main_loop():
     radius = 365
     ball_right_side = 0
     basket_right_side = 1
-    basket_exists=False
+    basket_exists = False
     
     basket_edge_buffer = 75
 
@@ -90,16 +90,16 @@ def main_loop():
     try:
         while True:
             #print("------------------------- Current state: ", state, "-------------------------")
-            speed_T=0
-            grabber=6000
-            thrower_angle=6900
+            speed_T = 0
+            grabber = 6000
+            thrower_angle = 6900
             if state == State.THROW or state == State.TMOTOR or state == State.TESTCAMERA:
                 processed_Data = processor.process_frame(aligned_depth=True)
             else:
                 processed_Data = processor.process_frame(aligned_depth=False)
             
             if(processed_Data.basket_b.exists or processed_Data.basket_m.exists):
-                basket_exists=True
+                basket_exists = True
                 
                 if basket_color == BasketColor.MAGENTA:
                     basket = processed_Data.basket_m
@@ -203,8 +203,8 @@ def main_loop():
 
             if state == State.FIND_BALL:
                 if robot.ball_in_grabber>0:
-                    grabber=4800
-                    state=State.FIND_BASKET
+                    grabber = 4800
+                    state = State.FIND_BASKET
                     continue
                 
                 print("--------Searching ball--------")
@@ -214,7 +214,6 @@ def main_loop():
                 else:
                     start_time = time.time()
                     timer = True
-                print('jou neeger', elapsed_time)
                 if elapsed_time > 2.5 and basket_exists:
                     state = State.NO_BALLS
 
