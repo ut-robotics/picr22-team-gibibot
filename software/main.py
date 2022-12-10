@@ -45,7 +45,6 @@ def main_loop():
     cam=camera.RealsenseCamera(exposure=100) #defaulti peal on depth_enabled = True
     processor = image_processor.ImageProcessor(cam, debug=debug, color_config = "colors/colors.pkl")
     robot=movement.OmniRobot()
-    reso_x_mid=443
     calculator = calculations.Calculations()
     comms=communication.Communication()
     processor.start()
@@ -55,12 +54,16 @@ def main_loop():
     frame = 0
     frame_cnt = 0
     
+    mid_offset = 19
+    reso_x_mid = cam.rgb_width/2 + mid_offset #443
+    
     spin = 15
     radius = 365
     ball_right_side = 0
     basket_right_side = 1
     basket_exists=False
     basket=""
+    basket_edge_buffer = 75
 
     #orbit state constants
     max_orbit_Yspeed = 0.15
@@ -278,7 +281,7 @@ def main_loop():
                     
 
                     #if that kind of basket is in our list
-                    if basket.exists and (basket.x>75 and basket.x<773):
+                    if basket.exists and (basket.x > basket_edge_buffer and basket.x < cam.rgb_width - basket_edge_buffer):
                         print("BASKET ON OLEMAS")
        
                         speed_X = calculator.sig_correction_move(x_cord, 0.5, 0.01)
