@@ -5,7 +5,7 @@
 ../Core/Src/main.c:156:6:EnableMotorDrivers	16	static,ignoring_inline_asm
 ../Core/Src/main.c:168:6:UpdateServosAndThrower	8	static
 ../Core/Src/main.c:178:6:HAL_TIM_PeriodElapsedCallback	32	static
-../Core/Src/main.c:211:5:main	24	static
+../Core/Src/main.c:213:5:main	16	static
 ../Core/Src/main.c:317:6:SystemClock_Config	88	static
 ../Core/Src/main.c:365:13:MX_TIM1_Init	104	static
 ../Core/Src/main.c:441:13:MX_TIM2_Init	56	static

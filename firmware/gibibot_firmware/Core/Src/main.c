@@ -83,13 +83,13 @@ typedef struct Command {
 } Command;
 
 typedef struct Feedback {
-  int16_t speed1;
+  //int16_t speed1;
+  int16_t ballDetected;
   int16_t speed2;
   int16_t speed3;
-  uint16_t ballDetected;
   uint16_t delimiter;
 } Feedback;
-
+int16_t IRsensor;
 typedef struct MotorControl {
 	int16_t gainP;
 	int16_t gainI;
@@ -178,19 +178,21 @@ void UpdateServosAndThrower() {
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	//Reading the motor encoders and calculating motor pwm
 	int32_t motor1PWM = ClampValue(ControlMotor(&motorControl1, (int16_t)TIM2->CNT, command.speed1), -65535, 65535);
-	//Direction
+	//Direction M1
 	if (motor1PWM < 0) {
 		HAL_GPIO_WritePin(M1_DIR_GPIO_Port, M1_DIR_Pin, 0);
 	} else {
 		HAL_GPIO_WritePin(M1_DIR_GPIO_Port, M1_DIR_Pin, 1);
 	}
 	int32_t motor2PWM = ClampValue(ControlMotor(&motorControl2, (int16_t)TIM3->CNT, command.speed2), -65535, 65535);
+	//Direction M2
 	if (motor2PWM < 0) {
 		HAL_GPIO_WritePin(M2_DIR_GPIO_Port, M2_DIR_Pin, 0);
 	} else {
 		HAL_GPIO_WritePin(M2_DIR_GPIO_Port, M2_DIR_Pin, 1);
 	}
 	int32_t motor3PWM = ClampValue(ControlMotor(&motorControl3, (int16_t)TIM4->CNT, command.speed3), -65535, 65535);
+	//Direction M3
 	if (motor3PWM < 0) {
 		HAL_GPIO_WritePin(M3_DIR_GPIO_Port, M3_DIR_Pin, 0);
 	} else {
@@ -245,10 +247,10 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   Feedback feedback = {
-        .speed1 = 0,
+        //.speed1 = 0,
+		.ballDetected = 0,
         .speed2 = 0,
         .speed3 = 0,
-		.ballDetected = 0,
         .delimiter = 0xAAAA
     };
 
@@ -269,10 +271,7 @@ int main(void)
   //Wakes up the thrower
   TIM15->CCR2 = 3150;
 
-  //EnableMotorDrivers();
-
-
-  uint8_t sensorSent = 0;
+  //uint8_t sensorSent = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -280,18 +279,7 @@ int main(void)
   while (1)
   {
 	UpdateServosAndThrower();
-	//Sends feedback when ball is detected
-	uint8_t IRsensor = HAL_GPIO_ReadPin(IR_SENSOR_GPIO_Port, IR_SENSOR_Pin);
-	if (IRsensor > 0 && sensorSent == 0) {
-		feedback.ballDetected = 1;
-		CDC_Transmit_FS((uint8_t*)&feedback, (uint16_t)sizeof(feedback));
-		sensorSent = 1;
-	}
-	if (IRsensor == 0 && sensorSent == 1) {
-		feedback.ballDetected = 0;
-		CDC_Transmit_FS((uint8_t*)&feedback, (uint16_t)sizeof(feedback));
-		sensorSent = 0;
-	}
+	IRsensor = HAL_GPIO_ReadPin(IR_SENSOR_GPIO_Port, IR_SENSOR_Pin);
 	HAL_GPIO_WritePin(DEBUG_LED_GPIO_Port, DEBUG_LED_Pin, IRsensor);
     /* USER CODE END WHILE */
 
@@ -300,7 +288,8 @@ int main(void)
 		isCommandReceived = 0;
 		//HAL_GPIO_TogglePin(DEBUG_LED_GPIO_Port, DEBUG_LED_Pin);
 		EnableMotorDrivers(); //Sends the nsleep signal to motor drivers
-		feedback.speed1 = motorControl1.positionChange;
+		//feedback.speed1 = motorControl1.positionChange;
+		feedback.ballDetected = IRsensor;
 		feedback.speed2 = motorControl2.positionChange;
 		feedback.speed3 = motorControl3.positionChange;
 
