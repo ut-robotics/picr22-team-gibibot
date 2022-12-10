@@ -70,6 +70,7 @@ def main_loop():
     max_orbit_Rspeed = 3
     orbit_to_cali_buffer = 15
     change_orbit_Y = 0.1
+    orbit_thresh = 340
 
     #move state constants
     max_move_Xspeed = 1.0
@@ -274,7 +275,7 @@ def main_loop():
                     dist=targeted_ball.distance
 
                     #controlls basket colour
-                    if dist < 340:
+                    if dist < orbit_thresh:
                         print("PALL LIIGA KAUGEL LAHEME OTSIME PALLI")
                         state = State.FIND_BALL
                         continue
