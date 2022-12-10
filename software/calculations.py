@@ -27,8 +27,8 @@ class Calculations():
         return  wheel_ang_speed_mu
     
     def calc_throwingSpeed(self, basket_dist):
-        t_dist=[60,75,91,115,133,154,178,203,225,248,268,287,310]
-        t_speeds=[473,495,540,580,640,680,750,780,860,915,958,1030,1065]
+        t_dist=[53,72,94,118,143,165,190,222,248,290,310,350,390,430]
+        t_speeds=[475,500,565,600,670,720,785,830,860,930,990,1050,1200,1300]
         desired_speed=0
         for i in range(len(t_dist)):
             if basket_dist<=t_dist[i]:
@@ -46,4 +46,49 @@ class Calculations():
                 return desired_speed
         #speed_T=(speed_T1+speed_T2)/2 
         return desired_speed
+
+    def sig_correction_move(self, xcord, max_speed, a=1):
+
+        base = np.linspace(-424, 424, 849)
+
+        element = xcord - 19
+        
+        element = max(element, 0)
+
+        sigmoid = max_speed*2/(1 + np.exp(a*(-base)))
+
+        speed = round((sigmoid[element] - max_speed), 2)
+
+        print("keskpunkt kiirus - ", round((sigmoid[443] - max_speed), 2))
+
+        return speed
+    
+    def sig_approach(self, ycord, max_speed, a=1):
+
+        base = np.linspace(0, 480, 481)
+
+        sigmoid = (max_speed*2)/(1 + np.exp(a*(-base)))
+
+        sigmoid = np.flip(sigmoid)
+
+        speed = abs(round((sigmoid[ycord]- max_speed), 2))
+
+        return speed
+
+    def sig_correction_orbit(self, ycord, max_speed, a=1):
+
+        base = np.linspace(-52, 52, 105)
+
+        element = ycord - 342
+        
+        element = max(element 0)
+        element = min(element, 104)
+
+        sigmoid = max_speed*2/(1 + np.exp(a*(-base)))
+
+        speed = -(round((sigmoid[element] - max_speed), 2))
+
+        return speed
+        
+        
         
