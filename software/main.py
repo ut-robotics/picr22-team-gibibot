@@ -172,7 +172,7 @@ def main_loop():
             
                 if ref_cmds == True:
                     run, blue = ref.get_current_referee_command()
-                    print(run, blue )
+                    print(run, blue)
                     if run == True and First_Ref==1:
                         state = State.FIND_BALL
                         if blue == True:
@@ -320,9 +320,7 @@ def main_loop():
                 else:
                     start_time = time.time()
                     timer = True
-                print('Elapsed time: ', elapsed_time)
-                print('pall grabberis: ', comms.ball_in_grabber)
-                print('kas pall on grabberis - ', comms.ball_in_grabber)
+            
                 if robot.ball_in_grabber>0:
                     grabber=4800
                     state = State.FIND_BASKET   
