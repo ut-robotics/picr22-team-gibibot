@@ -243,11 +243,11 @@ Firmware for the sensor and servos. Made the sensor - Raimo 6h
 [%hardbreaks]
 ---07.12.22---
 Tried to fix the problems with the motors. Improved the firmware - Raimo 9.5h
-New robot fabrication and code testing. - Robert, Argo 10h
+New robot fabrication and code testing. - Robert, Argo 10h, Marc 8h
 
 [%hardbreaks]
 ---08.12.22---
-Tried to fix the problems with the motors - Raimo 10h, Robert 7h
+Tried to fix the problems with the motors - Raimo 10h, Robert 7h, Argo 5h
 
 
 [%hardbreaks]
@@ -255,9 +255,9 @@ Tried to fix the problems with the motors - Raimo 10h, Robert 7h
 Fixed the mainboard, fixed the sensor wire - Raimo 5.5h
 
 [%hardbreaks]
----09.12.22---
+---10.12.22---
 Changed the sensor feedback in the firmware, helped testing the robot - Raimo 4h
-Fully implemented code for new robot, also tested it - Robert 7h
+Fully implemented code for new robot, also tested it - Robert, Argo 7h
 
 
 
