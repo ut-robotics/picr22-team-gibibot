@@ -254,7 +254,7 @@ Fixed the mainboard, fixed the sensor wire - Raimo 5.5h
 
 [%hardbreaks]
 ---09.12.22---
-Changed the sensor feedback in the firmware - Raimo 2h
+Changed the sensor feedback in the firmware, helped testing the robot - Raimo 4h
 
 
 
