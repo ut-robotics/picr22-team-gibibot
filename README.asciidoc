@@ -147,7 +147,7 @@ Fixed the final issues with the design and added gerber files - Raimo 2h
 [%hardbreaks]
 ---07.11.22---
 Fixed some issues and improved code  - Robert 3h
-Worked on mainboard documentation - Raimo 1,5h
+Worked on mainboard documentation - Raimo 1.5h
 
 [%hardbreaks]
 ---09.11.22---
@@ -184,7 +184,7 @@ Chassis design - Marc, 3h
 Ref commands and other stuff - Robert 4h
 setting up line dedection with @jit - Argo 3h
 Thrower and chassis design - Marc 8h
-Soldering mainboard - Raimo 4,5h
+Soldering mainboard - Raimo 4.5h
 
 [%hardbreaks]
 ---22.11.22---
@@ -199,7 +199,6 @@ Soldering mainboard - Raimo 3h
 ---24.11.22---
 New thrower measurments, throwing calibration corrections, second test competition - Argo, Robert 6h
 
-
 [%hardbreaks]
 ---25.11.22---
 first sigmoid controller implementation - Argo 2h, Robert 1h
@@ -207,23 +206,30 @@ first sigmoid controller implementation - Argo 2h, Robert 1h
 [%hardbreaks]
 ---27.11.22---
 Sigmoid fully implemented and tested - Robert 3h, Argo 4.5h  
-Github Issues - Marc 5h  
+Github Issues - Marc 5h 
+
+[%hardbreaks]
+---28.11.22---
+Fixed some mainboard issues - Raimo 4h
+
+[%hardbreaks]
+---30.11.22---
+Tested the mainboard and made some wires - Raimo 2h
 
 [%hardbreaks]
 ---01.12.22---
-Thrower and Electronics in Fusion - Marc 7h  
+Thrower and Electronics in Fusion - Marc 7h
+Mainboard firmware - Raimo 3h
 
 [%hardbreaks]
 ---02.12.22---
-Front guards and github issues - Marc 4h  
-
-[%hardbreaks]
----01.12.22---
+Front guards and github issues - Marc 4h
 Front guards - Marc 3h  
 
 [%hardbreaks]
 ---03.12.22---
 Issues - Marc 3h  
+Mainboard firmware - Raimo 4h
 
 [%hardbreaks]
 ---04.12.22---
@@ -232,6 +238,23 @@ Manufacturing - Marc 1h
 [%hardbreaks]
 ---05.12.22---
 Manufacturing - Marc 4h  
+Firmware for the sensor and servos. Made the sensor - Raimo 6h
+
+[%hardbreaks]
+---07.12.22---
+Tried to fix the problems with the motors. Improved the firmware - Raimo 9.5h
+
+[%hardbreaks]
+---08.12.22---
+Tried to fix the problems with the motors - Raimo 10h
+
+[%hardbreaks]
+---09.12.22---
+Fixed the mainboard, fixed the sensor wire - Raimo 5.5h
+
+[%hardbreaks]
+---09.12.22---
+Changed the sensor feedback in the firmware - Raimo 2h
 
 
 
