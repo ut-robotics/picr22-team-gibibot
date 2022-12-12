@@ -38,7 +38,7 @@ def main_loop():
     state=State.WAITING
     debug=True
     ref_cmds=False
-    basket_color = BasketColor.MAGENTA
+    basket_color = BasketColor.BLUE
 
     First_Ref=1
     ref=client.Client()
@@ -59,7 +59,7 @@ def main_loop():
     mid_offset = 11
     reso_x_mid = cam.rgb_width/2 + mid_offset #443
     
-    spin = 26
+    spin = 21
     radius = 365
     ball_right_side = 0
     basket_right_side = 1
@@ -75,9 +75,9 @@ def main_loop():
     orbit_thresh = 340
 
     #move state constants
-    max_move_Xspeed = 0.8
+    max_move_Xspeed = 1
     max_move_Yspeed = 2.5
-    max_move_Rspeed = 4
+    max_move_Rspeed = 5
     change_move_X = 0.01
     change_move_Y = 0.005
     change_move_R = 0.01
@@ -91,7 +91,7 @@ def main_loop():
         while True:
             #print("------------------------- Current state: ", state, "-------------------------")
             speed_T = 0
-            grabber = 6000
+            grabber = 6900
             thrower_angle = 6900
             if state == State.THROW or state == State.TMOTOR or state == State.TESTCAMERA:
                 processed_Data = processor.process_frame(aligned_depth=True)
@@ -101,10 +101,12 @@ def main_loop():
             if(processed_Data.basket_b.exists or processed_Data.basket_m.exists):
                 basket_exists = True
                 
+                
                 if basket_color == BasketColor.MAGENTA:
                     basket = processed_Data.basket_m
                 elif basket_color == BasketColor.BLUE:
                     basket = processed_Data.basket_b
+                print('kaugus korvist ',basket.distance)
                 
             else:
                 basket_exists=False
@@ -214,7 +216,7 @@ def main_loop():
                 else:
                     start_time = time.time()
                     timer = True
-                if elapsed_time > 2.5 and basket_exists:
+                if elapsed_time > 2.2 and basket_exists:
                     state = State.NO_BALLS
 
                 if len(processed_Data.balls) != 0:
@@ -228,14 +230,14 @@ def main_loop():
             elif state == State.NO_BALLS:
                 if (basket_exists):
                     
-                    if processed_Data.basket_b.distance > 150:
+                    if processed_Data.basket_b.distance > 110:
                         basket_no_ball = processed_Data.basket_b
                         speed_Y = calculator.sig_approach(basket_no_ball.y,max_move_Yspeed, change_move_Y)
                         speed_R = -(calculator.sig_correction_move(basket_no_ball.x,max_move_Rspeed, change_move_R))
                         speed_X = calculator.sig_correction_move(basket_no_ball.x,max_move_Xspeed, change_move_X)
                         robot.move(speed_X, speed_R, speed_Y, speed_T, thrower_angle, grabber)
 
-                    elif processed_Data.basket_m.distance > 150:
+                    elif processed_Data.basket_m.distance > 110:
                         basket_no_ball = processed_Data.basket_m
                         speed_Y = calculator.sig_approach(basket_no_ball.y,max_move_Yspeed, change_move_Y)
                         speed_R = -(calculator.sig_correction_move(basket_no_ball.x,max_move_Rspeed, change_move_R))
@@ -303,12 +305,11 @@ def main_loop():
                     x_cord=targeted_ball.x
                     y_cord=targeted_ball.y
                     dist=targeted_ball.distance
-                    if dist < 365:
+                    if dist > 470:
                         speed_R=0
                         speed_X=0
-                        speed_Y=0.4
                     else:
-                        speed_Y = calculator.sig_approach(y_cord,max_move_Yspeed, change_move_Y)
+                        #speed_Y = calculator.sig_approach(y_cord,max_move_Yspeed, change_move_Y)
                         speed_R = -(calculator.sig_correction_move(x_cord,max_move_Rspeed, change_move_R))
                         speed_X = calculator.sig_correction_move(x_cord,max_move_Xspeed, change_move_X)
 
@@ -344,10 +345,10 @@ def main_loop():
                 #<
 
 
-                if basket.exists and basket.distance<=150:
+                if basket.exists and (basket.distance<=200 and basket.distance>=90):
                     state = State.CALIBRATION
                     
-                elif basket.exists and basket.distance>150:
+                elif basket.exists and (basket.distance>200 or basket.distance<90):
                     state = State.MOVE_BASKET
                     
                 
@@ -361,13 +362,22 @@ def main_loop():
                 grabber=4800
                 if (basket.exists):
                     
-                    if basket.distance >=250:
+                    
+                    if basket.distance<=90:
+                        speed_Y = -calculator.sig_approach(basket.y,max_move_Yspeed, change_move_Y)
+                        speed_R = (calculator.sig_correction_move(basket.x,max_move_Rspeed, change_move_R))
+                        speed_X = -calculator.sig_correction_move(basket.x,max_move_Xspeed, change_move_X)
+                        robot.move(speed_X, speed_R, speed_Y, speed_T, thrower_angle, grabber)
+
+
+                    elif basket.distance >=200:
                         speed_Y = calculator.sig_approach(basket.y,max_move_Yspeed, change_move_Y)
                         speed_R = -(calculator.sig_correction_move(basket.x,max_move_Rspeed, change_move_R))
                         speed_X = calculator.sig_correction_move(basket.x,max_move_Xspeed, change_move_X)
                         robot.move(speed_X, speed_R, speed_Y, speed_T, thrower_angle, grabber)
                     
-                    elif basket.distance >250:
+                    
+                    elif basket.distance <200 and basket.distance>90:
                         state=State.CALIBRATION
 
                     else:
@@ -381,8 +391,8 @@ def main_loop():
                 try:
                 
                     print("----CALIBRATION----")
-                    speed_T = int(calculator.calc_throwingSpeed(basket.distance))
-                    speed_R = -(calculator.sig_correction_move(basket.x, 3, 0.008))
+                    speed_T = 0
+                    speed_R = -(calculator.sig_correction_move(basket.x, 4, 0.008))
                     speed_Y = 0
                     grabber = 3000
                     speed_X = 0
@@ -396,6 +406,7 @@ def main_loop():
                     print('Elapsed time: ', elapsed_time)
                     if elapsed_time > 0.2:
                         grabber=4800
+                        speed_T = int(calculator.calc_throwingSpeed(basket.distance))
                     if elapsed_time > 1:
                         state = State.THROW
                         elapsed_time = 0
