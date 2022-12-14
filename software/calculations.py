@@ -27,45 +27,41 @@ class Calculations():
         return  wheel_ang_speed_mu
     
     def calc_throwingSpeed(self, basket_dist):
-        t_dist=[93,123,150,175,212,245,287,335,374,450]
-        t_speeds=[950,1010,1100,1175,1300,1400,1530,1700,1850,1990]
+        t_dist=[69,93,117,124,138,150,161,172,180,193,206,215,225,240,255,278,310,362,403]
+        t_speeds=[900,975,1075,1090,1145,1190,1225,1250,1285,1300,1350,1390,1430,1485,1525,1650,1775,2000,2725]
         desired_speed=0
         for i in range(len(t_dist)):
             if basket_dist<=t_dist[i]:
                 
-                #speed_T1=(basket_dist*t_speeds[i]/t_dist[i])
                 if i!=0:
                     percentage=(basket_dist-t_dist[i-1])/(t_dist[i]-t_dist[i-1])
-                    #speed_T2=(basket_dist*t_speeds[i-1]/t_dist[i-1])
                 elif i==0:
                     desired_speed=(basket_dist*t_speeds[i]/t_dist[i])
                     return desired_speed
                 
-                desired_speed=t_speeds[i-1]+(t_speeds[i]-t_speeds[i-1])*percentage+100
+                desired_speed=t_speeds[i-1]+(t_speeds[i]-t_speeds[i-1])*percentage
                 
                 return desired_speed
-        #speed_T=(speed_T1+speed_T2)/2 
         return desired_speed
 
     def sig_correction_move(self, xcord, max_speed, a=1):
 
         base = np.linspace(-424, 424, 849)
 
-        element = xcord - 19
+        element = xcord + 10
         
         element = max(element, 0)
+        element = min(element, 848)
 
         sigmoid = max_speed*2/(1 + np.exp(a*(-base)))
 
         speed = round((sigmoid[element] - max_speed), 2)
 
-        print("keskpunkt kiirus - ", round((sigmoid[443] - max_speed), 2))
-
         return speed
     
     def sig_approach(self, ycord, max_speed, a=1):
 
-        base = np.linspace(0, 480, 481)
+        base = np.linspace(0, 400, 481)
 
         sigmoid = (max_speed*2)/(1 + np.exp(a*(-base)))
 

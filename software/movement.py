@@ -34,8 +34,6 @@ class OmniRobot:
         
         self.comms.send_inf(wheelx, wheelr, wheely, speed_T, thrower_angle, grabber)
         self.ball_in_grabber = self.comms.ball_in_grabber
-        print('movefunktsiooni ball grabber - ', self.comms.ball_in_grabber)
-        print("movefunktsioonis tema classi ball in grabber - ", self.ball_in_grabber)
 
     def test_thrower(self, speed_T, speed_Y):
         self.move(0,0,speed_Y,speed_T,6900,6900)

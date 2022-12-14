@@ -17,7 +17,8 @@ class Communication:
                 self.Data=struct.unpack('<hhhH', self.RecvData)
                 #self.testSerial.close()
                 #self.port=self.testPort
-            except:
+            except Exception as e:
+                print(e)
                 continue
             #finally:
                 #self.Serial=serial.Serial(self.port, baudrate=9600, timeout=2)
@@ -28,7 +29,6 @@ class Communication:
         try:
             inf_out=struct.pack('<hhhHHHH', speed1, speedr, speed3, thrower_speed, thrower_angle, grabber, 0xAAAA)
             self.Serial.write(inf_out)
-            print("Data sent: ", speed1, speedr, speed3, thrower_speed, thrower_angle, grabber, 0xAAAA)
             inf_in=self.Serial.read(8)
             ball_detected, actual_speedr, actual_speed3,feedback_delimiter = struct.unpack('<hhhH', inf_in)
             self.ball_in_grabber = ball_detected

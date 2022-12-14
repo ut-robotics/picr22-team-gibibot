@@ -94,8 +94,7 @@ class ImageProcessor():
         elif distance_m != -1:
             basket_distance = distance_m
         elif distance_b == -1 or distance_m == -1:
-            basket_distance = 60
-        #print("BASKET DISTANCE IMAGES: ", basket_distance)
+            basket_distance = 25
 
         balls = []
         
@@ -107,7 +106,7 @@ class ImageProcessor():
 
             size = cv2.contourArea(contour)
 
-            if size < 15:
+            if size < 20:
                 continue
 
             x, y, w, h = cv2.boundingRect(contour)
@@ -123,12 +122,15 @@ class ImageProcessor():
             obj_y = int(y + (h/2))
             obj_dst = obj_y
 
+            if not inside or 15 > basket_distance or w/h > 4 or obj_y < 40:
+                continue
+
             if self.debug:
                 self.debug_frame[ys, xs] = [0, 0, 0]
                 cv2.circle(self.debug_frame,(obj_x, obj_y), 10, (0,255,0), 2)
 
-            if (inside or obj_y > 350) and 50 < basket_distance :
-                balls.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
+            
+            balls.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
         
         balls.sort(key= lambda x: x.size)
 
@@ -160,7 +162,9 @@ class ImageProcessor():
             except:
                 obj_dst = depth_frame[obj_y, obj_x] / 10
 
-            baskets.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
+            if h > 50:
+
+                baskets.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
 
         baskets.sort(key= lambda x: x.size)
 
