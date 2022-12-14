@@ -10,7 +10,7 @@ class Calculations():
         self.pid_freq=60
         self.gearbox_reduction_ratio=18.75
         self.enc_edges_per_motor_rev=64
-        self.wheel_angles=[240,0,120]
+        self.wheel_angles=[240,120,0]
         self.wheel_radius=0.07
         self.disable_failsafe=1
         self.wheelSpeedTo_mu=self.gearbox_reduction_ratio*self.enc_edges_per_motor_rev/(2.0*pi*self.wheel_radius*self.pid_freq)
@@ -27,16 +27,14 @@ class Calculations():
         return  wheel_ang_speed_mu
     
     def calc_throwingSpeed(self, basket_dist):
-        t_dist=[53,72,94,118,143,165,190,222,248,290,310,350,390,430]
-        t_speeds=[475,500,565,600,670,720,785,830,860,930,990,1050,1200,1300]
+        t_dist=[69,93,117,124,138,150,161,172,180,193,206,215,225,240,255,278,310,362,403]
+        t_speeds=[900,975,1075,1090,1145,1190,1225,1250,1285,1300,1350,1390,1430,1485,1525,1650,1775,2000,2725]
         desired_speed=0
         for i in range(len(t_dist)):
             if basket_dist<=t_dist[i]:
                 
-                #speed_T1=(basket_dist*t_speeds[i]/t_dist[i])
                 if i!=0:
                     percentage=(basket_dist-t_dist[i-1])/(t_dist[i]-t_dist[i-1])
-                    #speed_T2=(basket_dist*t_speeds[i-1]/t_dist[i-1])
                 elif i==0:
                     desired_speed=(basket_dist*t_speeds[i]/t_dist[i])
                     return desired_speed
@@ -44,28 +42,26 @@ class Calculations():
                 desired_speed=t_speeds[i-1]+(t_speeds[i]-t_speeds[i-1])*percentage
                 
                 return desired_speed
-        #speed_T=(speed_T1+speed_T2)/2 
         return desired_speed
 
     def sig_correction_move(self, xcord, max_speed, a=1):
 
         base = np.linspace(-424, 424, 849)
 
-        element = xcord - 19
+        element = xcord + 10
         
         element = max(element, 0)
+        element = min(element, 848)
 
         sigmoid = max_speed*2/(1 + np.exp(a*(-base)))
 
         speed = round((sigmoid[element] - max_speed), 2)
 
-        print("keskpunkt kiirus - ", round((sigmoid[443] - max_speed), 2))
-
         return speed
     
     def sig_approach(self, ycord, max_speed, a=1):
 
-        base = np.linspace(0, 480, 481)
+        base = np.linspace(0, 400, 481)
 
         sigmoid = (max_speed*2)/(1 + np.exp(a*(-base)))
 
@@ -81,7 +77,7 @@ class Calculations():
 
         element = ycord - 342
         
-        element = max(element 0)
+        element = max(element, 0)
         element = min(element, 104)
 
         sigmoid = max_speed*2/(1 + np.exp(a*(-base)))
