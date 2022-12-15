@@ -1,4 +1,5 @@
 from numba import jit
+import numpy as np
 
 @jit(nopython=True)
 def color_sequence(column):
@@ -21,6 +22,8 @@ def color_sequence(column):
             counter = 0
         if counter > count_thresh:
             sequence.append(element)
+    # if len(sequence) == 0:
+    #     sequence = [np.array([1], dtype=np.uint8)[0]]
     return sequence
 
 @jit(nopython=True)
@@ -32,12 +35,14 @@ def is_inside(sequence):
         value = True
         return value
     for i in sequence:
-        if i == 6:
-            if last_colour == 5:
+        if i == 6:#BLACK
+            if last_colour == 5:#WHITE
                 value = True
-            elif last_colour == 4:
+            elif last_colour == 4:#ORANGE
                 value = False
         last_colour = i
+    if sequence[-1] == 1:
+        value =  True
     return value    
 
 # Real Data:  0 0 0 43690

@@ -27,8 +27,8 @@ class Calculations():
         return  wheel_ang_speed_mu
     
     def calc_throwingSpeed(self, basket_dist):
-        t_dist=[69,93,117,124,138,150,161,172,180,193,206,215,225,240,255,278,310,362,403]
-        t_speeds=[900,975,1075,1090,1145,1190,1225,1250,1285,1300,1350,1390,1430,1485,1525,1650,1775,2000,2725]
+        t_dist=[69,93,109,117,124,138,150,161,172,180,191,206,215,225,240,255,278,301,310,322,345,362,400,420,430]
+        t_speeds=[900,975,1015,1075,1090,1145,1190,1225,1250,1285,1310,1350,1390,1430,1485,1525,1650,1700,1775,1800,1855,1990,2050,2125,2175]
         desired_speed=0
         for i in range(len(t_dist)):
             if basket_dist<=t_dist[i]:
@@ -48,7 +48,7 @@ class Calculations():
 
         base = np.linspace(-424, 424, 849)
 
-        element = xcord + 10
+        element = xcord + 0
         
         element = max(element, 0)
         element = min(element, 848)

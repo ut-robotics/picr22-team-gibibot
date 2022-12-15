@@ -111,7 +111,7 @@ class ImageProcessor():
 
             x, y, w, h = cv2.boundingRect(contour)
 
-            ys	= np.array(np.arange(y + h, self.camera.rgb_height-30), dtype=np.uint16)
+            ys	= np.array(np.arange(y + h, self.camera.rgb_height), dtype=np.uint16)
             xs	= np.array(np.linspace(x + w/2, self.camera.rgb_width / 2, num=len(ys)), dtype=np.uint16)
 
             line_to_ball = fragments[ys, xs]
@@ -122,14 +122,15 @@ class ImageProcessor():
             obj_y = int(y + (h/2))
             obj_dst = obj_y
 
-            if not inside or 15 > basket_distance or w/h > 4 or obj_y < 40:
+
+            if not inside or 15 > basket_distance  or obj_y < 40 or w/h > 4:
                 continue
 
             if self.debug:
                 self.debug_frame[ys, xs] = [0, 0, 0]
                 cv2.circle(self.debug_frame,(obj_x, obj_y), 10, (0,255,0), 2)
 
-            
+            #if inside:
             balls.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
         
         balls.sort(key= lambda x: x.size)
@@ -155,6 +156,10 @@ class ImageProcessor():
 
             obj_x = int(x + (w/2))
             obj_y = int(y + (h/2))
+
+            # if h/w > 4:
+            #     continue
+
             try:
                 
                 distance_arr = depth_frame[obj_y-10:obj_y+10, obj_x-10:obj_x+10]
@@ -198,12 +203,14 @@ class ImageProcessor():
         
         value = True
 
-        np.trim_zeros(line)
+        line = np.trim_zeros(line)
+
 
         colours = color_sequence(line)
 
+
         if len(colours) == 0:
-            value = False
+            value = True
         else:
             value = is_inside(colours)
 
