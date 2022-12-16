@@ -94,7 +94,7 @@ class ImageProcessor():
         elif distance_m != -1:
             basket_distance = distance_m
         elif distance_b == -1 or distance_m == -1:
-            basket_distance = 25
+            basket_distance = 40
 
         balls = []
         
@@ -123,7 +123,7 @@ class ImageProcessor():
             obj_dst = obj_y
 
 
-            if not inside or 15 > basket_distance  or obj_y < 40 or w/h > 4:
+            if not inside or 30 > basket_distance  or obj_y < 40 or w/h > 4:
                 continue
 
             if self.debug:

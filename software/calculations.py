@@ -48,7 +48,7 @@ class Calculations():
 
         base = np.linspace(-424, 424, 849)
 
-        element = xcord + 0
+        element = xcord - 2
         
         element = max(element, 0)
         element = min(element, 848)

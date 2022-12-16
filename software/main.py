@@ -36,10 +36,11 @@ class BasketColor(Enum):
 
 
 def main_loop():
-    state=State.TMOTOR
+    state=State.WAITING
+
     debug=True
-    ref_cmds=False
-    basket_color = BasketColor.MAGENTA
+    ref_cmds=True
+    basket_color = BasketColor.BLUE
 
     First_Ref=1
     ref=client.Client()
@@ -57,7 +58,7 @@ def main_loop():
     frame = 0
     frame_cnt = 0
     
-    mid_offset = 0
+    mid_offset = -2
     reso_x_mid = cam.rgb_width/2 + mid_offset #443
     
     spin = 40
@@ -342,15 +343,15 @@ def main_loop():
                 elif not grab_timer:
                     grab_start_time = time.time()
                     grab_timer = True
-                if grab_elapsed_time > 3:
+                if grab_elapsed_time > 1.5:
                     state=State.FIND_BALL
                     grab_elapsed_time=0
                     grab_timer=False
                 #If there is ball
-                grabber=6800
+                grabber=6600
                 speed_R=0
                 speed_X=0
-                speed_Y=0.55
+                speed_Y=0.60
                 if len(processed_Data.balls) > 0:
                     targeted_ball=processed_Data.balls[-1]
                     x_cord=targeted_ball.x
@@ -450,7 +451,7 @@ def main_loop():
                     
                     
                     if basket.distance<=65:
-                        speed_Y = -calculator.sig_approach(basket.y,max_move_Yspeed, change_move_Y)
+                        speed_Y = -calculator.sig_approach(basket.y,max_move_Yspeed-0.5, change_move_Y)
                         speed_R = -(calculator.sig_correction_move(basket.x,max_move_Rspeed, change_move_R))
                         speed_X = -calculator.sig_correction_move(basket.x,max_move_Xspeed, change_move_X)
                         robot.move(speed_X, speed_R, speed_Y, speed_T, thrower_angle, grabber)
@@ -482,7 +483,7 @@ def main_loop():
                     speed_T = 0
                     speed_R = -(calculator.sig_correction_move(basket.x, 4, 0.011))
                     speed_Y = 0
-                    grabber = 3000
+                    grabber = 2750
                     speed_X = 0
                     
                     
@@ -491,8 +492,9 @@ def main_loop():
                     else:
                         start_time = time.time()
                         timer = True
-                    if elapsed_time > 0.2:
+                    if elapsed_time > 0.23:
                         grabber=4800
+                    if elapsed_time > 0.3:
                         speed_T = int(calculator.calc_throwingSpeed(basket.distance))
                     if elapsed_time > 1: #and basket.x>reso_x_mid-10 and basket.x<reso_x_mid+10:
                         state = State.THROW
