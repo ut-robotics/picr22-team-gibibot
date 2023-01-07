@@ -29,10 +29,10 @@ The mainboard can control 3 motors and 2 servos. The motor drivers are powered b
 === Good
 * Everyting worked in the end and we won Delta-X and the course competition.
 
-image::https://user-images.githubusercontent.com/112662827/211169992-68409b84-9493-466a-b800-7c67e5b26b65.jpg[Tux,500,500]
-image::https://user-images.githubusercontent.com/112662827/211169998-20ac7f89-c637-45fc-b4ae-4e3fb1bdacac.jpg[Tux,500,500]
-image::https://user-images.githubusercontent.com/112662827/211170003-e3264e73-28b2-42e0-b00a-e51ef2a45c92.jpg[Tux,500,500]
-image::https://user-images.githubusercontent.com/112662827/211170010-b454fe8b-06f9-461d-827f-3709ff7763a9.jpg[Tux,950,500]
+image::https://user-images.githubusercontent.com/112662827/211169992-68409b84-9493-466a-b800-7c67e5b26b65.jpg[500,500]
+image::https://user-images.githubusercontent.com/112662827/211169998-20ac7f89-c637-45fc-b4ae-4e3fb1bdacac.jpg[500,500]
+image::https://user-images.githubusercontent.com/112662827/211170003-e3264e73-28b2-42e0-b00a-e51ef2a45c92.jpg[500,500]
+image::https://user-images.githubusercontent.com/112662827/211170010-b454fe8b-06f9-461d-827f-3709ff7763a9.jpg[950,500]
 
 == Mechanics
 
