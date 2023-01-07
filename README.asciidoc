@@ -1,265 +1,257 @@
-Team members: Robert Valge, Argo Aljand, Marc Ander Etti, Raimo Köidam
-[%hardbreaks]
-Fusion 360 link: https://a360.co/3fKQEJi  
-[%hardbreaks]
----Progress blog---
-[%hardbreaks]
----12.09.22---
-[%hardbreaks]
-Starting the designe of the thrower. -Marc 10h
-[%hardbreaks]
-Configuration of the communication between the motherboard and the computer. -Argo -Robert 5h
-[%hardbreaks]
-VNC setup. -Argo -Robert 2h
-[%hardbreaks]
-Soldering wires and connectors. -Raimo 3h
-[%hardbreaks]
+= GibiBot
 
----15.09.22---
-Image processing, basic movement. -Argo -Robert 3h
-[%hardbreaks]
-Soldering wires and connectors. -Raimo 3h
-[%hardbreaks]
-Thrower designe. -Marc 8h
-[%hardbreaks]
+== Team members
 
----19.09.22---
-Thrower designe. -Marc 5h
-[%hardbreaks]
+* *Robert Valge* (Programming)
+* *Argo Aljand* (Programming)
+* *Marc Ander Etti* (Mechanics)
+* *Raimo Köidam* (Electronics)
 
----21.09.22---
-Mainboard design started - Raimo 2h
-VNC setup vol2 - Argo & Robert 1h
-[%hardbreaks]
+== Links
 
----22.09.22---
-Made code easier to understand, removed unnecessary parts of code - Robert 2h
-Battery and code test - Raimo & Robert 2h
-[%hardbreaks]
+*Fusion 360 link:* https://a360.co/3fKQEJi  
 
-
----26.09.22---
-Robot finds and centers ball, got robot moving - Raimo, Robert, Argo, 2.5h
-Worked on thrower - Marc 2,5h
-[%hardbreaks]
-
----29.09.22---
-Mainboard schematic - Raimo 2,5h
-secure_ball, omni funcktion implementation - Argo 3.5h
-code structure corrections - Argo 0.5h
-
-[%hardbreaks]
-
----02.10.22---
-Worked on thrower - Marc 2h
-[%hardbreaks]
-
----03.10.22---
-Worked on thrower - Marc 2h
-Mainboard schematic - Raimo 2h
-[%hardbreaks]
-
----06.10.22---
-Robot can find and follow the ball - Argo, Robert 2.5h
-Mainboard PCB design - Raimo 2h
-[%hardbreaks]
-
----10.10.22---
-Mainboard PCB design - Raimo 1,5h
-Worked on robot's movement - Argo, Robert 2h
-[%hardbreaks]
-
----13.10.22---
-Tested movement and fixed some bugs. Also implemented some functions related to speed- Argo, Robert 4h
-[%hardbreaks]
-
----17.10.22---
-Mainboard PCB design - Raimo 2h
-[%hardbreaks]
-
----19.10.22---
-Started to fix problems that instructors mentioned - Robert 1,5h
-[%hardbreaks]
----20.10.22---
-Orbit and throw functions and made following better - Robert 9,5h
-Made the robot wiring a bit better, Mainboard PCB design - Raimo 2,5h
-[%hardbreaks]
-
----22.10.22---
-Looked through the review summary and fixed some ofthe problems in the PCB design - Raimo 4h
-[%hardbreaks]
-
----24.10.22---
-Worked on thrower code - Robert 3h
-Looked through the review summary and fixed some ofthe problems in the PCB design - Raimo 2h
-
-[%hardbreaks]
----26.11.22---
-Mechanics - Marc, 1h
-
-[%hardbreaks]
----27.10.22---
-Linux setup vol2, nucleo replacement, new test to see that everything works again - Robert, Argo  7h
-Modded the new nucleo - Raimo 0,5h
-Looked through the review summary and fixed some ofthe problems in the PCB design - Raimo 2h
-
-[%hardbreaks]
----28.10.22---
-Thrower measurements and calculations code - Robert 2,5h
-
-[%hardbreaks]
----29.10.22---
-New thrower measurements, better aim, test runs on court - Robert 8h, Argo 4h
-Distance measuring function implementation - Robert, Argo 2h
-
-[%hardbreaks]
----30.10.22---
-Different enums, made code cleaner, removed issues  - Robert 1,5h
-Fixed some issues with the PCB design - Raimo 2h
-
-[%hardbreaks]
----31.10.22---
-Previous changes tested - Robert, Argo 5h
-Fixed some issues with the PCB design - Raimo 6h
-
-[%hardbreaks]
----01.11.22---
-Fixed some issues with the PCB design and made some changes - Raimo 5h
-
-[%hardbreaks]
----02.11.22---
-Fixed some issues with the PCB design and made some changes - Raimo 2h
-
-[%hardbreaks]
----03.11.22---
-Calibration state - Robert 5h
-
-[%hardbreaks]
----04.11.22---
-Mechanics problems - Marc, 2h
-
-[%hardbreaks]
----06.11.22---
-Line detection - Argo 2,5h
-Distance measuring from deapth frame with numpy - Argo, Robert 4h
-Fixed the final issues with the design and added gerber files - Raimo 2h
-
-[%hardbreaks]
----07.11.22---
-Fixed some issues and improved code  - Robert 3h
-Worked on mainboard documentation - Raimo 1.5h
-
-[%hardbreaks]
----09.11.22---
-Fixed thrower's mechanical issue and worked on main file- Robert, Argo 1h
-
-
-[%hardbreaks]
----10.11.22---
-Test competition and new measurements - Argo, Robert 7h
-
-[%hardbreaks]
----12.11.22---
-Base plate design - Marc, 3h
-
-[%hardbreaks]
----14.11.22---
-Bottom and top plate design - Marc, 3h
-Firmware - Raimo 2h
-
-[%hardbreaks]
----17.11.22---
-Firmware - Raimo 2h
-
-[%hardbreaks]
----19.11.22---
-Chassis and wheels design - Marc, 2h
-
-[%hardbreaks]
----20.11.22---
-Chassis design - Marc, 3h
-
-[%hardbreaks]
----21.11.22---
-Ref commands and other stuff - Robert 4h
-setting up line dedection with @jit - Argo 3h
-Thrower and chassis design - Marc 8h
-Soldering mainboard - Raimo 4.5h
-
-[%hardbreaks]
----22.11.22---
-line dedection using @jit - Argo 3h
-Soldering mainboard - Raimo 3h
-
-[%hardbreaks]
----23.11.22---
-Soldering mainboard - Raimo 3h
-
-[%hardbreaks]
----24.11.22---
-New thrower measurments, throwing calibration corrections, second test competition - Argo, Robert 6h
-
-[%hardbreaks]
----25.11.22---
-first sigmoid controller implementation - Argo 2h, Robert 1h
-
-[%hardbreaks]
----27.11.22---
-Sigmoid fully implemented and tested - Robert 3h, Argo 4.5h  
-Github Issues - Marc 5h 
-
-[%hardbreaks]
----28.11.22---
-Fixed some mainboard issues - Raimo 4h
-
-[%hardbreaks]
----30.11.22---
-Tested the mainboard and made some wires - Raimo 2h
-
-[%hardbreaks]
----01.12.22---
-Thrower and Electronics in Fusion - Marc 7h
-Mainboard firmware - Raimo 3h
-
-[%hardbreaks]
----02.12.22---
-Front guards and github issues - Marc 4h
-Front guards - Marc 3h  
-
-[%hardbreaks]
----03.12.22---
-Issues - Marc 3h  
-Mainboard firmware - Raimo 4h
-
-[%hardbreaks]
----04.12.22---
-Manufacturing - Marc 1h  
-
-[%hardbreaks]
----05.12.22---
-Manufacturing - Marc 4h  
-Firmware for the sensor and servos. Made the sensor - Raimo 6h
-
-[%hardbreaks]
----07.12.22---
-Tried to fix the problems with the motors. Improved the firmware - Raimo 9.5h
-New robot fabrication and code testing. - Robert, Argo 10h, Marc 9h
-
-[%hardbreaks]
----08.12.22---
-Tried to fix the problems with the motors - Raimo 10h, Robert 7h, Argo 5h
-
-
-[%hardbreaks]
----09.12.22---
-Fixed the mainboard, fixed the sensor wire - Raimo 5.5h
-
-[%hardbreaks]
----10.12.22---
-Changed the sensor feedback in the firmware, helped testing the robot - Raimo 4h
-Fully implemented code for new robot, also tested it - Robert, Argo 7h
+== Programming
 
 
 
+== Electronics
+
+The electronics of the robot use the components that were recommended and provided by the instrucors.
+The mainboard can control 3 motors and 2 servos. The motor drivers are powered by a 4S LiPo battery and the microcontroller side is powered through the usb connector by the NUC computer. The USB connection is also used to communicate between the microcontroller and the computer. There is a connector for an IR sensor to detect the ball in the holder. The microcontroller will let the computer know when the IR sensor detects a ball.
+
+=== Bad
+* After soldering all the components, there was a problem with the 5V on the battery side of the board. It turned out that one of the pins of the switching regulator was not connected.
+* Some of the PWM and DIR pins connections were swapped. Needed to hack the board to fix it.
+* Micro USB connector broke and had to be replaced.
+* IR sensor wire broke during the robot assembly and it needed to be fixed.
+
+=== Good
+* Everyting worked in the end and we won Delta-X and the course competition.
+
+== Mechanics
 
 
+
+== Personal comments
+
+=== Robert:
+
+=== Argo:
+
+=== Marc:
+
+=== Raimo:
+==== On which parts of the robot did you work on?
+I worked on the electronics and the firmware of the robot.
+
+===== What did you learn?
+I learned to use Altium Designer. I also learned more about electronics and pcb design. Also I learned how to use the STM32CubeIDE and to write firmware for the stm32 microcontroller.
+
+===== What would you do differently next time?
+I would try to design the electronics a little earlier so that there would be a bit more time to fix the issues that will pop up.
+
+===== What did you like/did not like about the course/building a robot?
+I liked the practical experience. I also liked that the instructors were always ready to help. I would have liked to have a bit more time to work on the robot before the competition.
+
+===== Suggestions for next year students.
+I recommend starting with the electronics design early.
+
+===== Suggestions for instructors.
+I don't have any sugestions for the instructors.
+
+== Progress blog
+
+=== 12.09.22
+* Starting the designe of the thrower. - Marc 10h
+* Configuration of the communication between the motherboard and the computer. - Argo, Robert 5h
+* VNC setup. - Argo, Robert 2h
+* Soldering wires and connectors. - Raimo 3h
+
+=== 15.09.22
+* Image processing, basic movement. - Argo, Robert 3h
+* Soldering wires and connectors. - Raimo 3h
+* Thrower designe. - Marc 8h
+
+=== 19.09.22
+* Thrower designe. - Marc 5h
+
+=== 21.09.22
+* Mainboard design started - Raimo 2h
+* VNC setup vol2 - Argo, Robert 1h
+
+=== 22.09.22
+* Made code easier to understand, removed unnecessary parts of code - Robert 2h
+* Battery and code test - Raimo, Robert 2h
+
+=== 26.09.22
+* Robot finds and centers ball, got robot moving - Raimo, Robert, Argo, 2.5h
+* Worked on thrower - Marc 2.5h
+
+=== 29.09.22
+* Mainboard schematic - Raimo 2.5h
+* secure_ball, omni funcktion implementation - Argo 3.5h
+* code structure corrections - Argo 0.5h
+
+=== 02.10.22
+* Worked on thrower - Marc 2h
+
+=== 03.10.22
+* Worked on thrower - Marc 2h
+* Mainboard schematic - Raimo 2h
+
+=== 06.10.22
+* Robot can find and follow the ball - Argo, Robert 2.5h
+* Mainboard PCB design - Raimo 2h
+
+=== 10.10.22
+* Mainboard PCB design - Raimo 1.5h
+* Worked on robot's movement - Argo, Robert 2h
+
+=== 13.10.22
+* Tested movement and fixed some bugs. Also implemented some functions related to speed- Argo, Robert 4h
+
+=== 17.10.22
+* Mainboard PCB design - Raimo 2h
+
+=== 19.10.22
+* Started to fix problems that instructors mentioned - Robert 1.5h
+
+=== 20.10.22
+* Orbit and throw functions and made following better - Robert 9.5h
+* Made the robot wiring a bit better, Mainboard PCB design - Raimo 2.5h
+
+=== 22.10.22
+* Looked through the review summary and fixed some ofthe problems in the PCB design - Raimo 4h
+
+=== 24.10.22
+* Worked on thrower code - Robert 3h
+* Looked through the review summary and fixed some ofthe problems in the PCB design - Raimo 2h
+
+=== 26.11.22
+* Mechanics - Marc, 1h
+
+=== 27.10.22
+* Linux setup vol2, nucleo replacement, new test to see that everything works again - Robert, Argo  7h
+* Modded the new nucleo - Raimo 0.5h
+* Looked through the review summary and fixed some ofthe problems in the PCB design - Raimo 2h
+
+=== 28.10.22
+* Thrower measurements and calculations code - Robert 2.5h
+
+=== 29.10.22
+* New thrower measurements, better aim, test runs on court - Robert 8h, Argo 4h
+* Distance measuring function implementation - Robert, Argo 2h
+
+=== 30.10.22
+* Different enums, made code cleaner, removed issues  - Robert 1,5h
+* Fixed some issues with the PCB design - Raimo 2h
+
+=== 31.10.22
+* Previous changes tested - Robert, Argo 5h
+* Fixed some issues with the PCB design - Raimo 6h
+
+=== 01.11.22
+* Fixed some issues with the PCB design and made some changes - Raimo 5h
+
+=== 02.11.22
+* Fixed some issues with the PCB design and made some changes - Raimo 2h
+
+=== 03.11.22
+* Calibration state - Robert 5h
+
+=== 04.11.22
+* Mechanics problems - Marc, 2h
+
+=== 06.11.22
+* Line detection - Argo 2,5h
+* Distance measuring from deapth frame with numpy - Argo, Robert 4h
+* Fixed the final issues with the design and added gerber files - Raimo 2h
+
+=== 07.11.22
+* Fixed some issues and improved code  - Robert 3h
+* Worked on mainboard documentation - Raimo 1.5h
+
+=== 09.11.22
+* Fixed thrower's mechanical issue and worked on main file- Robert, Argo 1h
+
+=== 10.11.22
+* Test competition and new measurements - Argo, Robert 7h
+
+=== 12.11.22
+* Base plate design - Marc, 3h
+
+=== 14.11.22
+* Bottom and top plate design - Marc, 3h
+* Firmware - Raimo 2h
+
+=== 17.11.22
+* Firmware - Raimo 2h
+
+=== 19.11.22
+* Chassis and wheels design - Marc, 2h
+
+=== 20.11.22
+* Chassis design - Marc, 3h
+
+=== 21.11.22
+* Ref commands and other stuff - Robert 4h
+* setting up line dedection with @jit - Argo 3h
+* Thrower and chassis design - Marc 8h
+* Soldering mainboard - Raimo 4.5h
+
+=== 22.11.22
+* line dedection using @jit - Argo 3h
+* Soldering mainboard - Raimo 3h
+
+=== 23.11.22
+* Soldering mainboard - Raimo 3h
+
+=== 24.11.22
+* New thrower measurments, throwing calibration corrections, second test competition - Argo, Robert 6h
+
+=== 25.11.22
+* first sigmoid controller implementation - Argo 2h, Robert 1h
+
+=== 27.11.22
+* Sigmoid fully implemented and tested - Robert 3h, Argo 4.5h  
+* Github Issues - Marc 5h 
+
+=== 28.11.22
+* Fixed some mainboard issues - Raimo 4h
+
+=== 30.11.22
+* Tested the mainboard and made some wires - Raimo 2h
+
+=== 01.12.22
+* Thrower and Electronics in Fusion - Marc 7h
+* Mainboard firmware - Raimo 3h
+
+=== 02.12.22
+* Front guards and github issues - Marc 4h
+* Front guards - Marc 3h  
+
+=== 03.12.22
+* Issues - Marc 3h  
+* Mainboard firmware - Raimo 4h
+
+=== 04.12.22
+* Manufacturing - Marc 1h  
+
+=== 05.12.22
+* Manufacturing - Marc 4h  
+* Firmware for the sensor and servos. Made the sensor - Raimo 6h
+
+=== 07.12.22
+* Tried to fix the problems with the motors. Improved the firmware - Raimo 9.5h
+* New robot fabrication and code testing. - Robert, Argo 10h, Marc 9h
+
+=== 08.12.22
+* Tried to fix the problems with the motors - Raimo 10h, Robert 7h, Argo 5h
+
+=== 09.12.22
+* Fixed the mainboard, fixed the sensor wire - Raimo 5.5h
+
+=== 10.12.22
+* Changed the sensor feedback in the firmware, helped testing the robot - Raimo 4h
+* Fully implemented code for new robot, also tested it - Robert, Argo 7h
