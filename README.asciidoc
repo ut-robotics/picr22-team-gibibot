@@ -277,3 +277,18 @@ I don't have any suggestions for the instructors.
 === 10.12.22
 * Changed the sensor feedback in the firmware, helped testing the robot - Raimo 4h
 * Fully implemented code for new robot, also tested it - Robert, Argo 7h
+
+=== 12.12.22
+* Tested and improved new robot's code - Robert, Argo 7h
+
+=== 13.12.22
+* New measurements, changed some code - Robert, Argo 6h
+
+=== 14.12.22
+* Showed some programming tasks and did little modifications to code - Robert, Argo 8h
+
+=== 15.12.22
+* Final modifications, everything working, applied fur around the robot, new measurements - Robert, Argo 10h
+
+=== 16.12.22
+* DeltaX day - Robert, Argo, Raimo 6h
