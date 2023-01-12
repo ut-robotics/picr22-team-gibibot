@@ -33,6 +33,9 @@
 
 === Good and bad
 One of our code's strong side is sigmoid controller. It eliminated most of the if else sentences and also made the robot's movement better.
+Ball dedection and depth dedection could be improved by using better and more calculations.
+Timer that we used could be made into a function to make the code more compact.
+Line dedection is very reliable.
 
 
 
