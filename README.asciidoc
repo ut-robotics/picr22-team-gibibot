@@ -1,6 +1,6 @@
-We used TightVNC for working with robot.
+==Instructions how to setup and run the code
 
-1. Install TightVNC
+1. Install TightVNC or any other VNC (doesn't work with ssh)
 2. Connect to robot's computer using it's ip address 
 3. Clone the code from the github repository
 4. Make sure you are in the software folder before continuing
