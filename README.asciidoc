@@ -1,4 +1,4 @@
-==Instructions how to setup and run the code
+== Instructions how to setup and run the code
 
 1. Install TightVNC or any other VNC (doesn't work with ssh)
 2. Connect to robot's computer using it's ip address 
