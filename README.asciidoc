@@ -12,6 +12,24 @@
 *Fusion 360 link:* https://a360.co/3fKQEJi  
 
 == Programming
+=== Packages
+* math - for calculations
+* random - to make random choices
+* enum - to make State and Color Enums
+* time - for different timers, for example if robot is in FIND_BALL state for 3 seconds then it changes the state
+* pyrealsense2 - camera's library
+* threading - to make second thread for referee commands client
+* json - string manipulation
+* websockets - for client and referee server connection
+* asyncio - 
+* serial - needed for coding usb communication
+* struct - for packing information that is sent to the motherboard
+* serial.tools.list_ports - to check for available usb ports, so we don't have to find the correct port's name manually
+* jit_functions - used it in image processing, jit makes for loops much faster so we can go through lists much faster
+* numpy - 
+* cv2 - 
+* tkinter - 
+* websockets - to make our testing server for referee commands
 
 
 
