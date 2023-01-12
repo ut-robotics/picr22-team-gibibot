@@ -35,6 +35,9 @@
 
 Our code overall is section into files according to their usage (for example immage_processing.py and movement.py) to make the code less clutterd then if it was all in the same file. The fails contain mainly different classes and then we can import them according to our needs. The main code is structured so that every situatsion has a State that we can refere to to make the robot move accordingly.
 
+=== Block diagram of game logic
+image::
+
 === Good and bad
 
 * One of our code's strong side is sigmoid controller. It eliminated most of the if else sentences and also made the robot's movement better.
