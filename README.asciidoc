@@ -60,6 +60,23 @@ Get the robot moving as soon as possible so you get motivation to improve it dur
 I don’t have any suggestions or reproaches for the instructors.
 
 === Argo:
+==== On which parts of the robot did you work on?
+I worked on robot's code. Mainly on image processing.
+
+===== What did you learn? 
+I learned alot of different techniques to improve and optimise my code. Also bettered my coding habits to make code that is less prone to errors and keep my coding structure more clear.
+
+===== What would you do differently next time?
+Start earlier and make a structured plan going forward. Also follow the guide and requirements given to us on writing clear and structured code more precisely.
+
+===== What did you like/did not like about the course/building a robot?
+I liked buliding the robot from ground up and really enjoyed the programming process, trying to problem solve and make our robot better.
+
+===== Suggestions for next year students.
+The given code by the instructors may be overwhelming at first but step by step you get the hang of it. Always aske questions and help from the instructors if you don't understand something.
+
+===== Suggestions for instructors.
+The instructors were helpful and for me every thing went smoothly so I don't have any suggestions.
 
 === Marc:
 
