@@ -13,9 +13,9 @@
 
 == Programming
 === Packages
-* math - for calculations
+* math - used for calculating different math equasions for omni motion
 * random - to make random choices
-* enum - to make State and Color Enums
+* enum - used to make a state machine for movemnt and colours
 * time - for different timers, for example if robot is in FIND_BALL state for 3 seconds then it changes the state
 * pyrealsense2 - camera's library
 * threading - to make second thread for referee commands client
