@@ -31,6 +31,10 @@
 * tkinter - used it in the beginning to simulate omnimotion visually
 * websockets - to make our testing server for referee commands
 
+=== A brief description of your game logic and overall code structure.
+
+Our code overall is section into files according to their usage (for example immage_processing.py and movement.py) to make the code less clutterd then if it was all in the same file. The fails contain mainly different classes and then we can import them according to our needs. The main code is structured so that every situatsion has a State that we can refere to to make the robot move accordingly.
+
 === Good and bad
 
 * One of our code's strong side is sigmoid controller. It eliminated most of the if else sentences and also made the robot's movement better.
@@ -38,7 +42,6 @@
 * Timer that we used could be made into a function to make the code more compact.
 * Line dedection is very reliable.
 * Code was good enough to win DeltaX.
-
 
 
 == Electronics
