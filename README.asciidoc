@@ -31,6 +31,9 @@
 * tkinter - used it in the beginning to simulate omnimotion visually
 * websockets - to make our testing server for referee commands
 
+=== Good and bad
+One of our code's strong side is sigmoid controller. It eliminated most of the if else sentences and also made the robot's movement better.
+
 
 
 == Electronics
