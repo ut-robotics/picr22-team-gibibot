@@ -37,6 +37,7 @@
 * Ball dedection and depth dedection could be improved by using better and more calculations.
 * Timer that we used could be made into a function to make the code more compact.
 * Line dedection is very reliable.
+* Code was good enough to win DeltaX.
 
 
 
