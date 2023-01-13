@@ -52,13 +52,12 @@ image::https://user-images.githubusercontent.com/112713620/212192438-b3be92dc-77
 The electronics of the robot use the components that were recommended and provided by the instrucors.
 The mainboard can control 3 motors and 2 servos. The motor drivers are powered by a 4S LiPo battery and the microcontroller side is powered through the usb connector by the NUC computer. The USB connection is also used to communicate between the microcontroller and the computer. There is a connector for an IR sensor to detect the ball in the holder. The microcontroller will let the computer know when the IR sensor detects a ball.
 
-=== Bad
+=== Some problems that occured and the final outcome
 * After soldering all the components, there was a problem with the 5V on the battery side of the board. It turned out that one of the pins of the switching regulator was not connected.
 * Some of the PWM and DIR pins connections were swapped. Needed to hack the board to fix it.
 * Micro USB connector broke and had to be replaced.
 * IR sensor wire broke during the robot assembly and it needed to be fixed.
 
-=== Good
 * Everyting worked in the end and we won Delta-X and the course competition.
 
 image::https://user-images.githubusercontent.com/112662827/211169992-68409b84-9493-466a-b800-7c67e5b26b65.jpg[500,500]
@@ -341,3 +340,6 @@ I don't have any suggestions for the instructors.
 
 === 16.12.22
 * DeltaX day - Robert, Argo, Raimo 6h
+
+=== 17.12.22
+* Course competition - Raimo, Argo 5h
