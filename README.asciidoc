@@ -146,6 +146,24 @@ The instructors were helpful and for me every thing went smoothly so I don't hav
 
 === Marc:
 
+==== On which parts of the robot did you work on?
+I worked on the mechanical design of the robot and manufacture
+
+===== What did you learn? 
+I learned to use Fusion 360 quite good
+
+===== What would you do differently next time?
+I would read the instructions/limitations more thorough
+
+===== What did you like/did not like about the course/building a robot?
+I liked the teamwork and the ability to do something that will really be used. I did not like the presentations.
+
+===== Suggestions for next year students.
+Read the timeline
+
+===== Suggestions for instructors.
+Information about the course (tasks table, rules etc) is really hard to read/follow. There should also be more instructors, because they are overwhelmed with work at when all the students are in school, and it can take over a week to mill or use some other tools because the instructors don't have enough time for everyone. Other than that, the instructors did their job really good.
+
 === Raimo:
 ==== On which parts of the robot did you work on?
 I worked on the electronics and the firmware of the robot.
