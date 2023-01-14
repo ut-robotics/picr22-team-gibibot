@@ -22,7 +22,7 @@ The driver side also has a switching regulator (TPS62933DRLR) which converts the
 * Motor driver current output up to 2.77A.
 
 ## PCB
-image:https://user-images.githubusercontent.com/112662827/212202425-6cf1347a-7b41-4bcb-865b-d04923f3c480.png[]
+image:https://github.com/ut-robotics/picr22-team-gibibot/blob/electronics/electronics/picr22-team-GibiBot-mainboard/mainboard.png[]
 
 ## Connector Pinouts
 
