@@ -4,11 +4,11 @@
 
 The mainboard is controlled through a STM32G441KBT6 microcontroller. It uses the USB connector to communicate with computer. The microcontroller is powered by the USB connector through a 5V to 3.3V voltage regulator(NCP164CSN330T1G). It can be programmed through the programmer connector with a STLINK programmer.
 
-The board has two isolated sides which have both have their own seperate ground planes. 2 MAX14930DASE+ isolators and 1 MAX12930EASA+ isolator connect both sides. The microcontroller sends signals through the isolators to the motor drivers, servos and the thrower.
+The board has two isolated sides with their own seperate ground planes. 2 MAX14930DASE+ isolators and 1 MAX12930EASA+ isolator connect both sides. The microcontroller sends signals through the isolators to the motor drivers, servos and the thrower.
 
 The microcontroller side has a debug LED which can be controlled through the microcontroller.
 
-The driver side has 3 PDRV8243HRXYQ1 motor drivers which can power 3 motors. The motor drivers need an nsleep signal from the microcontroller to wake up. The drivers are controllerd with a direction signal and a PWM signal. The direction pin determines which way the motor spins.
+The driver side has 3 PDRV8243HRXYQ1 motor drivers which can power 3 DC motors. The motor drivers need an nsleep signal from the microcontroller to wake up. The drivers are controlled with a direction signal and a PWM signal. The direction pin determines which way the motor spins.
 
 The driver side also has a switching regulator (TPS62933DRLR) which converts the input voltage to 5V for the isolators and servos.
 
@@ -31,9 +31,9 @@ image:https://user-images.githubusercontent.com/112662827/212202425-6cf1347a-7b4
 2. SWDIO
 3. GND
 4. SWCLK
-5. NC
+5. GND
 6. NC
-7. GND
+7. NC
 8. NC
 9. GND
 10. NRST
@@ -67,3 +67,13 @@ image:https://user-images.githubusercontent.com/112662827/212202425-6cf1347a-7b4
 2. IR_SENSOR
 3. GND
 4. NC
+
+### J14 - Servo 1 (Angle Adjustment Servo) Connector
+1. SERVO_PWM_OUT
+2. 5V
+3. GND
+
+### J16 - Servo 2 (Grabber Servo) Connector
+1. SERVO2_PWM_OUT
+2. 5V
+3. GND
