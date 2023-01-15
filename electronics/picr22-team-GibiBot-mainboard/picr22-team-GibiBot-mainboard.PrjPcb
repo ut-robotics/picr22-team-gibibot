@@ -33,7 +33,7 @@ FSMCodingStyle=eFMSDropDownList_OneProcess
 FSMEncodingStyle=eFMSDropDownList_OneHot
 IsProjectConflictPreventionWarningsEnabled=0
 IsVirtualBomDocumentRemoved=0
-OutputPath=
+OutputPath=Project Outputs for picr22-team-GibiBot-mainboard
 LogFolderPath=
 ManagedProjectGUID=
 IncludeDesignInRelease=0
@@ -129,58 +129,54 @@ DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiB
 DItemRevisionGUID=
 
 [GeneratedDocument4]
-DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard.RUL
-DItemRevisionGUID=
-
-[GeneratedDocument5]
 DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard_Copper_Signal_1.gbr
 DItemRevisionGUID=
 
-[GeneratedDocument6]
+[GeneratedDocument5]
 DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard_Copper_Signal_2.gbr
 DItemRevisionGUID=
 
-[GeneratedDocument7]
+[GeneratedDocument6]
 DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard_Copper_Signal_Bot.gbr
 DItemRevisionGUID=
 
-[GeneratedDocument8]
+[GeneratedDocument7]
 DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard_Copper_Signal_Top.gbr
 DItemRevisionGUID=
 
-[GeneratedDocument9]
+[GeneratedDocument8]
 DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard_Legend_Bot.gbr
 DItemRevisionGUID=
 
-[GeneratedDocument10]
+[GeneratedDocument9]
 DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard_Legend_Top.gbr
 DItemRevisionGUID=
 
-[GeneratedDocument11]
+[GeneratedDocument10]
 DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard_NPTH_Drill.gbr
 DItemRevisionGUID=
 
-[GeneratedDocument12]
+[GeneratedDocument11]
 DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard_Paste_Bot.gbr
 DItemRevisionGUID=
 
-[GeneratedDocument13]
+[GeneratedDocument12]
 DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard_Paste_Top.gbr
 DItemRevisionGUID=
 
-[GeneratedDocument14]
+[GeneratedDocument13]
 DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard_Profile.gbr
 DItemRevisionGUID=
 
-[GeneratedDocument15]
+[GeneratedDocument14]
 DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard_PTH_Drill.gbr
 DItemRevisionGUID=
 
-[GeneratedDocument16]
+[GeneratedDocument15]
 DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard_Soldermask_Bot.gbr
 DItemRevisionGUID=
 
-[GeneratedDocument17]
+[GeneratedDocument16]
 DocumentPath=Project Outputs for picr22-team-GibiBot-mainboard\picr22-team-GibiBot-mainboard_Soldermask_Top.gbr
 DItemRevisionGUID=
 
@@ -193,6 +189,47 @@ Variant=[No Variations]
 OutputJobsCount=0
 ContentTypeGUID=CB6F2064-E317-11DF-B822-12313F0024A2
 ConfigurationType=Source
+
+[Generic_SmartPDF]
+AutoOpenFile=-1
+AutoOpenOutJob=-1
+
+[Generic_SmartPDFSettings]
+ProjectMode=0
+ZoomPrecision=50
+AddNetsInformation=-1
+AddNetPins=-1
+AddNetNetLabels=-1
+AddNetPorts=-1
+ShowComponentParameters=-1
+GlobalBookmarks=0
+ExportBOM=0
+TemplateFilename=
+TemplateStoreRelative=-1
+PCB_PrintColor=1
+SCH_PrintColor=0
+PrintQuality=-4
+SCH_ShowNoErc=-1
+SCH_ShowParameter=-1
+SCH_ShowProbes=-1
+SCH_ShowBlankets=-1
+SCH_NoERCSymbolsToShow="Thin Cross","Thick Cross","Small Cross",Checkbox,Triangle
+SCH_ShowNote=-1
+SCH_ShowNoteCollapsed=-1
+Wir_PrintColor=0
+Ldr_PrintColor=0
+SCH_ExpandLogicalToPhysical=-1
+SCH_VariantName=[No Variations]
+SCH_ExpandComponentDesignators=-1
+SCH_ExpandNetlabels=0
+SCH_ExpandPorts=0
+SCH_ExpandSheetNumber=0
+SCH_ExpandDocumentNumber=0
+SCH_HasExpandLogicalToPhysicalSheets=-1
+SaveSettingsToOutJob=0
+
+[Generic_EDE]
+OutputDir=Project Outputs for picr22-team-GibiBot-mainboard
 
 [OutputGroup1]
 Name=Netlist Outputs

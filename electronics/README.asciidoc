@@ -1,0 +1,79 @@
+# GibiBot Electronics Documentation
+
+## Information
+
+The mainboard is controlled through a STM32G441KBT6 microcontroller. It uses the USB connector to communicate with computer. The microcontroller is powered by the USB connector through a 5V to 3.3V voltage regulator(NCP164CSN330T1G). It can be programmed through the programmer connector with a STLINK programmer.
+
+The board has two isolated sides with their own seperate ground planes. 2 MAX14930DASE+ isolators and 1 MAX12930EASA+ isolator connect both sides. The microcontroller sends signals through the isolators to the motor drivers, servos and the thrower.
+
+The microcontroller side has a debug LED which can be controlled through the microcontroller.
+
+The driver side has 3 PDRV8243HRXYQ1 motor drivers which can power 3 brushed DC motors. The motor drivers need an nsleep signal from the microcontroller to wake up. The drivers are controlled with a direction signal and a PWM signal. The direction pin determines which way the motor spins.
+
+The driver side also has a switching regulator (TPS62933DRLR) which converts the input voltage to 5V for the isolators and servos.
+
+### Microcontroller side:
+* Powered trough a micro USB connector.
+* It has USB protection.
+
+### The motor driver side:
+* Input voltage up to 16.8V.
+* Input has reverse voltage protection.
+* Motor driver current output up to 2.77A.
+
+## PCB
+image:picr22-team-GibiBot-mainboard/mainboard.png[]
+
+## Connector Pinouts
+
+### J6 - Programmer Connector
+1. 3.3V
+2. SWDIO
+3. GND
+4. SWCLK
+5. GND
+6. NC
+7. NC
+8. NC
+9. GND
+10. NRST
+
+### J11 - Motor 1 Encoder Connector
+1. GND
+2. 3.3V
+3. ENC1_M1
+4. ENC2_M1
+
+### J12 - Motor 2 Encoder Connector
+1. GND
+2. 3.3V
+3. ENC1_M2
+4. ENC2_M2
+
+### J13 - Motor 3 Encoder Connector
+1. GND
+2. 3.3V
+3. ENC1_M3
+4. ENC2_M3
+
+### J15 - Thrower Connector
+1. GND
+2. THRW_PWM_OUT
+3. NC
+4. NC
+
+### J17 - IR Sensor Connector
+1. 5V
+2. IR_SENSOR
+3. GND
+4. NC
+
+### J14 - Servo 1 (Angle Adjustment Servo) Connector
+1. SERVO_PWM_OUT
+2. 5V
+3. GND
+
+### J16 - Servo 2 (Grabber Servo) Connector
+1. SERVO2_PWM_OUT
+2. 5V
+3. GND
