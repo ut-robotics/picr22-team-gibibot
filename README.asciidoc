@@ -36,7 +36,7 @@
 Our code overall is section into files according to their usage (for example immage_processing.py and movement.py) to make the code less clutterd then if it was all in the same file. The fails contain mainly different classes and then we can import them according to our needs. The main code is structured so that every situatsion has a State that we can refere to to make the robot move accordingly.
 
 === Block diagram of game logic
-image::https://user-images.githubusercontent.com/112713620/212192438-b3be92dc-7776-4a3d-9623-ac57508f8613.JPG[750,750]
+image::Images/gamelogic_block_diagram.JPG[750,750]
 
 === Good and bad
 
@@ -60,21 +60,21 @@ The mainboard can control 3 motors and 2 servos. The motor drivers are powered b
 
 * Everyting worked in the end and we won Delta-X and the course competition.
 
-image::https://user-images.githubusercontent.com/112662827/211169992-68409b84-9493-466a-b800-7c67e5b26b65.jpg[500,500]
-image::https://user-images.githubusercontent.com/112662827/211169998-20ac7f89-c637-45fc-b4ae-4e3fb1bdacac.jpg[500,500]
-image::https://user-images.githubusercontent.com/112662827/211170003-e3264e73-28b2-42e0-b00a-e51ef2a45c92.jpg[500,500]
-image::https://user-images.githubusercontent.com/112662827/211170010-b454fe8b-06f9-461d-827f-3709ff7763a9.jpg[950,500]
+image::Images/mainboard1.jpg[500,500]
+image::Images/mainboard2.jpg[500,500]
+image::Images/robot.jpg[500,500]
+image::Images/mainboard_with_wires.jpg[950,500]
 
 == Mechanics
 
 === Thrower design
 * Ball grabbing ability 
 
-image:https://raw.githubusercontent.com/marcanderetti/praktikatooetti/master/Screenshot%202023-01-13%20144223.png[] 
+image:Images/thrower1.png[] 
 
 * Adjustable throwing angle 
 
-image:https://raw.githubusercontent.com/marcanderetti/praktikatooetti/master/Screenshot%202023-01-13%20144249.png[] 
+image:Images/thrower2.png[] 
 
 
 === Wheels design
@@ -84,24 +84,24 @@ image:https://raw.githubusercontent.com/marcanderetti/praktikatooetti/master/Scr
 === Hull Design:
 * Thrower moved close to centre of the robot to help with aiming accuracy 
 
-image:https://raw.githubusercontent.com/marcanderetti/praktikatooetti/master/Screenshot%202023-01-13%20144506.png[] 
+image:Images/robot_model.png[] 
 
 * Round design, all sides covered 
 * Verical batteries 
 
-image:https://raw.githubusercontent.com/marcanderetti/praktikatooetti/master/Screenshot%202023-01-13%20144535.png[] 
+image:Images/robot_batteries.png[] 
 
 * PC mounted on camera holder 
 
-image:https://raw.githubusercontent.com/marcanderetti/praktikatooetti/master/Screenshot%202023-01-13%20144642.png[] 
+image:Images/robot_pc.png[] 
 
 * Main PCB under camera holder 
 
-image:https://raw.githubusercontent.com/marcanderetti/praktikatooetti/master/Screenshot%202023-01-13%20144721.png[] 
+image:Images/mainboard_model.png[] 
 
 * Empty area inside was filled with cables 
 
-image:https://raw.githubusercontent.com/marcanderetti/praktikatooetti/master/Screenshot%202023-01-13%20144806.png[] 
+image:Images/robot_model_inside.png[] 
 
 
 == Personal comments
