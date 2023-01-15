@@ -8,7 +8,7 @@ The board has two isolated sides with their own seperate ground planes. 2 MAX149
 
 The microcontroller side has a debug LED which can be controlled through the microcontroller.
 
-The driver side has 3 PDRV8243HRXYQ1 motor drivers which can power 3 DC motors. The motor drivers need an nsleep signal from the microcontroller to wake up. The drivers are controlled with a direction signal and a PWM signal. The direction pin determines which way the motor spins.
+The driver side has 3 PDRV8243HRXYQ1 motor drivers which can power 3 brushed DC motors. The motor drivers need an nsleep signal from the microcontroller to wake up. The drivers are controlled with a direction signal and a PWM signal. The direction pin determines which way the motor spins.
 
 The driver side also has a switching regulator (TPS62933DRLR) which converts the input voltage to 5V for the isolators and servos.
 
@@ -22,7 +22,7 @@ The driver side also has a switching regulator (TPS62933DRLR) which converts the
 * Motor driver current output up to 2.77A.
 
 ## PCB
-image:https://github.com/ut-robotics/picr22-team-gibibot/blob/electronics/electronics/picr22-team-GibiBot-mainboard/mainboard.png[]
+image:picr22-team-GibiBot-mainboard/mainboard.png[]
 
 ## Connector Pinouts
 
