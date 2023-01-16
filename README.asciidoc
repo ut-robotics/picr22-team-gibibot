@@ -103,6 +103,16 @@ image:Images/mainboard_model.png[]
 
 image:Images/robot_model_inside.png[] 
 
+Overall on the mechanical side:
++ Thrower design was near perfect
++ Chassis had room for cables
++ Solid construction and easy to assemble
++ Good collaboration with programmers granted effective design choices
++ Wheels were covered with easily removable wheel covers
+- wheels were not that good
+- PCB should have been on the bottom plate
+- A lot of 3d printed parts were used
+
 
 == Personal comments
 
