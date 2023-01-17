@@ -1,12 +1,20 @@
-=== Instructions how to setup and run the code
-== Robot computer setup
-* Install python 3.8.x using command "sudo apt-get install python3.9-distutils"
-* Install pip3.9 with these commands
-wget https://bootstrap.pypa.io/get-pip.py
-python3.9 get-pip.py
-echo 'export PATH=~/.local/bin/:$PATH' >> ~/.bashrc
-source ~/.bashrc
-*
+== Instructions how to setup and run the code
+=== Robot computer setup
+1. Install python 3.8.x using this command:
+* sudo apt-get install python3.9-distutils
+2. Install pip3.9 with these commands:
+* wget https://bootstrap.pypa.io/get-pip.py
+* python3.9 get-pip.py
+* echo 'export PATH=~/.local/bin/:$PATH' >> ~/.bashrc
+* source ~/.bashrc
+3. Install a IDE of youre choice.
+4. Install git
+* sudo apt install git
+5. To compile te give segmentation library install tools  pyhton3.9-dev and build essential.
+6. Install tkinter module with this command:
+*sudo apt-get install python3.9-tk
+
+=== Connecting to the robot remotely
 1. Install TightVNC or any other VNC (doesn't work with ssh)
 2. Connect to robot's computer using it's ip address 
 3. Clone the code from the github repository
