@@ -1,5 +1,12 @@
-== Instructions how to setup and run the code
-
+=== Instructions how to setup and run the code
+== Robot computer setup
+* Install python 3.8.x using command "sudo apt-get install python3.9-distutils"
+* Install pip3.9 with these commands
+wget https://bootstrap.pypa.io/get-pip.py
+python3.9 get-pip.py
+echo 'export PATH=~/.local/bin/:$PATH' >> ~/.bashrc
+source ~/.bashrc
+*
 1. Install TightVNC or any other VNC (doesn't work with ssh)
 2. Connect to robot's computer using it's ip address 
 3. Clone the code from the github repository
