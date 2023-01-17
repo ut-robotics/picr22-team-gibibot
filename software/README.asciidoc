@@ -17,7 +17,7 @@
 === Connecting to the robot remotely and running the code
 1. Install TightVNC or any other VNC (doesn't work with ssh)
 2. Connect to robot's computer using it's ip address 
-*we recommend using a HDMI dummy but a config file can also be created.
+* we recommend using a HDMI dummy but a config file can also be created.
 3. Clone the code from the github repository
 4. Make sure you are in the software folder before continuing
 5. Depending on if you want to use referee commands, change the "ref_cmds" variable in main.py to True or False depending on your decision
