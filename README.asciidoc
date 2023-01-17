@@ -36,7 +36,7 @@
 Our code overall is section into files according to their usage (for example image_processing.py and movement.py) to make the code less cluttered then if it was all in the same file. The fails contain mainly different classes and then we can import them according to our needs. The main code is structured so that every situation has a State that we can refer to to make the robot move accordingly.
 
 === Block diagram of game logic
-image::Images/diagramm2.JPG[750,750]
+image::Images/diagramm2.JPG[1000,1000]
 
 === Good and bad
 
