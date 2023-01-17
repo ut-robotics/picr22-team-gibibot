@@ -13,9 +13,9 @@
 
 == Programming
 === Packages
-* math - used for calculating different math equasions for omni motion
+* math - used for calculating different math equations for omni motion
 * random - to make random choices
-* enum - used to make a state machine for movemnt and colours
+* enum - used to make a state machine for movement and colours
 * time - for different timers, for example if robot is in FIND_BALL state for 3 seconds then it changes the state
 * pyrealsense2 - camera's library
 * threading - to make second thread for referee commands client
@@ -33,7 +33,7 @@
 
 === A brief description of your game logic and overall code structure.
 
-Our code overall is section into files according to their usage (for example immage_processing.py and movement.py) to make the code less clutterd then if it was all in the same file. The fails contain mainly different classes and then we can import them according to our needs. The main code is structured so that every situatsion has a State that we can refere to to make the robot move accordingly.
+Our code overall is section into files according to their usage (for example image_processing.py and movement.py) to make the code less cluttered then if it was all in the same file. The fails contain mainly different classes and then we can import them according to our needs. The main code is structured so that every situation has a State that we can refer to to make the robot move accordingly.
 
 === Block diagram of game logic
 image::Images/gamelogic_block_diagram.JPG[750,750]
@@ -41,7 +41,7 @@ image::Images/gamelogic_block_diagram.JPG[750,750]
 === Good and bad
 
 * One of our code's strong side is sigmoid controller. It eliminated most of the if else sentences and also made the robot's movement better.
-* Ball dedection and depth dedection could be improved by using better and more calculations.
+* Ball detection and depth dedection could be improved by using better and more calculations.
 * Timer that we used could be made into a function to make the code more compact.
 * Line dedection is very reliable.
 * Code was good enough to win DeltaX.
@@ -49,16 +49,16 @@ image::Images/gamelogic_block_diagram.JPG[750,750]
 
 == Electronics
 
-The electronics of the robot use the components that were recommended and provided by the instrucors.
+The electronics of the robot use the components that were recommended and provided by the instructors.
 The mainboard can control 3 motors and 2 servos. The motor drivers are powered by a 4S LiPo battery and the microcontroller side is powered through the usb connector by the NUC computer. The USB connection is also used to communicate between the microcontroller and the computer. There is a connector for an IR sensor to detect the ball in the holder. The microcontroller will let the computer know when the IR sensor detects a ball.
 
-=== Some problems that occured and the final outcome
+=== Some problems that occurred and the final outcome
 * After soldering all the components, there was a problem with the 5V on the battery side of the board. It turned out that one of the pins of the switching regulator was not connected.
 * Some of the PWM and DIR pins connections were swapped. Needed to hack the board to fix it.
 * Micro USB connector broke and had to be replaced.
 * IR sensor wire broke during the robot assembly and it needed to be fixed.
 
-* Everyting worked in the end and we won Delta-X and the course competition.
+* Everything worked in the end and we won Delta-X and the course competition.
 
 image::Images/mainboard1.jpg[500,500]
 image::Images/mainboard2.jpg[500,500]
@@ -140,16 +140,16 @@ I don’t have any suggestions or reproaches for the instructors.
 I worked on robot's code. Mainly on image processing.
 
 ===== What did you learn? 
-I learned alot of different techniques to improve and optimise my code. Also bettered my coding habits to make code that is less prone to errors and keep my coding structure more clear.
+I learned a lot of different techniques to improve and optimise my code. Also bettered my coding habits to make code that is less prone to errors and keep my coding structure more clear.
 
 ===== What would you do differently next time?
 Start earlier and make a structured plan going forward. Also follow the guide and requirements given to us on writing clear and structured code more precisely.
 
 ===== What did you like/did not like about the course/building a robot?
-I liked buliding the robot from ground up and really enjoyed the programming process, trying to problem solve and make our robot better.
+I liked building the robot from ground up and really enjoyed the programming process, trying to problem-solve and make our robot better.
 
 ===== Suggestions for next year students.
-The given code by the instructors may be overwhelming at first but step by step you get the hang of it. Always aske questions and help from the instructors if you don't understand something.
+The given code by the instructors may be overwhelming at first but step by step you get the hang of it. Always ask questions and help from the instructors if you don't understand something.
 
 ===== Suggestions for instructors.
 The instructors were helpful and for me every thing went smoothly so I don't have any suggestions.
