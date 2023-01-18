@@ -8,13 +8,15 @@
 * echo 'export PATH=~/.local/bin/:$PATH' >> ~/.bashrc
 * source ~/.bashrc
 3. Install a IDE of youre choice.
-4. Segmentation module installation
-* cd segment_module
-* pip3.9 install .
+4. Install the required dependencies using pip
+* pip3.9 install opencv-python pyrealsense2 numpy
 5. Install git
 * sudo apt install git
 6. To compile the give segmentation library install tools  pyhton3.9-dev and build essential.
-7. Install tkinter module with this command:
+7. Segmentation module installation
+* cd segment_module
+* pip3.9 install .
+8. Install tkinter module with this command:
 *sudo apt-get install python3.9-tk
 
 === Connecting to the robot remotely and running the code
