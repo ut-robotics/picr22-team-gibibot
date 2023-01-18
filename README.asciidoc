@@ -68,11 +68,11 @@ image::Images/mainboard_with_wires.jpg[950,500]
 == Mechanics
 
 === Thrower design
-* Ball grabbing ability 
+* Ball grabbing ability is achieved by a servo that rotates a wheel and long ball ramps. The (grey)wheel draws the ball in and stops once the ball reaches the IR sensor. If the robot is ready to throw, the motor will push the ball past the sensor, after that the ball will reach the throwing motor.
 
 image:Images/thrower1.png[] 
 
-* Adjustable throwing angle 
+* Adjustable throwing angle is achieved by rotating a gear wheel attached to a servo, which rises or lowers the ramp
 
 image:Images/thrower2.png[] 
 
@@ -105,6 +105,7 @@ image:Images/robot_model_inside.png[]
 
 Overall on the mechanical side:
 + Thrower design was near perfect
++ Angle adjustment and ball grabbing worked good
 + Chassis had room for cables
 + Solid construction and easy to assemble
 + Good collaboration with programmers granted effective design choices
