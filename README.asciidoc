@@ -41,9 +41,9 @@ image::Images/diagramm2.JPG[1000,1000]
 === Good and bad
 
 * One of our code's strong side is sigmoid controller. It eliminated most of the if else sentences and also made the robot's movement better.
-* Ball detection and depth dedection could be improved by using better and more calculations.
+* Ball detection and depth detection could be improved by using better and more calculations.
 * Timer that we used could be made into a function to make the code more compact.
-* Line dedection is very reliable.
+* Line detection is very reliable.
 * Code was good enough to win DeltaX.
 
 
