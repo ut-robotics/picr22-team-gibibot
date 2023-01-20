@@ -1,0 +1,21 @@
+# GibiBot Firmware
+
+### Data sent to the mainboard:
+[]
+----
+motor1 speed(int16), motor2 speed(int16), motor3 speed(int16), thrower speed(uint16), thrower angle(uint16), grabber speed(uint16), delimiter(uint16)
+----
+* Thrower speed can be from 0 to 3250.
+* Thrower angle can be from 2700 to 6900.
+* Grabber servo speed can be from 2700 to 6900. 4800 stops the grabber.
+* The delimiter has to be 0xAAAA
+
+### Data received from the mainboard:
+[]
+----
+ball detected(int16), delimiter(uint16)
+----
+* Ball detected is 1 if the ball is detected by the IR sensor and 0 if not.
+* The delimiter has to be 0xAAAA
+
+The data is sent from the mainboard after it receives command.
